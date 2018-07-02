@@ -31,3 +31,4 @@ D:\Pankaj\EkRishta\EkRishta\bin\Microsoft.AspNet.Identity.Core.xml
 D:\Pankaj\EkRishta\EkRishta\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 D:\Pankaj\EkRishta\EkRishta\obj\Debug\EkRishta.dll
 D:\Pankaj\EkRishta\EkRishta\obj\Debug\EkRishta.pdb
+D:\Pankaj\EkRishta\EkRishta\obj\Debug\EkRishta.csprojResolveAssemblyReference.cache

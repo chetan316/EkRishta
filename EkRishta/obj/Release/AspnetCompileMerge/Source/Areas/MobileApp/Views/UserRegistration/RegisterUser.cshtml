@@ -1,0 +1,104 @@
+﻿@model Models.UserRegistration
+@{
+    ViewBag.Title = "RegisterUser";
+}
+<link href="~/Content/Mobile.css" rel="stylesheet" />
+
+<h2>RegisterUser</h2>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmRegister" }))
+{
+    @Html.AntiForgeryToken()
+    @*<div id="dvValidationMessage" class="alert alert-danger fade in">
+        </div>*@
+    <div id="dvValidationMessage">
+    </div>
+    @Html.HiddenFor(m => m.UserId, new { @id = "hdnUserId" })
+    <div id="dvGender" class="ac">
+        <h3>Select</h3>
+        @Html.RadioButtonFor(m => m.Gender, "M", htmlAttributes: new { @id = "rdbMale", @checked = "" }) @Html.Label("Male")
+        @Html.RadioButtonFor(m => m.Gender, "F", htmlAttributes: new { @id = "rdbFemale" }) @Html.Label("Female")
+        <br /><a id="acNextGender">Next</a>
+    </div>
+
+    <div id="dvMobile" class="ac" style="display:none;">
+        <h3>Enter your Mobile Number</h3>
+        @Html.TextBoxFor(m => m.MobileNo, htmlAttributes: new { @id = "txtMobileNo", @placeholder = "Enter Mobile No", @class = "form-control onlynumeric", @style = "margin-left: 38%;" })
+        <br /><button id="acNextMobile" disabled="disabled">Next</button>
+    </div>
+
+    <div id="dvOTP" class="ac" style="display:none;">
+        <h3>Enter your OTP Number</h3>
+        @Html.TextBoxFor(m => m.OTP, htmlAttributes: new { @id = "txtOTP", @placeholder = "Enter OTP", @class = "form-control", @style = "margin-left: 38%;" })
+        <br /><a id="acNextOTP">Save And Next</a>
+    </div>
+
+    <div id="dvLoginDetails" class="ac" style="display:none;">
+        <h3>Login Details</h3>
+        @Html.TextBoxFor(m => m.EmailId, htmlAttributes: new { @id = "txtEmail", @placeholder = "Enter Email", @class = "form-control", @style = "margin-left: 38%;" })
+        @Html.TextBoxFor(m => m.Password, htmlAttributes: new { @id = "txtPassword", @placeholder = "Enter Password", @type = "password", @class = "form-control", @style = "margin-left: 38%;" })
+        @Html.TextBoxFor(m => m.Password, htmlAttributes: new { @id = "txtConfirmPassword", @placeholder = "Enter Password", @type = "password", @class = "form-control", @style = "margin-left: 38%;" })
+        <br /><a id="acNextLoginDetails">Save And Next</a>
+    </div>
+
+
+    <div id="dvProfileCreatedFor" class="ac" style="display:none;">
+        <h3>Profile Created By</h3>
+        @Html.RadioButtonFor(m => m.ProfileCreatedBy, "1", htmlAttributes: new { @id = "rdbSelf" }) @Html.Label("Self")
+        @Html.RadioButtonFor(m => m.ProfileCreatedBy, "2", htmlAttributes: new { @id = "rdbParent" }) @Html.Label("Parent/Guardian")
+        @Html.RadioButtonFor(m => m.ProfileCreatedBy, "3", htmlAttributes: new { @id = "rdbFriend" }) @Html.Label("Sibling/Friend")
+        <br /><a id="acNextProfileCreatedDetails">Save And Next</a>
+    </div>
+    <div id="dvContactDetails" class="ac" style="display:none;">
+        <h3>Contact Details</h3>
+        @Html.TextBoxFor(m => m.FirstName, htmlAttributes: new { @id = "txtFirstName", @placeholder = "First Name", @class = "form-control", @style = "margin-left: 38%;" })
+        @Html.TextBoxFor(m => m.LastName, htmlAttributes: new { @id = "txtLastName", @placeholder = "Last Name", @class = "form-control", @style = "margin-left: 38%;" })
+        @Html.TextBoxFor(m => m.MobileNo, htmlAttributes: new { @id = "txtContactMobileNo", @placeholder = "Mobile Number", @class = "form-control", @disabled = "disabled", @style = "margin-left: 38%;" })
+        @Html.TextBoxFor(m => m.EmailId, htmlAttributes: new { @id = "txtContactEmailId", @placeholder = "Email Id", @class = "form-control", @disabled = "disabled", @style = "margin-left: 38%;" })
+        @Html.TextBoxFor(m => m.CallTime, htmlAttributes: new { @id = "txtContactTime", @placeholder = "Call to Time", @class = "form-control", @style = "margin-left: 38%;" })
+        <br /><a id="acNextContactDetails">Save And Next</a>
+    </div>
+    <div id="dvBasicDetails" class="ac" style="display:none;">
+        <h3>Basic Details</h3>
+        @Html.DropDownListFor(m => m.MaritialStatus, new SelectList(new List<object>{new {value=0,text = "Maritial Status"},
+                                                                                     new {value=1,text = "Unmarried"},
+                                                                                     new {value=2,text="Divorced"},
+                                                                                     new {value=3, text="Widow"},
+                                                                                     new {value=4, text="Widower"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.ReligionId, new SelectList(new List<object>{new {value=0,text = "Religion"},
+                                                                                     new {value=1,text = "Hindu"},
+                                                                                     new {value=2,text="Muslim"},
+                                                                                     new {value=3, text="Jain"},
+                                                                                     new {value=4, text="Christian"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.MotherTounge, new SelectList(new List<object>{new {value="",text = "Mother Tounge"},
+                                                                                     new {value="Marathi",text = "Marathi"},
+                                                                                     new {value="Hindi",text="Hindi"},
+                                                                                     new {value="English", text="English"}}, "value", "text", "Marathi"), htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.StateId, new SelectList(new List<object>{new {value=0,text = "State"},
+                                                                                     new {value=1,text = "Maharashtra"},
+                                                                                     new {value=2,text="Goa"},
+                                                                                     new {value=3, text="Gujrat"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.CityId, new SelectList(new List<object>{new {value=0,text = "City"},
+                                                                                     new {value=1,text = "Mumbai"},
+                                                                                     new {value=2,text="Pune"},
+                                                                                     new {value=3, text="Surat"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.Income, new SelectList(new List<object>{new {value=0,text = "Income"},
+                                                                                     new {value=1,text = "Upto 1 Lakh"},
+                                                                                     new {value=2,text="1-2 Lakh"},
+                                                                                     new {value=3, text="2-4 Lakh"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
+        <br /><a id="acNextBasicDetails">Save And Next</a>
+    </div>
+    <div id="dvPhoto" class="ac" style="display:none;">
+        <h3>Add your Profile Photo</h3>
+        <input id="fuPhoto" type="file" />
+        <br /><input type="button" id="btnUpload" value="Upload Photo" class="form-control btn-primary ac" />
+    </div>
+    <div id="dvSuccessMessage"></div>
+    @*<div class="alert alert-success alert-dismissible fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> This alert box could indicate a successful or positive action.
+  </div>*@
+        }
+        @section scripts{
+            <script src="~/Scripts/CustomJs/common.js"></script>
+            <script src="~/Scripts/CustomJs/UserRegistration.js"></script>
+        }

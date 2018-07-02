@@ -1,0 +1,17 @@
+﻿.fl{
+    float:left;
+}
+
+.fr{
+    float:right;
+}
+.ac{
+    text-align:center;
+}
+
+.caps{
+    text-transform:capitalize;
+}
+a{
+    cursor:pointer;
+}
