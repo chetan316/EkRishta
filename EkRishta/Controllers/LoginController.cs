@@ -12,7 +12,6 @@ namespace EkRishta.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Login
         public ActionResult Index()
         {
             return View();
@@ -27,7 +26,7 @@ namespace EkRishta.Controllers
                 if (ModelState.IsValid)
                 {
                     DataSet dsResult = new DataSet();
-                    string conStr = ConfigurationManager.ConnectionStrings["DBConString"].ConnectionString;
+                    string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                     SqlConnection connString = new SqlConnection(conStr);
                     SqlCommand sqlCmd = new SqlCommand();
                     sqlCmd.CommandType = CommandType.StoredProcedure;
@@ -47,17 +46,21 @@ namespace EkRishta.Controllers
                         objUser.EmailId = Convert.ToString(dsResult.Tables[0].Rows[0]["EmailId"]);
 
                         Session["USER"] = objUser;
+                        return RedirectToAction("MyProfile", "User", new { Area = "" });
                     }
-                    return View("Index");
+                    else
+                    {
+                        return View();
+                    }
                 }
                 else
                 {
-                    return View("Index");
+                    return View();
                 }
             }
             catch (Exception ex)
             {
-                return View("Index");
+                return View();
 
                 throw;
             }

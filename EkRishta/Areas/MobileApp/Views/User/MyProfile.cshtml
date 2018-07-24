@@ -1,0 +1,183 @@
+﻿@model Models.Custom.UserMaster
+
+@{
+    ViewBag.Title = "MyProfile";
+}
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <h2>MyProfile</h2>
+    <div class="table" style="width:100%">
+        <div>
+            <h3>Basic Details</h3>
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>@Model.FirstName @Model.LastName</td>
+                </tr>
+                <tr>
+                    <td>Age</td>
+                    <td>@Model.ProfileId</td>
+                </tr>
+                <tr>
+                    <td>Birth Date</td>
+                    <td>@Model.DOB</td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td>@Model.Gender</td>
+                </tr>
+                <tr>
+                    <td>MaritialStatus</td>
+                    <td>@Model.MaritialStatus</td>
+                </tr>
+                <tr>
+                    <td>Email Id</td>
+                    <td>@Model.EmailId</td>
+                </tr>
+                <tr>
+                    <td>Mobile No</td>
+                    <td>@Model.MobileNo</td>
+                </tr>
+            </table>
+            <h3>Education/Occupation Details</h3>
+            <table>
+                <tr>
+                    <td>Qualification</td>
+                    <td>@Model.Degree</td>
+                </tr>
+                <tr>
+                    <td>Field</td>
+                    <td>@Model.Field</td>
+                </tr>
+                <tr>
+                    <td>College Name</td>
+                    <td>@Model.CollegeName</td>
+                </tr>
+                <tr>
+                    <td>Company Name</td>
+                    <td>@Model.CompanyName</td>
+                </tr>
+                <tr>
+                    <td>Designation</td>
+                    <td>@Model.Designation</td>
+                </tr>
+                <tr>
+                    <td>Income</td>
+                    <td>@Model.Income</td>
+                </tr>
+            </table>
+            <h3>Native Location</h3>
+            <table>
+                <tr>
+                    <td>Address Line 1</td>
+                    <td>@Model.Address1</td>
+                </tr>
+                <tr>
+                    <td>Address Line 2</td>
+                    <td>@Model.Address2</td>
+                </tr>
+                <tr>
+                    <td>College Name</td>
+                    <td>@Model.CollegeName</td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td>@Model.CityName</td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>@Model.StateName</td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>@Model.CountryName</td>
+                </tr>
+                <tr>
+                    <td>Pincode</td>
+                    <td>@Model.Pincode</td>
+                </tr>
+            </table>
+            <h3>Family Details</h3>
+            <table>
+                <tr>
+                    <td>Father Name</td>
+                    <td>@Model.FatherName</td>
+                </tr>
+                <tr>
+                    <td>Father Profession</td>
+                    <td>@Model.FatherProfession</td>
+                </tr>
+                <tr>
+                    <td>Mother Name</td>
+                    <td>@Model.MotherName</td>
+                </tr>
+                <tr>
+                    <td>Mother Profession</td>
+                    <td>@Model.MotherProfession</td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>@Model.StateName</td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>@Model.CountryName</td>
+                </tr>
+                <tr>
+                    <td>Pincode</td>
+                    <td>@Model.Pincode</td>
+                </tr>
+            </table>
+            <h3>Religion Details</h3>
+            <table>
+                <tr>
+                    <td>Religion</td>
+                    <td>@Model.ReligionName</td>
+                </tr>
+                <tr>
+                    <td>Cast</td>
+                    <td>@Model.CastName</td>
+                </tr>
+                <tr>
+                    <td>Mother Tounge</td>
+                    <td>@Model.MotherTounge</td>
+                </tr>
+                <tr>
+                    <td>Country of Birth</td>
+                    <td>@Model.BirthCountry</td>
+                </tr>
+            </table>
+            <h3>Physical Status and Lifestyle</h3>
+            <table>
+                <tr>
+                    <td>Height</td>
+                    <td>@Model.Height</td>
+                </tr>
+                <tr>
+                    <td>Body Type</td>
+                    <td>@Model.BodyType</td>
+                </tr>
+                <tr>
+                    <td>Skin Tone</td>
+                    <td>@Model.SkinTone</td>
+                </tr>
+                <tr>
+                    <td>Blood Group</td>
+                    <td>@Model.BloodGroup</td>
+                </tr>
+                <tr>
+                    <td>Smoke</td>
+                    <td>@Model.IsSmoke</td>
+                </tr>
+                <tr>
+                    <td>Drink</td>
+                    <td>@Model.IsDrink</td>
+                </tr>
+            </table>
+        </div>
+
+
+
+    </div>
+        }

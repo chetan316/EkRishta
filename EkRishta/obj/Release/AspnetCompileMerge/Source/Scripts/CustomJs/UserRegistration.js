@@ -44,6 +44,7 @@
     });
 
     $("#acNextOTP").on("click", function () {
+        ClearValidationDiv();
         if ($("#txtOTP").val() == "") {
             $("#dvValidationMessage").html("Please Enter OTP");
         }
@@ -60,11 +61,13 @@
     });
 
     $("#acNextLoginDetails").on("click", function () {
+        ClearValidationDiv();
         $("#dvLoginDetails").css("display", "none");
         $("#dvProfileCreatedFor").css("display", "block");
     });
 
     $("#acNextProfileCreatedDetails").on("click", function () {
+        ClearValidationDiv();
         $("#dvProfileCreatedFor").css("display", "none");
         $("#dvContactDetails").css("display", "block");
         $("#txtContactEmailId").val($("#txtEmail").val());
@@ -72,11 +75,13 @@
     });
 
     $("#acNextContactDetails").on("click", function () {
+        ClearValidationDiv();
         $("#dvContactDetails").css("display", "none");
         $("#dvBasicDetails").css("display", "block");
     });
 
     $("#acNextBasicDetails").on("click", function () {
+        ClearValidationDiv();
         var IsUserRegistered = RegisterUser();
         if (IsUserRegistered) {
             $("#dvBasicDetails").css("display", "none");
@@ -200,4 +205,8 @@ function CheckMobileNo() {
         }
     });
     return IsMobileNoExists;
+}
+
+function ClearValidationDiv() {
+    $("#dvValidationMessage").html("");
 }

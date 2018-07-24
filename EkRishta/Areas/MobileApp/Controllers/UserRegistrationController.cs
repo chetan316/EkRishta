@@ -25,7 +25,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
-                string conStr = ConfigurationManager.ConnectionStrings["DBConString"].ConnectionString;
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
@@ -107,7 +107,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
 
                     //Save Path to Database
                     DataSet dsResponse = new DataSet();
-                    string conStr = ConfigurationManager.ConnectionStrings["DBConString"].ConnectionString;
+                    string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                     SqlConnection connString = new SqlConnection(conStr);
                     SqlCommand sqlCmd = new SqlCommand();
                     sqlCmd.CommandType = CommandType.StoredProcedure;
@@ -138,7 +138,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
-                string conStr = ConfigurationManager.ConnectionStrings["DBConString"].ConnectionString;
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;

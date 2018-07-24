@@ -17,7 +17,7 @@ namespace EkRishta.Areas.MobileApp
             context.MapRoute(
                 "MobileApp_default",
                 "MobileApp/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { Controller = "User", action = "MyProfile", id = UrlParameter.Optional }
             );
         }
     }

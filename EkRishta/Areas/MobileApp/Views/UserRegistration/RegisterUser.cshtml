@@ -12,11 +12,11 @@
         </div>*@
     <div id="dvValidationMessage">
     </div>
+     <div class="banner">
     @Html.HiddenFor(m => m.UserId, new { @id = "hdnUserId" })
     <div id="dvGender" class="ac">
-        <h3>Select</h3>
-        @Html.RadioButtonFor(m => m.Gender, "M", htmlAttributes: new { @id = "rdbMale", @checked = "" }) @Html.Label("Male")
-        @Html.RadioButtonFor(m => m.Gender, "F", htmlAttributes: new { @id = "rdbFemale" }) @Html.Label("Female")
+        @Html.RadioButtonFor(m => m.Gender, "M", htmlAttributes: new { @id = "rdbMale", @checked = "" }) @Html.Label("I am Male", htmlAttributes: new { @for = "rdbMale", @style = "background:url('http://placekitten.com/150/150') no-repeat" })
+        @Html.RadioButtonFor(m => m.Gender, "F", htmlAttributes: new { @id = "rdbFemale" }) @Html.Label("I am Female", htmlAttributes: new { @for = "rdbFemale", @style = "background:url('http://placekitten.com/151/151') no-repeat" })
         <br /><a id="acNextGender">Next</a>
     </div>
 
@@ -92,6 +92,7 @@
         <input id="fuPhoto" type="file" />
         <br /><input type="button" id="btnUpload" value="Upload Photo" class="form-control btn-primary ac" />
     </div>
+         </div>
     <div id="dvSuccessMessage"></div>
     @*<div class="alert alert-success alert-dismissible fade in">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

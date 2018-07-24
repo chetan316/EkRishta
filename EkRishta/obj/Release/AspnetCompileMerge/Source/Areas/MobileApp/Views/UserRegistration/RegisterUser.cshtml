@@ -12,18 +12,18 @@
         </div>*@
     <div id="dvValidationMessage">
     </div>
+     <div class="banner">
     @Html.HiddenFor(m => m.UserId, new { @id = "hdnUserId" })
     <div id="dvGender" class="ac">
-        <h3>Select</h3>
-        @Html.RadioButtonFor(m => m.Gender, "M", htmlAttributes: new { @id = "rdbMale", @checked = "" }) @Html.Label("Male")
-        @Html.RadioButtonFor(m => m.Gender, "F", htmlAttributes: new { @id = "rdbFemale" }) @Html.Label("Female")
+        @Html.RadioButtonFor(m => m.Gender, "M", htmlAttributes: new { @id = "rdbMale", @checked = "" }) @Html.Label("I am Male", htmlAttributes: new { @for = "rdbMale", @style = "background:url('http://placekitten.com/150/150') no-repeat" })
+        @Html.RadioButtonFor(m => m.Gender, "F", htmlAttributes: new { @id = "rdbFemale" }) @Html.Label("I am Female", htmlAttributes: new { @for = "rdbFemale", @style = "background:url('http://placekitten.com/151/151') no-repeat" })
         <br /><a id="acNextGender">Next</a>
     </div>
 
     <div id="dvMobile" class="ac" style="display:none;">
         <h3>Enter your Mobile Number</h3>
         @Html.TextBoxFor(m => m.MobileNo, htmlAttributes: new { @id = "txtMobileNo", @placeholder = "Enter Mobile No", @class = "form-control onlynumeric", @style = "margin-left: 38%;" })
-        <br /><button id="acNextMobile" disabled="disabled">Next</button>
+        <br /><input type="button" id="acNextMobile" disabled="disabled" value="Next"/>
     </div>
 
     <div id="dvOTP" class="ac" style="display:none;">
@@ -92,6 +92,7 @@
         <input id="fuPhoto" type="file" />
         <br /><input type="button" id="btnUpload" value="Upload Photo" class="form-control btn-primary ac" />
     </div>
+         </div>
     <div id="dvSuccessMessage"></div>
     @*<div class="alert alert-success alert-dismissible fade in">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
