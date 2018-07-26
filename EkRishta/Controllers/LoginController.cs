@@ -44,6 +44,7 @@ namespace EkRishta.Controllers
                         objUser.ProfileId = Convert.ToString(dsResult.Tables[0].Rows[0]["ProfileId"]);
                         objUser.MobileNo = Convert.ToString(dsResult.Tables[0].Rows[0]["MobileNo"]);
                         objUser.EmailId = Convert.ToString(dsResult.Tables[0].Rows[0]["EmailId"]);
+                        objUser.ReligionId = Convert.ToString(dsResult.Tables[0].Rows[0]["ReligionId"]);
 
                         Session["USER"] = objUser;
                         return RedirectToAction("MyProfile", "User", new { Area = "" });

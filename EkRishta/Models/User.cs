@@ -11,5 +11,6 @@ namespace Models
         public string ProfileId { get; set; }
         public string MobileNo { get; set; }
         public string EmailId { get; set; }
+        public string ReligionId { get; set; }
     }
 }

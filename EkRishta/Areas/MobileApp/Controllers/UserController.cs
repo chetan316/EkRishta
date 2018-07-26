@@ -39,7 +39,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     {
                         objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
                         objUserMaster.LastName = Convert.ToString(dr["LastName"]);
-                        objUserMaster.Gender = Convert.ToString(dr["Gender"])=="M"?"Male":"Female";
+                        objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
                         objUserMaster.Age = Convert.ToString(dr["Age"]);
                         objUserMaster.DOB = Convert.ToString(dr["DOB"]);
                         objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
@@ -63,7 +63,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.MotherName = Convert.ToString(dr["MotherName"]);
                         objUserMaster.MotherProfession = Convert.ToString(dr["MotherProfession"]);
 
-                        objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"])=="1"?"Unmarried":"Married";
+                        objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]) == "1" ? "Unmarried" : "Married";
                         objUserMaster.MotherTounge = Convert.ToString(dr["MotherTounge"]);
                         objUserMaster.BirthCountry = Convert.ToString(dr["BirthCountry"]);
                         objUserMaster.BirthPlace = Convert.ToString(dr["BirthPlace"]);
@@ -94,12 +94,66 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.Income = Convert.ToString(dr["Income"]) == "1" ? "INR Upto 1 Lakh" : "INR 2-4 Lakh";
                     }
                 }
-                return View("MyProfile", objUserMaster);
+                return View("~/Areas/MobileApp/Views/User/MyProfile.cshtml", objUserMaster);
             }
             catch (Exception ex)
             {
                 return View();
             }
+        }
+
+        public ActionResult MatchingProfile()
+        {
+            DataSet dsResponse = new DataSet();
+            List<UserMaster> lstUserMaster = new List<UserMaster>();
+
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                Models.User objUser = (Models.User)(Session["USER"]);
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                sqlCmd.Parameters.AddWithValue("@ReligionId", objUser.ReligionId);
+                sqlCmd.CommandText = "GetMatchingProfile";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                UserMaster objUserMaster = new UserMaster();
+
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        objUserMaster.UserId = Convert.ToInt32(dr["UserId"]);
+                        objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
+                        objUserMaster.LastName = Convert.ToString(dr["LastName"]);
+                        objUserMaster.ProfileId = Convert.ToString(dr["ProfileId"]);
+                        objUserMaster.MobileNo = Convert.ToString(dr["MobileNo"]);
+                        objUserMaster.DOB = Convert.ToString(dr["DOB"]);
+                        objUserMaster.Age = Convert.ToString(dr["Age"]);
+                        objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
+                        objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
+                        objUserMaster.IsSurnameVisible = Convert.ToString(dr["IsSurnameVisible"]);
+                        objUserMaster.IsDPVisible = Convert.ToString(dr["IsDPVisible"]);
+                        objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]) == "1" ? "Unmarried" : "Married";
+                        objUserMaster.Height = Convert.ToString(dr["Height"]);
+                        objUserMaster.ProfilePicPath = Server.MapPath("~/Uploads/" + objUser.UserId + "/") + Convert.ToString(dr["ProfilePicPath"]);
+                        objUserMaster.ReligionId = Convert.ToInt32(dr["ReligionId"]);
+                        objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
+                        objUserMaster.SubCastId = Convert.ToInt32(dr["SubCastId"]);
+
+                        lstUserMaster.Add(objUserMaster);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return View("~/Areas/MobileApp/Views/User/MatchingProfile.cshtml", lstUserMaster);
         }
     }
 }
