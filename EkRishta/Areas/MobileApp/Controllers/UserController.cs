@@ -77,7 +77,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.IsPhysicalDisable = Convert.ToString(dr["IsPhysicalDisable"]);
                         objUserMaster.CallTime = Convert.ToString(dr["CallTime"]);
                         objUserMaster.ProfileCreatedBy = Convert.ToString(dr["ProfileCreatedBy"]);
-                        objUserMaster.ProfilePicPath = Server.MapPath("~/Uploads/" + objUser.UserId + "/") + Convert.ToString(dr["ProfilePicPath"]);
+                        objUserMaster.ProfilePicPath = "/Uploads/" + objUser.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
 
                         objUserMaster.ReligionName = "Hindu";// Convert.ToString(dr[""]);
                         objUserMaster.CastName = "Maratha";//"Convert.ToString(dr[""]);
