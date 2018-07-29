@@ -12,7 +12,7 @@
         </div>*@
     <div id="dvValidationMessage">
     </div>
-     <div class="banner">
+    <div class="banner"></div>
     @Html.HiddenFor(m => m.UserId, new { @id = "hdnUserId" })
     <div id="dvGender" class="ac">
         @Html.RadioButtonFor(m => m.Gender, "M", htmlAttributes: new { @id = "rdbMale", @checked = "" }) @Html.Label("I am Male", htmlAttributes: new { @for = "rdbMale", @style = "background:url('http://placekitten.com/150/150') no-repeat" })
@@ -43,7 +43,7 @@
 
     <div id="dvProfileCreatedFor" class="ac" style="display:none;">
         <h3>Profile Created By</h3>
-        @Html.RadioButtonFor(m => m.ProfileCreatedBy, "1", htmlAttributes: new { @id = "rdbSelf" }) @Html.Label("Self")
+        @Html.RadioButtonFor(m => m.ProfileCreatedBy, "1", htmlAttributes: new { @id = "rdbSelf", @checked = "" }) @Html.Label("Self")
         @Html.RadioButtonFor(m => m.ProfileCreatedBy, "2", htmlAttributes: new { @id = "rdbParent" }) @Html.Label("Parent/Guardian")
         @Html.RadioButtonFor(m => m.ProfileCreatedBy, "3", htmlAttributes: new { @id = "rdbFriend" }) @Html.Label("Sibling/Friend")
         <br /><a id="acNextProfileCreatedDetails">Save And Next</a>
@@ -92,7 +92,7 @@
         <input id="fuPhoto" type="file" />
         <br /><input type="button" id="btnUpload" value="Upload Photo" class="form-control btn-primary ac" />
     </div>
-         </div>
+         
     <div id="dvSuccessMessage"></div>
     @*<div class="alert alert-success alert-dismissible fade in">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

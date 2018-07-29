@@ -119,7 +119,7 @@ $("#btnUpload").click(function () {
                 $("#dvSuccessMessage").html("<strong>Registration Successful</strong>");
                 $("#dvSuccessMessage").attr("class", "alert alert-success ac");
                 setTimeout(function () {
-                    window.location.href = "/MobileApp/UserProfile";
+                    window.location.href = "/User/MyProfile";
                 }, 2000);
             },
             error: function (err) {

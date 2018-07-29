@@ -121,12 +121,13 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsResponse);
 
-                UserMaster objUserMaster = new UserMaster();
 
                 if (dsResponse != null && dsResponse.Tables[0] != null)
                 {
                     foreach (DataRow dr in dsResponse.Tables[0].Rows)
                     {
+                        UserMaster objUserMaster = new UserMaster();
+
                         objUserMaster.UserId = Convert.ToInt32(dr["UserId"]);
                         objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
                         objUserMaster.LastName = Convert.ToString(dr["LastName"]);
@@ -140,7 +141,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.IsDPVisible = Convert.ToString(dr["IsDPVisible"]);
                         objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]) == "1" ? "Unmarried" : "Married";
                         objUserMaster.Height = Convert.ToString(dr["Height"]);
-                        objUserMaster.ProfilePicPath = Server.MapPath("~/Uploads/" + objUser.UserId + "/") + Convert.ToString(dr["ProfilePicPath"]);
+                        objUserMaster.ProfilePicPath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
                         objUserMaster.ReligionId = Convert.ToInt32(dr["ReligionId"]);
                         objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
                         objUserMaster.SubCastId = Convert.ToInt32(dr["SubCastId"]);

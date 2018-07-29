@@ -1,7 +1,76 @@
-﻿
+﻿@model IEnumerable<Models.Custom.UserMaster>
+
 @{
     ViewBag.Title = "MatchingProfile";
 }
 
 <h2>MatchingProfile</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-xs-12 col-sm-4 col-md-4">
 
+        @foreach (var item in Model)
+        {
+            <div class="MatchingProfilePic" style="margin-top:20px;">
+                <img src="@item.ProfilePicPath" alt="ProfilePic" class="fl" />
+
+            </div>
+            <table>
+                <tr>
+                    <td>
+                        <b>Name</b>&nbsp;:&nbsp;@item.FirstName @item.LastName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Age</b>&nbsp;:&nbsp;@item.Age
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Height</b>&nbsp;:&nbsp;@item.Height
+                    </td>
+                <tr>
+                    <td>
+                        <b>Religion</b>&nbsp;:&nbsp;@item.ReligionName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Community</b>&nbsp;:&nbsp;@item.CastName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Mother Tounge</b>&nbsp;:&nbsp;@item.MotherTounge
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Education</b>&nbsp;:&nbsp;@item.Degree
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Profession</b>&nbsp;:&nbsp;@item.Designation
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Contact No.</b>&nbsp;:&nbsp;@item.MobileNo
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Location</b>&nbsp;:&nbsp;@item.CityName
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <input type="button" value="Send Request" class="btn btn-info" onclick="SendRequest('@item.UserId');" />
+            </div>
+            <div class="clearfix"></div>
+        }
+    </div>
+}

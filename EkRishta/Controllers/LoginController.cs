@@ -51,20 +51,28 @@ namespace EkRishta.Controllers
                     }
                     else
                     {
-                        return View();
+                        ViewBag.ErrorMessage = "Please Enter Valid UserId and Password.";
+                        return View("Index");
                     }
                 }
                 else
                 {
-                    return View();
+                    ViewBag.ErrorMessage = "Please Enter Valid UserId and Password.";
+                    return View("Index");
                 }
             }
             catch (Exception ex)
             {
-                return View();
-
-                throw;
+                ViewBag.ErrorMessage = "Error Occurred, Please Try Again.";
+                return View("Index");
             }
+        }
+
+        [HttpGet]
+        public ActionResult LogOut()
+        {
+            Session.Remove("USER");
+            return View("Index");
         }
     }
 }

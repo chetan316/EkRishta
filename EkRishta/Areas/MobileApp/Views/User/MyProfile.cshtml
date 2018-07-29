@@ -3,12 +3,15 @@
 @{
     ViewBag.Title = "MyProfile";
 }
-
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     <h2>MyProfile</h2>
     <div class="table" style="width:100%">
         <div>
+            <div class="ProfilePic">
+                <img id="imgProfilePic" alt="Profile" src="@Model.ProfilePicPath" />
+            </div>
+            <div class="clearfix"></div>
             <h3>Basic Details</h3>
             <table>
                 <tr>
