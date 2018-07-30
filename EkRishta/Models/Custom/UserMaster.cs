@@ -110,5 +110,8 @@ namespace Models.Custom
         public string CompanyName { get; set; }
         public string Designation { get; set; }
         public string Income { get; set; }
+
+        public string RequestStatus { get; set; }
+        public string RequestedUserId { get; set; }
     }
 }

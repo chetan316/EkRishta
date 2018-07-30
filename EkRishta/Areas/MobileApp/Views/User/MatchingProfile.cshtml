@@ -4,10 +4,12 @@
     ViewBag.Title = "MatchingProfile";
 }
 
+<script src="~/Scripts/CustomJs/ManageUser.js"></script>
 <h2>MatchingProfile</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    <div id="divMessage"></div>
     <div class="col-xs-12 col-sm-4 col-md-4">
 
         @foreach (var item in Model)
@@ -68,9 +70,22 @@
                 </tr>
             </table>
             <div>
-                <input type="button" value="Send Request" class="btn btn-info" onclick="SendRequest('@item.UserId');" />
+
+                @if (item.RequestStatus == "P")
+                {
+                    <input type="button" value="Cancel Request" class="btn btn-info" id="btnSendRequest" onclick="SendRequest('@item.UserId');" />
+                }
+                else if (item.RequestStatus == "C" || item.RequestStatus == "N")
+                {
+                    <input type="button" value="Send Request" class="btn btn-info" id="btnSendRequest" onclick="SendRequest('@item.UserId');" />
+                }
+                else if (item.RequestStatus == "A")
+                {
+                    <label>Accepted</label>
+                }
             </div>
             <div class="clearfix"></div>
+
         }
     </div>
 }

@@ -143,8 +143,10 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.Height = Convert.ToString(dr["Height"]);
                         objUserMaster.ProfilePicPath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
                         objUserMaster.ReligionId = Convert.ToInt32(dr["ReligionId"]);
+                        objUserMaster.ReligionName= Convert.ToString(dr["ReligionName"]);
                         objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
-                        objUserMaster.SubCastId = Convert.ToInt32(dr["SubCastId"]);
+                        objUserMaster.CastName = Convert.ToString(dr["CastName"]);
+                        objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
 
                         lstUserMaster.Add(objUserMaster);
                     }
@@ -152,9 +154,40 @@ namespace EkRishta.Areas.MobileApp.Controllers
             }
             catch (Exception ex)
             {
-                throw;
             }
             return View("~/Areas/MobileApp/Views/User/MatchingProfile.cshtml", lstUserMaster);
+        }
+
+        [HttpPost]
+        public ActionResult SendRequest(UserMaster objUserMaster)
+        {
+            DataSet dsResponse = new DataSet();
+            string jsonResponse = string.Empty;
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                Models.User objUser = (Models.User)(Session["USER"]);
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                sqlCmd.Parameters.AddWithValue("@RequestedUserId", objUserMaster.RequestedUserId);
+                sqlCmd.Parameters.AddWithValue("@Status", objUserMaster.RequestStatus);
+                sqlCmd.CommandText = "ManageSendRequest";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+                if(dsResponse!=null && dsResponse.Tables[0] != null && dsResponse.Tables[0].Rows.Count > 0)
+                {
+                    jsonResponse = Convert.ToString(dsResponse.Tables[0].Rows[0]["Result"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            //return View();
+            return Json(jsonResponse, JsonRequestBehavior.AllowGet);
         }
     }
 }
