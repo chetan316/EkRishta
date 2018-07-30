@@ -12,5 +12,6 @@ namespace Models
         public string MobileNo { get; set; }
         public string EmailId { get; set; }
         public string ReligionId { get; set; }
+        public int ShareCount { get; set; }
     }
 }

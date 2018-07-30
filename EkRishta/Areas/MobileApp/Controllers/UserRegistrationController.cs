@@ -48,7 +48,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsResponse);
 
-                if (dsResponse != null && dsResponse.Tables[0].Rows.Count > 0)
+                if (dsResponse != null && dsResponse.Tables[0] != null && dsResponse.Tables[0].Rows.Count > 0)
                 {
                     response = Convert.ToString(dsResponse.Tables[0].Rows[0]["Result"]);
                     userId = Convert.ToString(dsResponse.Tables[0].Rows[0]["UserId"]);
@@ -61,7 +61,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             //return Json(response,JsonRequestBehavior.AllowGet);
             return Json(new
             {
-                Status=response,
+                Status = response,
                 UserId = userId
             });
         }
@@ -118,6 +118,19 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                     sda.Fill(dsResponse);
 
+                    if (dsResponse != null && dsResponse.Tables[0] != null && dsResponse.Tables[0].Rows.Count > 0)
+                    {
+                        User objUser = new User();
+                        objUser.UserId = objUserRegistration.UserId;
+                        objUser.ProfileId = Convert.ToString(dsResponse.Tables[0].Rows[0]["ProfileId"]);
+                        objUser.MobileNo = Convert.ToString(dsResponse.Tables[0].Rows[0]["MobileNo"]);
+                        objUser.EmailId = Convert.ToString(dsResponse.Tables[0].Rows[0]["EmailId"]);
+                        objUser.ReligionId = Convert.ToString(dsResponse.Tables[0].Rows[0]["ReligionId"]);
+                        objUser.ShareCount = 0;
+
+                        Session["USER"] = objUser;
+                    }
+
                     // Returns message that successfully uploaded  
                     return Json("Photo Uploaded Successfully!");
                 }
@@ -143,7 +156,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 sqlCmd.Parameters.AddWithValue("@MobileNo", MobileNo);
-//                sqlCmd.Parameters.AddWithValue("@CityId", objUserRegistration.CityId);
+                //                sqlCmd.Parameters.AddWithValue("@CityId", objUserRegistration.CityId);
                 sqlCmd.CommandText = "ValidateMobileNo";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);

@@ -147,6 +147,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
                         objUserMaster.CastName = Convert.ToString(dr["CastName"]);
                         objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
+                        objUserMaster.ShareCount = objUser.ShareCount;
 
                         lstUserMaster.Add(objUserMaster);
                     }
@@ -159,7 +160,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendRequest(UserMaster objUserMaster)
+        public ActionResult SendRequest(ManageRequest objManageRequest)
         {
             DataSet dsResponse = new DataSet();
             string jsonResponse = string.Empty;
@@ -171,8 +172,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 Models.User objUser = (Models.User)(Session["USER"]);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
-                sqlCmd.Parameters.AddWithValue("@RequestedUserId", objUserMaster.RequestedUserId);
-                sqlCmd.Parameters.AddWithValue("@Status", objUserMaster.RequestStatus);
+                sqlCmd.Parameters.AddWithValue("@RequestedUserId", objManageRequest.RequestedUserId);
+                sqlCmd.Parameters.AddWithValue("@Status", objManageRequest.RequestStatus);
                 sqlCmd.CommandText = "ManageSendRequest";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);

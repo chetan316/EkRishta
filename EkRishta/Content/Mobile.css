@@ -70,7 +70,7 @@ input[type="radio"]:checked + label {
     transform: rotateZ(-10deg) rotateX(10deg);
 }
 
-.ProfilePic{
+.ProfilePic {
     margin: 0px 0 0 15px;
     float: left;
     width: 80px;
@@ -85,7 +85,7 @@ input[type="radio"]:checked + label {
     box-shadow: 0px 0px 7px 1px rgb(0, 0, 0);
 }
 
-.MatchingProfilePic{
+.MatchingProfilePic {
     margin: 0px 0 0 15px;
     float: left;
     width: 180px;
@@ -99,6 +99,14 @@ input[type="radio"]:checked + label {
     box-shadow: 0px 0px 7px 1px rgb(0, 0, 0);
 }
 
-img{
-    max-width:100%;
+img {
+    max-width: 100%;
+}
+
+.displaybtn {
+    display: block;
+}
+
+.hidebtn {
+    display: none;
 }

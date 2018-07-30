@@ -30,6 +30,7 @@ namespace Models.Custom
         public string IsDPVisible { get; set; }
 
         public string IsActive { get; set; }
+        public int ShareCount { get; set; }
 
         /// <summary>
         /// Address Table
@@ -112,6 +113,5 @@ namespace Models.Custom
         public string Income { get; set; }
 
         public string RequestStatus { get; set; }
-        public string RequestedUserId { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "RegisterUser";
 }
-<link href="~/Content/Mobile.css" rel="stylesheet" />
+<link href="~/Content/Mobile.css?rd=1" rel="stylesheet" />
 
 <h2>RegisterUser</h2>
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmRegister" }))
@@ -100,6 +100,6 @@
   </div>*@
         }
         @section scripts{
-            <script src="~/Scripts/CustomJs/common.js"></script>
-            <script src="~/Scripts/CustomJs/UserRegistration.js"></script>
+            <script src="~/Scripts/CustomJs/common.js?rd=1"></script>
+            <script src="~/Scripts/CustomJs/UserRegistration.js?rd=1"></script>
         }
