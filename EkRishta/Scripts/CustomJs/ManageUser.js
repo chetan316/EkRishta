@@ -1,5 +1,5 @@
 ﻿function SendRequest(requestedUserId) {
-    var IsSendRequestButtonVisible = $("#btnSendRequest").css('display') != 'none' ? "1" : "0";
+    var IsSendRequestButtonVisible = $("#btnSendRequest_"+requestedUserId).is(":visible") == true ? "1" : "0";
     var requestStatus = IsSendRequestButtonVisible == "1" ? "Pending" : "Cancelled";
     var obj = {
         RequestedUserId: requestedUserId,
@@ -21,10 +21,14 @@
                 else if (requestStatus == "Pending") {
                     $("#divMessage").html("Request Sent Successfully");
                     $("#divMessage").attr("class", "alert alert-success fade in");
+                    $("#btnCancelRequest_" + requestedUserId).css('display', 'block');
+                    $("#btnSendRequest_" + requestedUserId).css('display', 'none');
                 }
                 else if (requestStatus == "Cancelled") {
                     $("#divMessage").html("Request Cancelled Successfully");
                     $("#divMessage").attr("class", "alert alert-success fade in");
+                    $("#btnCancelRequest_" + requestedUserId).css('display', 'none');
+                    $("#btnSendRequest_" + requestedUserId).css('display', 'block');
                 }
             }
             else {
