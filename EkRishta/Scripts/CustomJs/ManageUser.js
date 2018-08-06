@@ -41,3 +41,37 @@
         }
     });
 }
+
+function AcceptRejectRequest(requestedUserId, requestStatus) {
+    var obj = {
+        RequestedUserId: requestedUserId,
+        RequestStatus: status
+    }
+    var formData = JSON.stringify(obj);
+    $.ajax({
+        url: "/User/AccceptRejectRequest",
+        data: formData,
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            if (data != "") {
+                if (requestStatus == "Accepted") {
+                    $("#divMessage").html("Request Updated Successfully");
+                    $("#divMessage").attr("class", "alert alert-success fade in");
+                }
+                else if (requestStatus == "Rejected") {
+                    $("#divMessage").html("Request Updated Successfully");
+                    $("#divMessage").attr("class", "alert alert-success fade in");
+                }
+            }
+            else {
+                $("#divMessage").html("Error occurred. Please Try again");
+                $("#divMessage").attr("class", "alert alert-danger fade in");
+            }
+        },
+        error: function (xhr) {
+            console.log(xhr.status + "-" + xhr.responseText);
+        }
+    });
+}

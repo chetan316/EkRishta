@@ -14,7 +14,11 @@ namespace EkRishta.Areas.MobileApp.Controllers
     {
         public ActionResult RegisterUser()
         {
-            return View();
+            UserRegistration objUserRegistration = new UserRegistration();
+            objUserRegistration.ReligionDetails = new SelectList(ReligionDetails(), "Value", "Text");
+            objUserRegistration.LanguageDetails = new SelectList(LanguageDetails(), "Value", "Text");
+            objUserRegistration.StateDetails = new SelectList(StateDetails(), "Value", "Text");
+            return View(objUserRegistration);
         }
 
         [HttpPost]

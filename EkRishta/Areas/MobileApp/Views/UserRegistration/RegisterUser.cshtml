@@ -64,11 +64,16 @@
                                                                                      new {value=2,text="Divorced"},
                                                                                      new {value=3, text="Widow"},
                                                                                      new {value=4, text="Widower"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
-        @Html.DropDownListFor(m => m.ReligionId, new SelectList(new List<object>{new {value=0,text = "Religion"},
-                                                                                     new {value=1,text = "Hindu"},
-                                                                                     new {value=2,text="Muslim"},
-                                                                                     new {value=3, text="Jain"},
-                                                                                     new {value=4, text="Christian"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.ReligionDetails, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" }))
+        @Html.DropDownListFor(m => m.LanguageDetails, new SelectList(Model.LanguageDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+        @*@Html.DropDownListFor(m => m.StateDetails, new SelectList(Model.StateDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+    @Html.DropDownListFor(m => m.CityDetails, new SelectList(Model.CityDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })*@
+        
+        @*@Html.DropDownListFor(m => m.ReligionId, new SelectList(new List<object>{new {value=0,text = "Religion"},
+    new {value=1,text = "Hindu"},
+    new {value=2,text="Muslim"},
+    new {value=3, text="Jain"},
+    new {value=4, text="Christian"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
         @Html.DropDownListFor(m => m.MotherTounge, new SelectList(new List<object>{new {value="",text = "Mother Tounge"},
                                                                                      new {value="Marathi",text = "Marathi"},
                                                                                      new {value="Hindi",text="Hindi"},
@@ -76,7 +81,7 @@
         @Html.DropDownListFor(m => m.StateId, new SelectList(new List<object>{new {value=0,text = "State"},
                                                                                      new {value=1,text = "Maharashtra"},
                                                                                      new {value=2,text="Goa"},
-                                                                                     new {value=3, text="Gujrat"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
+                                                                                     new {value=3, text="Gujrat"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })*@
         @Html.DropDownListFor(m => m.CityId, new SelectList(new List<object>{new {value=0,text = "City"},
                                                                                      new {value=1,text = "Mumbai"},
                                                                                      new {value=2,text="Pune"},
