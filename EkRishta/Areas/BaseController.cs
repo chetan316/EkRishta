@@ -22,37 +22,37 @@ namespace EkRishta
             string response = string.Empty;
             try
             {
-                    Random generator = new Random();
-                    String OTP = generator.Next(0, 9999).ToString();
-                    string smsText = OTP + " " + ConfigurationManager.AppSettings["RegistrationSMSText"];
-                    string SMSLoginId = ConfigurationManager.AppSettings["SMSLoginId"];
-                    string SMSPassword = ConfigurationManager.AppSettings["SMSPassword"];
-                    string SMSSenderId = ConfigurationManager.AppSettings["SMSSenderId"];
-                    string SMSUrl = ConfigurationManager.AppSettings["SMSUrl"];
+                Random generator = new Random();
+                String OTP = generator.Next(0, 9999).ToString();
+                string smsText = OTP + " " + ConfigurationManager.AppSettings["RegistrationSMSText"];
+                string SMSLoginId = ConfigurationManager.AppSettings["SMSLoginId"];
+                string SMSPassword = ConfigurationManager.AppSettings["SMSPassword"];
+                string SMSSenderId = ConfigurationManager.AppSettings["SMSSenderId"];
+                string SMSUrl = ConfigurationManager.AppSettings["SMSUrl"];
 
-                    string smsURL = SMSUrl + "username=" + SMSLoginId + "&password=" + SMSPassword + "&message=" + HttpUtility.UrlEncode(smsText) + "&sender=" + SMSSenderId + "&numbers=" + MobileNo;
-                    //WebClient webClient = new WebClient();
-                    string APIResponse = "YOUR SMS HAS BEEN SENT";//webClient.DownloadString(smsURL);
+                string smsURL = SMSUrl + "username=" + SMSLoginId + "&password=" + SMSPassword + "&message=" + HttpUtility.UrlEncode(smsText) + "&sender=" + SMSSenderId + "&numbers=" + MobileNo;
+                //WebClient webClient = new WebClient();
+                string APIResponse = "YOUR SMS HAS BEEN SENT";//webClient.DownloadString(smsURL);
 
-                    DataSet dsResult = new DataSet();
-                    string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
-                    SqlConnection connString = new SqlConnection(conStr);
-                    SqlCommand sqlCmd = new SqlCommand();
-                    sqlCmd.CommandType = CommandType.StoredProcedure;
-                    sqlCmd.Parameters.AddWithValue("@MobileNo", MobileNo);
-                    sqlCmd.Parameters.AddWithValue("@SMSText", smsText);
-                    sqlCmd.Parameters.AddWithValue("@APIRequest", smsURL);
-                    sqlCmd.Parameters.AddWithValue("@APIResponse", APIResponse);
-                    sqlCmd.CommandText = "InsertSMSLogs";
-                    sqlCmd.Connection = connString;
-                    SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
-                    sda.Fill(dsResult);
+                DataSet dsResult = new DataSet();
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@MobileNo", MobileNo);
+                sqlCmd.Parameters.AddWithValue("@SMSText", smsText);
+                sqlCmd.Parameters.AddWithValue("@APIRequest", smsURL);
+                sqlCmd.Parameters.AddWithValue("@APIResponse", APIResponse);
+                sqlCmd.CommandText = "InsertSMSLogs";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResult);
 
-                    if (APIResponse.Contains("YOUR SMS HAS BEEN SENT"))
-                    {
-                        OTP="1111";
-                        response = SaveOTPDetails(MobileNo, OTP);
-                    }
+                if (APIResponse.Contains("YOUR SMS HAS BEEN SENT"))
+                {
+                    OTP = "1111";
+                    response = SaveOTPDetails(MobileNo, OTP);
+                }
             }
             catch (Exception ex)
             {
@@ -119,7 +119,133 @@ namespace EkRishta
             }
             return Json(response, JsonRequestBehavior.AllowGet);
         }
+
+        public List<SelectListItem> ReligionDetails()
+        {
+            DataSet dsReligion = new DataSet();
+            List<SelectListItem> lstSelectItem = new List<SelectListItem>();
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.CommandText = "GetReligionMaster";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsReligion);
+
+                if (dsReligion != null && dsReligion.Tables[0].Rows.Count > 0)
+                {
+                    lstSelectItem.Add(new SelectListItem { Text = "Religion", Value = "0" });
+                    foreach (DataRow dr in dsReligion.Tables[0].Rows)
+                    {
+                        lstSelectItem.Add(new SelectListItem { Text = Convert.ToString(dr["ReligionName"]), Value = Convert.ToString(dr["ReligionId"]) });
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return lstSelectItem;
+        }
+
+        public List<SelectListItem> LanguageDetails()
+        {
+            DataSet dsLanguage = new DataSet();
+            List<SelectListItem> lstSelectItem = new List<SelectListItem>();
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.CommandText = "GetLanguageMaster";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsLanguage);
+
+                if (dsLanguage != null && dsLanguage.Tables[0].Rows.Count > 0)
+                {
+                    lstSelectItem.Add(new SelectListItem { Text = "Mother Tounge", Value = "0" });
+                    foreach (DataRow dr in dsLanguage.Tables[0].Rows)
+                    {
+                        lstSelectItem.Add(new SelectListItem { Text = Convert.ToString(dr["LanguageName"]), Value = Convert.ToString(dr["LanguageId"]) });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return lstSelectItem;
+        }
+
+        public List<SelectListItem> StateDetails()
+        {
+            DataSet dsLanguage = new DataSet();
+            List<SelectListItem> lstSelectItem = new List<SelectListItem>();
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.CommandText = "GetStateMaster";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsLanguage);
+
+                if (dsLanguage != null && dsLanguage.Tables[0].Rows.Count > 0)
+                {
+                    lstSelectItem.Add(new SelectListItem { Text = "Select State", Value = "0" });
+                    foreach (DataRow dr in dsLanguage.Tables[0].Rows)
+                    {
+                        lstSelectItem.Add(new SelectListItem { Text = Convert.ToString(dr["StateName"]), Value = Convert.ToString(dr["StateId"]) });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return lstSelectItem;
+        }
+
+        public List<SelectListItem> CityDetails()
+        {
+            DataSet dsLanguage = new DataSet();
+            List<SelectListItem> lstSelectItem = new List<SelectListItem>();
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.CommandText = "GetCityMaster";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsLanguage);
+
+                if (dsLanguage != null && dsLanguage.Tables[0].Rows.Count > 0)
+                {
+                    lstSelectItem.Add(new SelectListItem { Text = "Select City", Value = "0" });
+                    foreach (DataRow dr in dsLanguage.Tables[0].Rows)
+                    {
+                        lstSelectItem.Add(new SelectListItem { Text = Convert.ToString(dr["CityName"]), Value = Convert.ToString(dr["CityId"]) });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return lstSelectItem;
+        }
     }
 
-   
+
 }

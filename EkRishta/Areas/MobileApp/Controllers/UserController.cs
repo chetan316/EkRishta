@@ -159,6 +159,61 @@ namespace EkRishta.Areas.MobileApp.Controllers
             return View("~/Areas/MobileApp/Views/User/MatchingProfile.cshtml", lstUserMaster);
         }
 
+        public ActionResult ProfileRequest()
+        {
+            DataSet dsResponse = new DataSet();
+            List<UserMaster> lstUserMaster = new List<UserMaster>();
+
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                Models.User objUser = (Models.User)(Session["USER"]);
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                sqlCmd.CommandText = "GetProfileRequest";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        UserMaster objUserMaster = new UserMaster();
+
+                        objUserMaster.UserId = Convert.ToInt32(dr["RequestingUserId"]);
+                        objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
+                        objUserMaster.LastName = Convert.ToString(dr["LastName"]);
+                        objUserMaster.ProfileId = Convert.ToString(dr["ProfileId"]);
+                        objUserMaster.MobileNo = Convert.ToString(dr["MobileNo"]);
+                        objUserMaster.DOB = Convert.ToString(dr["DOB"]);
+                        objUserMaster.Age = Convert.ToString(dr["Age"]);
+                        objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
+                        objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
+                        objUserMaster.IsSurnameVisible = Convert.ToString(dr["IsSurnameVisible"]);
+                        objUserMaster.IsDPVisible = Convert.ToString(dr["IsDPVisible"]);
+                        objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]) == "1" ? "Unmarried" : "Married";
+                        objUserMaster.Height = Convert.ToString(dr["Height"]);
+                        objUserMaster.ProfilePicPath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
+                        objUserMaster.ReligionId = Convert.ToInt32(dr["ReligionId"]);
+                        objUserMaster.ReligionName = Convert.ToString(dr["ReligionName"]);
+                        objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
+                        objUserMaster.CastName = Convert.ToString(dr["CastName"]);
+                        objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
+                        objUserMaster.ShareCount = objUser.ShareCount;
+
+                        lstUserMaster.Add(objUserMaster);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return View("~/Areas/MobileApp/Views/User/ProfileRequest.cshtml", lstUserMaster);
+        }
         [HttpPost]
         public ActionResult SendRequest(ManageRequest objManageRequest)
         {
@@ -188,6 +243,37 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 
             }
             //return View();
+            return Json(jsonResponse, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult AccceptRejectRequest(ManageRequest objManageRequest)
+        {
+            DataSet dsResponse = new DataSet();
+            string jsonResponse = string.Empty;
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                Models.User objUser = (Models.User)(Session["USER"]);
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                sqlCmd.Parameters.AddWithValue("@RequestedUserId", objManageRequest.RequestedUserId);
+                sqlCmd.Parameters.AddWithValue("@Status", objManageRequest.RequestStatus);
+                sqlCmd.CommandText = "ManageSendRequest";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+                if (dsResponse != null && dsResponse.Tables[0] != null && dsResponse.Tables[0].Rows.Count > 0)
+                {
+                    jsonResponse = Convert.ToString(dsResponse.Tables[0].Rows[0]["Result"]);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
             return Json(jsonResponse, JsonRequestBehavior.AllowGet);
         }
     }

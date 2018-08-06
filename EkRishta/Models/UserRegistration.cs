@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Models
 {
@@ -103,5 +104,10 @@ namespace Models
         public string CompanyName { get; set; }
         public string Designation { get; set; }
         public string Income { get; set; }
+
+        public SelectList ReligionDetails { get; set; }
+        public SelectList LanguageDetails { get; set; }
+        public SelectList StateDetails { get; set; }
+        public SelectList CityDetails { get; set; }
     }
 }

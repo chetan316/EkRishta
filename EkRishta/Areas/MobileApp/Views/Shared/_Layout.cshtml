@@ -29,6 +29,9 @@
                         <li>
                             @Html.ActionLink("My Matches", "MatchingProfile", "User", new { area = "MobileApp" }, null)
                         </li>
+                        <li>
+                            @Html.ActionLink("Profile Request", "ProfileRequest", "User", new { area = "MobileApp" }, null)
+                        </li>
                     }
                 </ul>
                 @if (Session["USER"] != null)
