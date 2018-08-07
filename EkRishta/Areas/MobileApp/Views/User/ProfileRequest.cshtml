@@ -62,12 +62,12 @@
                 </tr>
             </table>
             <div>
-                <input type="button" value="Accept" id="btnAcceptRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Accepted');" class="btn btn-info" />
-                <input type="button" value="Reject" id="btnRejectRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Rejected');" class="btn btn-info" />
+                <input type="button" value="@(item.RequestStatus == "A"?"Accepted":"Accept")" id="btnAcceptRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Accepted');" class="btn btn-info @(item.RequestStatus == "A"?"disabled":"")" />
+                <input type="button" value="@(item.RequestStatus == "R"?"Rejected":"Reject")" id="btnRejectRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Rejected');" class="btn btn-info @(item.RequestStatus == "R"?"disabled":"")" />
             </div>
             <div class="clearfix"></div>
 
         }
     </div>
-            }
+}
 

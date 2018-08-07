@@ -45,7 +45,7 @@
 function AcceptRejectRequest(requestedUserId, requestStatus) {
     var obj = {
         RequestedUserId: requestedUserId,
-        RequestStatus: status
+        RequestStatus: requestStatus
     }
     var formData = JSON.stringify(obj);
     $.ajax({
@@ -59,10 +59,18 @@ function AcceptRejectRequest(requestedUserId, requestStatus) {
                 if (requestStatus == "Accepted") {
                     $("#divMessage").html("Request Updated Successfully");
                     $("#divMessage").attr("class", "alert alert-success fade in");
+                    $("#btnAcceptRequest_" + requestedUserId).attr("class", "btn btn-info disabled");
+                    $("#btnAcceptRequest_" + requestedUserId).val("Accepted");
+                    $("#btnRejectRequest_" + requestedUserId).attr("class", "btn btn-info");
+                    $("#btnRejectRequest_" + requestedUserId).val("Reject");
                 }
                 else if (requestStatus == "Rejected") {
                     $("#divMessage").html("Request Updated Successfully");
                     $("#divMessage").attr("class", "alert alert-success fade in");
+                    $("#btnRejectRequest_" + requestedUserId).attr("class", "btn btn-info disabled");
+                    $("#btnRejectRequest_" + requestedUserId).val("Rejected");
+                    $("#btnAcceptRequest_" + requestedUserId).attr("class", "btn btn-info");
+                    $("#btnAcceptRequest_" + requestedUserId).val("Accept");
                 }
             }
             else {
