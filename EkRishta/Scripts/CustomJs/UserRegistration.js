@@ -164,11 +164,11 @@ function CheckOTP(OTP, MobileNo) {
 
 function RegisterUser() {
     var IsUserRegistered = false;
-    var formData = $("#frmRegister").serialize();
+    var objUserRegistration = $("#frmRegister").serialize();
     $.ajax({
         url: "RegisterUser",
         type: "POST",
-        data: formData,
+        data: objUserRegistration,
         dataType: "json",
         async:false,
         success: function (data) {

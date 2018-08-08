@@ -245,6 +245,16 @@ namespace EkRishta
             }
             return lstSelectItem;
         }
+        public List<SelectListItem> DOBDayDetails()
+        {
+            List<SelectListItem> lstSelectItem = new List<SelectListItem>();
+            lstSelectItem.Add(new SelectListItem { Text = "Day", Value = "0" });
+            for (int i = 1; i <= 31; i++)
+            {
+                lstSelectItem.Add(new SelectListItem { Text = Convert.ToString(i), Value = Convert.ToString(i) });
+            }
+            return lstSelectItem;
+        }
     }
 
 

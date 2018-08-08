@@ -18,6 +18,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             objUserRegistration.ReligionDetails = new SelectList(ReligionDetails(), "Value", "Text");
             objUserRegistration.LanguageDetails = new SelectList(LanguageDetails(), "Value", "Text");
             objUserRegistration.StateDetails = new SelectList(StateDetails(), "Value", "Text");
+            objUserRegistration.DOBDayDetails = new SelectList(DOBDayDetails(), "Value", "Text");
             return View(objUserRegistration);
         }
 
@@ -47,6 +48,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.Parameters.AddWithValue("@ReligionId", objUserRegistration.ReligionId);
                 sqlCmd.Parameters.AddWithValue("@StateId", objUserRegistration.StateId);
                 sqlCmd.Parameters.AddWithValue("@CityId", objUserRegistration.CityId);
+                sqlCmd.Parameters.AddWithValue("@DOB", objUserRegistration.DOBDay);
                 sqlCmd.CommandText = "RegisterUser";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);

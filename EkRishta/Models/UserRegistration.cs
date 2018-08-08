@@ -40,6 +40,7 @@ namespace Models
         public string OTP { get; set; }
         public string ProfileCreatedBy { get; set; }
         public string CallTime { get; set; }
+        public string DOBDay { get; set; }
 
         /// <summary>
         /// UserAddressDetails
@@ -109,5 +110,6 @@ namespace Models
         public SelectList LanguageDetails { get; set; }
         public SelectList StateDetails { get; set; }
         public SelectList CityDetails { get; set; }
+        public SelectList DOBDayDetails { get; set; }
     }
 }
