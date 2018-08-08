@@ -52,6 +52,7 @@
         <h3>Contact Details</h3>
         @Html.TextBoxFor(m => m.FirstName, htmlAttributes: new { @id = "txtFirstName", @placeholder = "First Name", @class = "form-control", @style = "margin-left: 38%;" })
         @Html.TextBoxFor(m => m.LastName, htmlAttributes: new { @id = "txtLastName", @placeholder = "Last Name", @class = "form-control", @style = "margin-left: 38%;" })
+        @Html.DropDownListFor(m => m.DOBDay, new SelectList(Model.DOBDayDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
         @Html.TextBoxFor(m => m.MobileNo, htmlAttributes: new { @id = "txtContactMobileNo", @placeholder = "Mobile Number", @class = "form-control", @disabled = "disabled", @style = "margin-left: 38%;" })
         @Html.TextBoxFor(m => m.EmailId, htmlAttributes: new { @id = "txtContactEmailId", @placeholder = "Email Id", @class = "form-control", @disabled = "disabled", @style = "margin-left: 38%;" })
         @Html.TextBoxFor(m => m.CallTime, htmlAttributes: new { @id = "txtContactTime", @placeholder = "Call to Time", @class = "form-control", @style = "margin-left: 38%;" })
@@ -64,8 +65,8 @@
                                                                                      new {value=2,text="Divorced"},
                                                                                      new {value=3, text="Widow"},
                                                                                      new {value=4, text="Widower"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
-        @Html.DropDownListFor(m => m.ReligionDetails, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" }))
-        @Html.DropDownListFor(m => m.LanguageDetails, new SelectList(Model.LanguageDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.ReligionId, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" }))
+        @Html.DropDownListFor(m => m.MotherTounge, new SelectList(Model.LanguageDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
         @*@Html.DropDownListFor(m => m.StateDetails, new SelectList(Model.StateDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
     @Html.DropDownListFor(m => m.CityDetails, new SelectList(Model.CityDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })*@
         
