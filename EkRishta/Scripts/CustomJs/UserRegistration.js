@@ -166,12 +166,12 @@ function RegisterUser() {
     var IsUserRegistered = false;
     var formData = $("#frmRegister").serialize();
     $.ajax({
-        url: "RegisterUser",
-        type: "POST",
-        data: formData,
-        dataType: "json",
-        async:false,
-        success: function (data) {
+            url: "RegisterUser",
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            async: false,
+            success: function (data) {
             if (data.Status == "SUCCESS") {
                 IsUserRegistered = true;
                 $("#hdnUserId").val(data.UserId);
@@ -179,13 +179,13 @@ function RegisterUser() {
             else {
                 $("#dvValidationMessage").html(data.Status);
             }
-        },
-        error: function (xhr) {
+    },
+            error: function (xhr) {
             alert(xhr.statusCode);
-        }
+    }
     });
     return IsUserRegistered;
-}
+    }
 
 function CheckMobileNo() {
     var IsMobileNoExists = false;

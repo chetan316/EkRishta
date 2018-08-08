@@ -40,6 +40,12 @@ namespace Models
         public string OTP { get; set; }
         public string ProfileCreatedBy { get; set; }
         public string CallTime { get; set; }
+        public SelectList DOBDayDetails { get; set; }
+        public SelectList DOBMonthDetails { get; set; }
+        public SelectList DOBYearDetails { get; set; }
+        public string DOBDay { get; set; }
+        public string DOBMonth { get; set; }
+        public string DOBYear { get; set; }
 
         /// <summary>
         /// UserAddressDetails

@@ -18,6 +18,9 @@ namespace EkRishta.Areas.MobileApp.Controllers
             objUserRegistration.ReligionDetails = new SelectList(ReligionDetails(), "Value", "Text");
             objUserRegistration.LanguageDetails = new SelectList(LanguageDetails(), "Value", "Text");
             objUserRegistration.StateDetails = new SelectList(StateDetails(), "Value", "Text");
+            objUserRegistration.DOBDayDetails = new SelectList(DOBDayDetails(), "Value", "Text");
+            objUserRegistration.DOBMonthDetails = new SelectList(DOBMonthDetails(), "Value", "Text");
+            objUserRegistration.DOBYearDetails = new SelectList(DOBYearDetails(), "Value", "Text");
             return View(objUserRegistration);
         }
 
@@ -39,6 +42,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.Parameters.AddWithValue("@MobileNo", objUserRegistration.MobileNo);
                 sqlCmd.Parameters.AddWithValue("@EmailId", objUserRegistration.EmailId);
                 sqlCmd.Parameters.AddWithValue("@Password", objUserRegistration.Password);
+                sqlCmd.Parameters.AddWithValue("@DOB", objUserRegistration.DOBDay.ToString() + "-" + objUserRegistration.DOBMonth.ToString() + "-" + objUserRegistration.DOBYear.ToString());
                 sqlCmd.Parameters.AddWithValue("@MaritialStatus", objUserRegistration.MaritialStatus);
                 sqlCmd.Parameters.AddWithValue("@MotherTounge", objUserRegistration.MotherTounge);
                 sqlCmd.Parameters.AddWithValue("@CallTime", objUserRegistration.CallTime);
