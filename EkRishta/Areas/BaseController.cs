@@ -251,7 +251,31 @@ namespace EkRishta
             lstSelectItem.Add(new SelectListItem { Text = "Day", Value = "0" });
             for (int i = 1; i <= 31; i++)
             {
-                lstSelectItem.Add(new SelectListItem { Text = Convert.ToString(i), Value = Convert.ToString(i) });
+                lstSelectItem.Add(new SelectListItem { Text = i.ToString().Length < 2 ? "0" + i.ToString() : i.ToString(), Value = i.ToString().Length < 2 ? "0" + i.ToString() : i.ToString() });
+            }
+            return lstSelectItem;
+        }
+
+        public List<SelectListItem> DOBMonthDetails()
+        {
+            List<SelectListItem> lstSelectItem = new List<SelectListItem>();
+            lstSelectItem.Add(new SelectListItem { Text = "Month", Value = "0" });
+            for (int i = 1; i <= 12; i++)
+            {
+                lstSelectItem.Add(new SelectListItem { Text = i.ToString().Length < 2 ? "0" + i.ToString() : i.ToString(), Value = i.ToString().Length < 2 ? "0" + i.ToString() : i.ToString() });
+            }
+            return lstSelectItem;
+        }
+
+        public List<SelectListItem> DOBYearDetails()
+        {
+            List<SelectListItem> lstSelectItem = new List<SelectListItem>();
+            int startYear = DateTime.Now.Year - 47;
+            int endYear = DateTime.Now.Year - 18;
+            lstSelectItem.Add(new SelectListItem { Text = "Year", Value = "0" });
+            for (int i = startYear; i <= endYear; i++)
+            {
+                lstSelectItem.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             }
             return lstSelectItem;
         }

@@ -23,7 +23,7 @@
     <div id="dvMobile" class="ac" style="display:none;">
         <h3>Enter your Mobile Number</h3>
         @Html.TextBoxFor(m => m.MobileNo, htmlAttributes: new { @id = "txtMobileNo", @placeholder = "Enter Mobile No", @class = "form-control onlynumeric", @style = "margin-left: 38%;" })
-        <br /><input type="button" id="acNextMobile" disabled="disabled" value="Next"/>
+        <br /><input type="button" id="acNextMobile" disabled="disabled" value="Next" />
     </div>
 
     <div id="dvOTP" class="ac" style="display:none;">
@@ -52,37 +52,28 @@
         <h3>Contact Details</h3>
         @Html.TextBoxFor(m => m.FirstName, htmlAttributes: new { @id = "txtFirstName", @placeholder = "First Name", @class = "form-control", @style = "margin-left: 38%;" })
         @Html.TextBoxFor(m => m.LastName, htmlAttributes: new { @id = "txtLastName", @placeholder = "Last Name", @class = "form-control", @style = "margin-left: 38%;" })
-        @Html.DropDownListFor(m => m.DOBDay, new SelectList(Model.DOBDayDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
         @Html.TextBoxFor(m => m.MobileNo, htmlAttributes: new { @id = "txtContactMobileNo", @placeholder = "Mobile Number", @class = "form-control", @disabled = "disabled", @style = "margin-left: 38%;" })
         @Html.TextBoxFor(m => m.EmailId, htmlAttributes: new { @id = "txtContactEmailId", @placeholder = "Email Id", @class = "form-control", @disabled = "disabled", @style = "margin-left: 38%;" })
+        <div>
+            @Html.DropDownListFor(m => m.DOBDay, new SelectList(Model.DOBDayDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBDay", @name = "DOBDayValue", @class = "form-control DOBddl", @onchange = "CalculateAge()" })
+            @Html.DropDownListFor(m => m.DOBMonth, new SelectList(Model.DOBMonthDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBMonth", @class = "form-control DOBddl", @onchange = "CalculateAge()" })
+            @Html.DropDownListFor(m => m.DOBYear, new SelectList(Model.DOBYearDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBYear", @class = "form-control DOBddl", @onchange = "CalculateAge()" })
+            @Html.HiddenFor(m => m.Age, htmlAttributes: new { @id="hdnAge"})
+        </div>
         @Html.TextBoxFor(m => m.CallTime, htmlAttributes: new { @id = "txtContactTime", @placeholder = "Call to Time", @class = "form-control", @style = "margin-left: 38%;" })
         <br /><a id="acNextContactDetails">Save And Next</a>
     </div>
     <div id="dvBasicDetails" class="ac" style="display:none;">
         <h3>Basic Details</h3>
-        @Html.DropDownListFor(m => m.MaritialStatus, new SelectList(new List<object>{new {value=0,text = "Maritial Status"},
-                                                                                     new {value=1,text = "Unmarried"},
-                                                                                     new {value=2,text="Divorced"},
-                                                                                     new {value=3, text="Widow"},
-                                                                                     new {value=4, text="Widower"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
-        @Html.DropDownListFor(m => m.ReligionId, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" }))
+        @Html.DropDownListFor(m => m.MaritialStatus, new SelectList(new List<object>{new {value="Unmarried",text = "Unmarried"},
+                                                                                     new {value="Divorced",text="Divorced"},
+                                                                                     new {value="Widow", text="Widow"},
+                                                                                     new {value="Widower", text="Widower"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.ReligionId, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
         @Html.DropDownListFor(m => m.MotherTounge, new SelectList(Model.LanguageDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
         @*@Html.DropDownListFor(m => m.StateDetails, new SelectList(Model.StateDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
-    @Html.DropDownListFor(m => m.CityDetails, new SelectList(Model.CityDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })*@
-        
-        @*@Html.DropDownListFor(m => m.ReligionId, new SelectList(new List<object>{new {value=0,text = "Religion"},
-    new {value=1,text = "Hindu"},
-    new {value=2,text="Muslim"},
-    new {value=3, text="Jain"},
-    new {value=4, text="Christian"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })
-        @Html.DropDownListFor(m => m.MotherTounge, new SelectList(new List<object>{new {value="",text = "Mother Tounge"},
-                                                                                     new {value="Marathi",text = "Marathi"},
-                                                                                     new {value="Hindi",text="Hindi"},
-                                                                                     new {value="English", text="English"}}, "value", "text", "Marathi"), htmlAttributes: new { @class = "form-control" })
-        @Html.DropDownListFor(m => m.StateId, new SelectList(new List<object>{new {value=0,text = "State"},
-                                                                                     new {value=1,text = "Maharashtra"},
-                                                                                     new {value=2,text="Goa"},
-                                                                                     new {value=3, text="Gujrat"}}, "value", "text", 1), htmlAttributes: new { @class = "form-control" })*@
+            @Html.DropDownListFor(m => m.CityDetails, new SelectList(Model.CityDetails, "Value", "Text"), htmlAttributes: new { @class = "form-control" })*@
+
         @Html.DropDownListFor(m => m.CityId, new SelectList(new List<object>{new {value=0,text = "City"},
                                                                                      new {value=1,text = "Mumbai"},
                                                                                      new {value=2,text="Pune"},
@@ -98,14 +89,14 @@
         <input id="fuPhoto" type="file" />
         <br /><input type="button" id="btnUpload" value="Upload Photo" class="form-control btn-primary ac" />
     </div>
-         
+
     <div id="dvSuccessMessage"></div>
     @*<div class="alert alert-success alert-dismissible fade in">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Success!</strong> This alert box could indicate a successful or positive action.
-  </div>*@
-        }
-        @section scripts{
-            <script src="~/Scripts/CustomJs/common.js?rd=1"></script>
-            <script src="~/Scripts/CustomJs/UserRegistration.js?rd=1"></script>
-        }
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Success!</strong> This alert box could indicate a successful or positive action.
+        </div>*@
+}
+@section scripts{
+    <script src="~/Scripts/CustomJs/common.js?rd=1"></script>
+    <script src="~/Scripts/CustomJs/UserRegistration.js?rd=1"></script>
+}

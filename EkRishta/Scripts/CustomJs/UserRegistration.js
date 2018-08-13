@@ -170,7 +170,7 @@ function RegisterUser() {
         type: "POST",
         data: objUserRegistration,
         dataType: "json",
-        async:false,
+        async: false,
         success: function (data) {
             if (data.Status == "SUCCESS") {
                 IsUserRegistered = true;
@@ -209,4 +209,17 @@ function CheckMobileNo() {
 
 function ClearValidationDiv() {
     $("#dvValidationMessage").html("");
+}
+
+function CalculateAge() {
+    //if (dob == undefined)
+    if ($('#ddlDOBMonth').val() != "0" && $('#ddlDOBDay').val() != "0" && $('#ddlDOBYear').val() != "0") {
+        var dob = new Date($('#ddlDOBMonth').val() + "-" + $('#ddlDOBDay').val() + "-" + $('#ddlDOBYear').val());
+        //else
+        //    dob = new Date(dob);
+        var today = new Date();
+        var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+
+        $('#hdnAge').val(age);
+    }
 }

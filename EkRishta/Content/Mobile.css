@@ -110,3 +110,8 @@ img {
 .hidebtn {
     display: none;
 }
+
+.DOBddl{
+    width: 7%;
+    display: inline;
+}
