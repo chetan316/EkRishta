@@ -97,37 +97,44 @@ $("#btnUpload").click(function () {
         var fileUpload = $("#fuPhoto").get(0);
         var files = fileUpload.files;
 
-        // Create FormData object
-        var fileData = new FormData(this.form.UserId);
+        if (fileUpload.files.length > 0) {
+            $("#dvValidationMessage").html("");
 
-        // Looping over all files and add it to FormData object
-        for (var i = 0; i < files.length; i++) {
-            fileData.append(files[i].name, files[i]);
+            // Create FormData object
+            var fileData = new FormData(this.form.UserId);
+
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+            // Adding one more key to FormData object
+            fileData.append("UserId", $('#hdnUserId').val());
+
+            $.ajax({
+                url: "/UserRegistration/UploadFiles",
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+                    console.log(result);
+                    $("#dvSuccessMessage").html("<strong>Registration Successful</strong>");
+                    $("#dvSuccessMessage").attr("class", "alert alert-success ac");
+                    setTimeout(function () {
+                        window.location.href = "/User/MyProfile";
+                    }, 2000);
+                },
+                error: function (err) {
+                    console.log(err.statusText);
+                }
+            });
+        } else {
+            //alert("FormData is not supported.");
+            $("#dvValidationMessage").html("Please select photo");
+
         }
 
-        // Adding one more key to FormData object
-        fileData.append("UserId", $('#hdnUserId').val());
-
-        $.ajax({
-            url: "/UserRegistration/UploadFiles",
-            type: "POST",
-            contentType: false, // Not to set any content header
-            processData: false, // Not to process data
-            data: fileData,
-            success: function (result) {
-                console.log(result);
-                $("#dvSuccessMessage").html("<strong>Registration Successful</strong>");
-                $("#dvSuccessMessage").attr("class", "alert alert-success ac");
-                setTimeout(function () {
-                    window.location.href = "/User/MyProfile";
-                }, 2000);
-            },
-            error: function (err) {
-                console.log(err.statusText);
-            }
-        });
-    } else {
-        alert("FormData is not supported.");
     }
 });
 
@@ -138,7 +145,9 @@ function CheckOTP(OTP, MobileNo) {
     //    return false;
     //}
     var IsValidOTP = false;
-    var formData = { MobileNo: MobileNo, OTP: OTP };
+    var formData = {
+        MobileNo: MobileNo, OTP: OTP
+    };
     $.ajax({
         url: "/Base/CheckOTP",
         data: JSON.stringify(formData),
@@ -192,7 +201,9 @@ function CheckMobileNo() {
     xhr = $.ajax({
         url: "ValidateMobileNo",
         type: "POST",
-        data: { "MobileNo": $("#txtMobileNo").val() },
+        data: {
+            "MobileNo": $("#txtMobileNo").val()
+        },
         dataType: "json",
         async: false,
         success: function (data) {

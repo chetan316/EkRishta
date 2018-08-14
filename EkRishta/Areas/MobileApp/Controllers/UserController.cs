@@ -44,6 +44,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.DOB = Convert.ToString(dr["DOB"]);
                         objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
                         objUserMaster.MobileNo = Convert.ToString(dr["MobileNo"]);
+                        objUserMaster.ProfileId = Convert.ToString(dr["ProfileId"]);
 
                         objUserMaster.Address1 = Convert.ToString(dr["Address1"]);
                         objUserMaster.Address2 = Convert.ToString(dr["Address2"]);

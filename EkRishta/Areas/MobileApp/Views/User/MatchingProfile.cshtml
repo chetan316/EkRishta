@@ -5,94 +5,87 @@
 }
 
 <script src="~/Scripts/CustomJs/ManageUser.js?rd=1"></script>
-<h2>MatchingProfile</h2>
+<div class="user_title Profile">
+    <div class="back-arow"> <a href="#">  <img alt="ek vivaah " src="/images/back.svg"> </a></div>
+    <p> Matching Profile</p>
+</div>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div id="divMessage"></div>
-    <div class="col-xs-12 col-sm-4 col-md-4">
+    <div class="maching-body">
         @{int ContactCount = 0;}
         @foreach (var item in Model)
         {
-            <div class="MatchingProfilePic" style="margin-top:20px;">
-                <img src="@item.ProfilePicPath" alt="ProfilePic" class="fl" />
-            </div>
-            <table>
-                <tr>
-                    <td>
-                        <b>Name</b>&nbsp;:&nbsp;@item.FirstName @item.LastName
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Age</b>&nbsp;:&nbsp;@item.Age
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Height</b>&nbsp;:&nbsp;@item.Height
-                    </td>
-                <tr>
-                    <td>
-                        <b>Religion</b>&nbsp;:&nbsp;@item.ReligionName
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Community</b>&nbsp;:&nbsp;@item.CastName
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Mother Tounge</b>&nbsp;:&nbsp;@item.MotherTounge
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Education</b>&nbsp;:&nbsp;@item.Degree
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Profession</b>&nbsp;:&nbsp;@item.Designation
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @if (item.RequestStatus == "A" || item.ShareCount >= 50)
-                        {
-                            ContactCount += 1;
-                            <b>Contact No.&nbsp;&nbsp;</b>@item.MobileNo
-                        }
-                        else
-                        {
-                            <b>Contact No.</b><span>&nbsp;&nbsp;View Contact</span>
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Location</b>&nbsp;:&nbsp;@item.CityName
-                    </td>
-                </tr>
-            </table>
-            <div>
+            <div class=" user_sec">
+                <div class="user-bg">
+                    <div class="Shield"> <img alt="ek vivaah " src="/images/wellness.svg"> </div>
 
-                @*@if (item.RequestStatus == "P")
-                    {*@
-                <input type="button" value="Cancel Request" id="btnCancelRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn btn-info @(item.RequestStatus=="P"?"displaybtn":"hidebtn")" />
-                @*}*@
-                @*@if (item.RequestStatus == "C" || item.RequestStatus == "N")
-                    {*@
-                <input type="button" value="Send Request" id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn btn-info @((item.RequestStatus=="C"||item.RequestStatus=="N")?"displaybtn":"hidebtn")" />
-                @*}*@
-                @if (item.RequestStatus == "A")
-                {
-                    <label>Accepted</label>
-                }
+                    <div class="ProfilePic profile_centre">
+                        <img src="@item.ProfilePicPath" alt="ProfilePic" class="fl" />
+                    </div>
+                </div>
+                <div class="user-details">
+                    <strong> @item.FirstName @item.LastName</strong>
+                </div>
+                <div class="view-pro user_title">
+                    <ul>
+                        <li class="fourty"> <a href="#"> View Profile </a> </li>
+                        <li class="fourty"><a href="#"> Photo <span> 9</span> </a> </li>
+                        <li> <a href="#">  <div class="heart"></div> </a> </li>
+                    </ul>
+                </div>
+
+                <div class="user-details">
+
+                    <ul>
+                        <li>@item.Age</li>
+                        <li>@item.Height </li>
+                        <li>@item.ReligionName </li>
+                        <li>@item.CastName</li>
+                        <li>@item.MotherTounge </li>
+
+                        <li>@item.Degree </li>
+                        <li>@item.Designation</li>
+                        <li>
+                            @if (item.RequestStatus == "A" || item.ShareCount >= 50)
+                            {
+                                ContactCount += 1;
+                                @item.MobileNo
+                            }
+                            else
+                            {
+                                <span>View Contact</span>
+                            }
+                        </li>
+                        <li> @item.CityName</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="action_sction">
+
+                    @*@if (item.RequestStatus == "P")
+                        {*@
+                    <input type="button" value="Cancel Request" id="btnCancelRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info @(item.RequestStatus=="P"?"displaybtn":"hidebtn")" />
+                    @*}*@
+                    @*@if (item.RequestStatus == "C" || item.RequestStatus == "N")
+                        {*@
+                    <input type="button" value=" Request" id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info @((item.RequestStatus=="C"||item.RequestStatus=="N")?"displaybtn":"hidebtn")" />
+                    @*}*@
+                    @if (item.RequestStatus == "A")
+                    {
+                        <label>Accepted</label>
+                    }
+                    <div class="action-btn"> <a href="#">Contact </a> </div>
+                    <div class="action-btn no-bder"> <a href="#">Block </a> </div>
+
+                </div>
             </div>
             <div class="clearfix"></div>
 
         }
     </div>
-}
+            }
