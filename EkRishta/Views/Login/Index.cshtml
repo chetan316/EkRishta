@@ -3,10 +3,10 @@
 @{
     Layout = null;
     ViewBag.Title = "Login";
-}
-
+} <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no, minimum-scale=1.0" />
+<link href="~/Content/Mobile.css?rd=1" rel="stylesheet" />
 @Styles.Render("~/Content/css")
-<h2>Login</h2>
+
 
 @{ Html.EnableClientValidation(); }
 @using (Html.BeginForm("Login", "Login", FormMethod.Post))
@@ -19,35 +19,45 @@
             @ViewBag.ErrorMessage
         </div>
     }
-    <table>
-        <tr>
-            <td>Mobile No</td>
-            <td>@Html.TextBoxFor(a => a.MobileNo, htmlAttributes: new { @class = "form-control" })</td>
-            <td>@Html.ValidationMessageFor(a => a.MobileNo)</td>
-        </tr>
-        <tr>
-            <td>
-                Password
-            </td>
-            <td>
-                @Html.TextBoxFor(a => a.LoginPassword, htmlAttributes: new { @class = "form-control" ,@type="password"})
-            </td>
-            <td>
-                @Html.ValidationMessageFor(a => a.LoginPassword)
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <input type="submit" value="Login" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.ActionLink("Register Here", "RegisterUser", "MobileApp/UserRegistration")
-            </td>
-        </tr>
-    </table>
+    <style>
+        body {
+            padding-top: 0;
+        }
+    </style>
+    <div class="bg-login">
+        <img alt="ek vivaah " src="/images/banner2.jpg">
+    </div>
+
+    <div class="login-body">
+        <div class="login-name">
+            Login
+        </div>
+
+
+        <div class="input">
+            <div class="picuser"><img alt="ek vivaah " src="/images/user.svg"> </div>
+            @Html.TextBoxFor(a => a.MobileNo, htmlAttributes: new { @class = "form", @placeholder = "Enter Email Id or Mobile No", })
+        </div>
+        <div class="input">
+            @Html.ValidationMessageFor(a => a.MobileNo)
+    </div>
+    <div class="input">
+        <div class="picuser"><img alt="ek vivaah " src="/images/wellness.svg"> </div>
+        @Html.TextBoxFor(a => a.LoginPassword, htmlAttributes: new { @class = "form", @placeholder = "Password", @type = "password" })
+    </div>
+    <div class="input">
+        @Html.ValidationMessageFor(a => a.LoginPassword)
+</div>
+
+<div class="login-btn"> <input type="submit" value="Login" /></div>
+
+</div>
+
+    <div class="Register">
+        @Html.ActionLink("Register Here", "RegisterUser", "MobileApp/UserRegistration")
+    </div>
+
+
 }
 
 

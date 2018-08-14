@@ -2,11 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no, minimum-scale=1.0" />
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/Mobile.css?rd=1" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Playball&amp;subset=latin-ext" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700" rel="stylesheet">
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -46,14 +48,24 @@
         </div>
     </div>
 
-    <div class="">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+    <div class="content">
+        @RenderBody()       
+        
     </div>
-
+<div class="space_empty"> </div>
+	<div class="mobile-nav"> 
+	<nav> 
+	<ul>
+	<li> <a href="#"> <i class="icon-home"> <img id="imgProfilePic" class="round_class" alt="Profile" src="" /> Profile </a> </li>
+	<li> <a href="#"> <i class="icon-home"><img src="/images/search.svg" alt="ek vivaah"></i> Search </a></li>
+	<li> <a href="#"> <i class="icon-home"><img src="/images/my-profile.svg" alt="ek vivaah"></i> Matches </a></li>
+	<li> <a href="#"> <i class="icon-home"><img src="/images/menu.svg" alt="ek vivaah"></i>Menu </a></li>	
+	</ul>
+	</nav>
+	</div>
+	
+	
+	
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
