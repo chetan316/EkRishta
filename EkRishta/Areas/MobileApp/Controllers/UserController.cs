@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,10 +14,9 @@ namespace EkRishta.Areas.MobileApp.Controllers
     [SessionAuthorize]
     public class UserController : BaseController
     {
-        public ActionResult MyProfile()
+        public ActionResult MyProfile(int? UserId)
         {
             string response = string.Empty;
-            string userId = string.Empty;
             DataSet dsResponse = new DataSet();
             try
             {
@@ -25,7 +25,11 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 Models.User objUser = (Models.User)(Session["USER"]);
-                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                if (UserId == null)
+                    sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                else
+                    sqlCmd.Parameters.AddWithValue("@UserId", UserId);
+
                 sqlCmd.CommandText = "GetUserProfile";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
@@ -48,9 +52,9 @@ namespace EkRishta.Areas.MobileApp.Controllers
 
                         objUserMaster.Address1 = Convert.ToString(dr["Address1"]);
                         objUserMaster.Address2 = Convert.ToString(dr["Address2"]);
-                        objUserMaster.CityName = "";// Convert.ToString(dr[""]);
-                        objUserMaster.StateName = "";//Convert.ToString(dr[""]);
-                        objUserMaster.CountryName = "India";// Convert.ToString(dr[""]);
+                        objUserMaster.CityName = Convert.ToString(dr["CityName"]);
+                        objUserMaster.StateName = Convert.ToString(dr["StateName"]);
+                        objUserMaster.CountryName = Convert.ToString(dr["CountryName"]);
                         objUserMaster.Pincode = Convert.ToString(dr["Pincode"]);
                         objUserMaster.AlternateAddress1 = Convert.ToString(dr["AlternateAddress1"]);
                         objUserMaster.AlternateAddress2 = Convert.ToString(dr["AlternateAddress2"]);
@@ -64,7 +68,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.MotherName = Convert.ToString(dr["MotherName"]);
                         objUserMaster.MotherProfession = Convert.ToString(dr["MotherProfession"]);
 
-                        objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]) == "1" ? "Unmarried" : "Married";
+                        objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]);
                         objUserMaster.MotherTounge = Convert.ToString(dr["MotherTounge"]);
                         objUserMaster.BirthCountry = Convert.ToString(dr["BirthCountry"]);
                         objUserMaster.BirthPlace = Convert.ToString(dr["BirthPlace"]);
@@ -80,9 +84,9 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.ProfileCreatedBy = Convert.ToString(dr["ProfileCreatedBy"]);
                         objUserMaster.ProfilePicPath = "/Uploads/" + objUser.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
 
-                        objUserMaster.ReligionName = "Hindu";// Convert.ToString(dr[""]);
-                        objUserMaster.CastName = "Maratha";//"Convert.ToString(dr[""]);
-                        objUserMaster.SubCastName = "";//Convert.ToString(dr[""]);
+                        objUserMaster.ReligionName = Convert.ToString(dr["ReligionName"]);
+                        objUserMaster.CastName = Convert.ToString(dr["CastName"]);
+                        //objUserMaster.SubCastName = "";//Convert.ToString(dr[""]);
                         objUserMaster.MoonSign = Convert.ToString(dr["MoonSign"]);
                         objUserMaster.Star = Convert.ToString(dr["Star"]);
                         objUserMaster.Gotra = Convert.ToString(dr["Gotra"]);
@@ -92,10 +96,15 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.Degree = Convert.ToString(dr["Degree"]);
                         objUserMaster.CompanyName = Convert.ToString(dr["CompanyName"]);
                         objUserMaster.Designation = Convert.ToString(dr["Designation"]);
-                        objUserMaster.Income = Convert.ToString(dr["Income"]) == "1" ? "INR Upto 1 Lakh" : "INR 2-4 Lakh";
+                        objUserMaster.Income = Convert.ToString(dr["Income"]);
                     }
                 }
-                return View("~/Areas/MobileApp/Views/User/MyProfile.cshtml", objUserMaster);
+
+                if (UserId == null)
+                    return View("~/Areas/MobileApp/Views/User/MyProfile.cshtml", objUserMaster);
+                else
+                    return RedirectToAction("ViewProfile", objUserMaster);//"~/Areas/MobileApp/Views/User/ViewProfile.cshtml", objUserMaster);
+
             }
             catch (Exception ex)
             {
@@ -129,6 +138,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     {
                         UserMaster objUserMaster = new UserMaster();
 
+                        objUserMaster.RequestSource = MethodInfo.GetCurrentMethod().Name;
                         objUserMaster.UserId = Convert.ToInt32(dr["UserId"]);
                         objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
                         objUserMaster.LastName = Convert.ToString(dr["LastName"]);
@@ -144,10 +154,10 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.Height = Convert.ToString(dr["Height"]);
                         objUserMaster.ProfilePicPath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
                         objUserMaster.ReligionId = Convert.ToInt32(dr["ReligionId"]);
-                        objUserMaster.ReligionName= Convert.ToString(dr["ReligionName"]);
+                        objUserMaster.ReligionName = Convert.ToString(dr["ReligionName"]);
                         objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
                         objUserMaster.CastName = Convert.ToString(dr["CastName"]);
-                        objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
+                        //objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
                         objUserMaster.ShareCount = objUser.ShareCount;
 
                         lstUserMaster.Add(objUserMaster);
@@ -157,9 +167,66 @@ namespace EkRishta.Areas.MobileApp.Controllers
             catch (Exception ex)
             {
             }
-            return View("~/Areas/MobileApp/Views/User/MatchingProfile.cshtml", lstUserMaster);
+            return View("~/Areas/MobileApp/Views/User/RequestInfo.cshtml", lstUserMaster);
         }
 
+        public ActionResult SentRequest()
+        {
+            DataSet dsResponse = new DataSet();
+            List<UserMaster> lstUserMaster = new List<UserMaster>();
+
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                Models.User objUser = (Models.User)(Session["USER"]);
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                sqlCmd.Parameters.AddWithValue("@ReligionId", objUser.ReligionId);
+                sqlCmd.CommandText = "GetSentRequest";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        UserMaster objUserMaster = new UserMaster();
+
+                        objUserMaster.RequestSource = MethodInfo.GetCurrentMethod().Name;
+                        objUserMaster.UserId = Convert.ToInt32(dr["UserId"]);
+                        objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
+                        objUserMaster.LastName = Convert.ToString(dr["LastName"]);
+                        objUserMaster.ProfileId = Convert.ToString(dr["ProfileId"]);
+                        objUserMaster.MobileNo = Convert.ToString(dr["MobileNo"]);
+                        objUserMaster.DOB = Convert.ToString(dr["DOB"]);
+                        objUserMaster.Age = Convert.ToString(dr["Age"]);
+                        objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
+                        objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
+                        objUserMaster.IsSurnameVisible = Convert.ToString(dr["IsSurnameVisible"]);
+                        objUserMaster.IsDPVisible = Convert.ToString(dr["IsDPVisible"]);
+                        objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]) == "1" ? "Unmarried" : "Married";
+                        objUserMaster.Height = Convert.ToString(dr["Height"]);
+                        objUserMaster.ProfilePicPath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
+                        objUserMaster.ReligionId = Convert.ToInt32(dr["ReligionId"]);
+                        objUserMaster.ReligionName = Convert.ToString(dr["ReligionName"]);
+                        objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
+                        objUserMaster.CastName = Convert.ToString(dr["CastName"]);
+                        //objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
+                        objUserMaster.ShareCount = objUser.ShareCount;
+
+                        lstUserMaster.Add(objUserMaster);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return View("~/Areas/MobileApp/Views/User/RequestInfo.cshtml", lstUserMaster);
+        }
         public ActionResult ProfileRequest()
         {
             DataSet dsResponse = new DataSet();
@@ -234,14 +301,14 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsResponse);
-                if(dsResponse!=null && dsResponse.Tables[0] != null && dsResponse.Tables[0].Rows.Count > 0)
+                if (dsResponse != null && dsResponse.Tables[0] != null && dsResponse.Tables[0].Rows.Count > 0)
                 {
                     jsonResponse = Convert.ToString(dsResponse.Tables[0].Rows[0]["Result"]);
                 }
             }
             catch (Exception ex)
             {
-                
+
             }
             //return View();
             return Json(jsonResponse, JsonRequestBehavior.AllowGet);
@@ -276,6 +343,100 @@ namespace EkRishta.Areas.MobileApp.Controllers
 
             }
             return Json(jsonResponse, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ViewProfile(int UserId)
+        {
+            string response = string.Empty;
+            DataSet dsResponse = new DataSet();
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@UserId", UserId);
+
+                sqlCmd.CommandText = "GetUserProfile";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                UserMaster objUserMaster = new UserMaster();
+
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
+                        objUserMaster.LastName = Convert.ToString(dr["LastName"]);
+                        objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
+                        objUserMaster.Age = Convert.ToString(dr["Age"]);
+                        objUserMaster.DOB = Convert.ToString(dr["DOB"]);
+                        objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
+                        objUserMaster.MobileNo = Convert.ToString(dr["MobileNo"]);
+                        objUserMaster.ProfileId = Convert.ToString(dr["ProfileId"]);
+
+                        objUserMaster.Address1 = Convert.ToString(dr["Address1"]);
+                        objUserMaster.Address2 = Convert.ToString(dr["Address2"]);
+                        objUserMaster.CityName = Convert.ToString(dr["CityName"]);
+                        objUserMaster.StateName = Convert.ToString(dr["StateName"]);
+                        objUserMaster.CountryName = Convert.ToString(dr["CountryName"]);
+                        objUserMaster.Pincode = Convert.ToString(dr["Pincode"]);
+                        objUserMaster.AlternateAddress1 = Convert.ToString(dr["AlternateAddress1"]);
+                        objUserMaster.AlternateAddress2 = Convert.ToString(dr["AlternateAddress2"]);
+                        objUserMaster.AlternateCityName = "";//Convert.ToString(dr[""]);
+                        objUserMaster.AlternateStateName = "";// Convert.ToString(dr[""]);
+                        objUserMaster.AlternateCountryName = "";// Convert.ToString(dr[""]);
+                        objUserMaster.AlternatePincode = Convert.ToString(dr["AlternatePincode"]);
+
+                        objUserMaster.FatherName = Convert.ToString(dr["FatherName"]);
+                        objUserMaster.FatherProfession = Convert.ToString(dr["FatherProfession"]);
+                        objUserMaster.MotherName = Convert.ToString(dr["MotherName"]);
+                        objUserMaster.MotherProfession = Convert.ToString(dr["MotherProfession"]);
+
+                        objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]);
+                        objUserMaster.MotherTounge = Convert.ToString(dr["MotherTounge"]);
+                        objUserMaster.BirthCountry = Convert.ToString(dr["BirthCountry"]);
+                        objUserMaster.BirthPlace = Convert.ToString(dr["BirthPlace"]);
+                        objUserMaster.BirthTime = Convert.ToString(dr["BirthTime"]);
+                        objUserMaster.Height = Convert.ToString(dr["Height"]);
+                        objUserMaster.BodyType = Convert.ToString(dr["BodyType"]);
+                        objUserMaster.SkinTone = Convert.ToString(dr["SkinTone"]);
+                        objUserMaster.BloodGroup = Convert.ToString(dr["BloodGroup"]);
+                        objUserMaster.IsSmoke = Convert.ToString(dr["IsSmoke"]);
+                        objUserMaster.IsDrink = Convert.ToString(dr["IsDrink"]);
+                        objUserMaster.IsPhysicalDisable = Convert.ToString(dr["IsPhysicalDisable"]);
+                        objUserMaster.CallTime = Convert.ToString(dr["CallTime"]);
+                        objUserMaster.ProfileCreatedBy = Convert.ToString(dr["ProfileCreatedBy"]);
+                        objUserMaster.ProfilePicPath = "/Uploads/" + UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
+
+                        objUserMaster.ReligionName = Convert.ToString(dr["ReligionName"]);
+                        objUserMaster.CastName = Convert.ToString(dr["CastName"]);
+                        //objUserMaster.SubCastName = "";//Convert.ToString(dr[""]);
+                        objUserMaster.MoonSign = Convert.ToString(dr["MoonSign"]);
+                        objUserMaster.Star = Convert.ToString(dr["Star"]);
+                        objUserMaster.Gotra = Convert.ToString(dr["Gotra"]);
+
+                        objUserMaster.CollegeName = Convert.ToString(dr["CollegeName"]);
+                        objUserMaster.Field = Convert.ToString(dr["Field"]);
+                        objUserMaster.Degree = Convert.ToString(dr["Degree"]);
+                        objUserMaster.CompanyName = Convert.ToString(dr["CompanyName"]);
+                        objUserMaster.Designation = Convert.ToString(dr["Designation"]);
+                        objUserMaster.Income = Convert.ToString(dr["Income"]);
+                    }
+                }
+
+                //if (UserId == null)
+                //    return View("~/Areas/MobileApp/Views/User/MyProfile.cshtml", objUserMaster);
+                //else
+                //    return View("~/Areas/MobileApp/Views/User/ViewProfile.cshtml", objUserMaster);
+                return View("~/Areas/MobileApp/Views/User/ViewProfile.cshtml", objUserMaster);
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
         }
     }
 }

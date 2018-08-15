@@ -1,46 +1,36 @@
 ﻿@model Models.Custom.UserMaster
 
 @{
-    ViewBag.Title = "MyProfile";
+    ViewBag.Title = "ViewProfile";
 }
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="user_title Profile">
         <div class="back-arow"> <a href="#">  <img alt="ek vivaah " src="/images/back.svg"> </a></div>
-        <p> My Profile</p>
+        <p>Profile</p>
     </div>
     <div class="table">
         <div>
-
             <div class="user-bg">
                 <div class="user_sec">
-
                     <div class="bg-cover">
                         <a href="#"> Upload cover </a>
                     </div>
-
                     <div class="ProfilePic profile_centre">
                         <img id="imgProfilePic" alt="Profile" src="@Model.ProfilePicPath" />
                     </div>
                 </div>
             </div>
-            <div class="view-pro user_title besic_lik">
-                <ul>
-                    <li> <a href="#"> Basic </a> </li>
-                    <li> <a href="#"> About </a> </li>
-                    <li><a href="#"> Add Photo </a> </li>
 
-                </ul>
-            </div>
             <div class="clearfix"></div>
-            <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/user.svg"></span> <p> Basic Details</p>   <a href="#"> Edit  </a> </div>
+            <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/user.svg"></span> <p> Basic Details</p></div>
 
             <div class="details">
                 <ul>
                     <li> <strong>Name </strong> <p>: @Model.FirstName @Model.LastName  </p>  </li>
-
                     <li> <strong>Profile Id  </strong> <p>: @Model.ProfileId </p>  </li>
                     <li> <strong>Age </strong> <p>:  @Model.Age</p>  </li>
                     <li> <strong>Birth Date </strong> <p>: @Model.DOB </p>  </li>
@@ -48,11 +38,10 @@
                     <li> <strong>MaritialStatus  </strong> <p> : @Model.MaritialStatus</p>  </li>
                     <li> <strong>Email </strong> <p>: @Model.EmailId </p>  </li>
                     <li> <strong>Mobile No </strong> <p>: @Model.MobileNo</p>  </li>
-
                 </ul>
             </div>
 
-            <div class="user_title"> <span> <img alt="matrimonial ek vivaah" src="/images/books.svg"></span> <p>Education/Occupation Details </p>   <a href="#"> Edit  </a> </div>
+            <div class="user_title"> <span> <img alt="matrimonial ek vivaah" src="/images/books.svg"></span> <p>Education/Occupation Details </p></div>
             <div class="details">
                 <ul>
                     <li> <strong>Qualification </strong> <p> : @Model.Degree</p>  </li>
@@ -61,11 +50,10 @@
                     <li> <strong>Company Name  </strong> <p>: @Model.CompanyName </p>  </li>
                     <li> <strong>Designation </strong> <p>: @Model.Designation </p>  </li>
                     <li> <strong>Income </strong> <p>: @Model.Income </p>  </li>
-
                 </ul>
             </div>
 
-            <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/Native.svg"> </span>  <p>Native Location  </p>   <a href="#"> Edit  </a> </div>
+            <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/Native.svg"> </span>  <p>Native Location  </p></div>
             <div class="details">
                 <ul>
                     <li> <strong>Address Line 1 </strong> <p> : @Model.Address1</p>  </li>
@@ -75,10 +63,9 @@
                     <li> <strong>State </strong> <p> : @Model.StateName </p>  </li>
                     <li> <strong>Country </strong> <p>:  @Model.CountryName</p>  </li>
                     <li> <strong>Pincode </strong> <p>:  @Model.Pincode</p>  </li>
-
                 </ul>
             </div>
-            <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/team.svg"> </span> <p>Family Details </p>   <a href="#"> Edit  </a> </div>
+            <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/team.svg"> </span> <p>Family Details </p></div>
             <div class="details">
                 <ul>
                     <li> <strong>Father Name </strong> <p>: @Model.FatherName </p>  </li>
@@ -88,41 +75,44 @@
                     <li> <strong>State </strong> <p>:  @Model.StateName</p>  </li>
                     <li> <strong>Country </strong> <p>: @Model.CountryName </p>  </li>
                     <li> <strong>Pincode </strong> <p> : @Model.Pincode</p>  </li>
-
                 </ul>
             </div>
-            <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/team.svg"> </span> <p>Religion Details </p>   <a href="#"> Edit  </a> </div>
+            <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/team.svg"> </span> <p>Religion Details </p></div>
             <div class="details">
                 <ul>
                     <li> <strong>Religion </strong> <p>: @Model.ReligionName </p>  </li>
                     <li> <strong>Cast </strong> <p>: @Model.CastName </p>  </li>
-
                     <li> <strong>Mother Tounge </strong> <p>: @Model.MotherTounge </p>  </li>
                     <li> <strong>Country of Birth </strong> <p> : @Model.BirthCountry</p>  </li>
-
-
                 </ul>
             </div>
-            <div class="user_title"> <span> <img alt="matrimonial ek vivaah" src="/images/books.svg"> </span> <p>Physical Status and Lifestyle </p>   <a href="#"> Edit  </a> </div>
+            <div class="user_title"> <span> <img alt="matrimonial ek vivaah" src="/images/books.svg"> </span> <p>Physical Status and Lifestyle </p></div>
             <div class="details">
                 <ul>
                     <li> <strong>Height </strong> <p> : @Model.Height</p>  </li>
                     <li> <strong>Body Type </strong> <p>: @Model.BodyType </p>  </li>
-
-
                     <li> <strong>Skin Tone </strong> <p> : @Model.SkinTone</p>  </li>
                     <li> <strong>Blood Group </strong> <p>: @Model.BloodGroup </p>  </li>
-
                     <li> <strong>Smoke </strong> <p> : @Model.IsSmoke</p>  </li>
                     <li> <strong>Drink </strong> <p> : @Model.IsDrink</p>  </li>
                 </ul>
             </div>
-
-
-
+            <div class="user_title"> <span> <img alt="matrimonial ek vivaah" src="/images/books.svg"> </span> <p>Partner Preferences</p></div>
+            <div class="details">
+                <ul>
+                    <li><strong>Age </strong> <p> :</p>  </li>
+                    <li><strong>Height </strong> <p> : </p>  </li>
+                    <li><strong>Maritial Status</strong> <p>: </p>  </li>
+                    <li><strong>Religion</strong> <p> : </p>  </li>
+                    <li><strong>Community</strong> <p>: </p>  </li>
+                    <li><strong>Mother Tounge</strong> <p> :</p>  </li>
+                    <li><strong>Diet</strong> <p> : </p></li>
+                    <li><strong>Education</strong> <p> : </p>  </li>
+                    <li><strong>Income</strong> <p> : </p>  </li>
+                </ul>
+            </div>
         </div>
-
-
-
     </div>
 }
+
+

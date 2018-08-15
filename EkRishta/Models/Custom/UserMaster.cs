@@ -113,5 +113,9 @@ namespace Models.Custom
         public string Income { get; set; }
 
         public string RequestStatus { get; set; }
+        /// <summary>
+        /// TO Identify from where request is initiated
+        /// </summary>
+        public string RequestSource { get; set; }
     }
 }

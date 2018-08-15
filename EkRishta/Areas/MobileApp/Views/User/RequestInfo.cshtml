@@ -1,18 +1,43 @@
 ﻿@model IEnumerable<Models.Custom.UserMaster>
 
 @{
-    ViewBag.Title = "MatchingProfile";
+    ViewBag.Title = "RequestInfo";
 }
 
 <script src="~/Scripts/CustomJs/ManageUser.js?rd=1"></script>
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
+    var MatchingProfile = Model.Where(m => m.RequestSource == "MatchingProfile");
+    var SentRequest = Model.Where(m => m.RequestSource == "SentRequest");
+    var AcceptedRequest = Model.Where(m => m.RequestSource == "AcceptedRequest");
+    var RejectedRequest = Model.Where(m => m.RequestSource == "RejectedRequest");
+    var BlockedUser = Model.Where(m => m.RequestSource == "BlockedUser");
+
     <div class="user_title Profile">
-        <div class="back-arow"> <a href="#">  <img alt="ek vivaah " src="/images/back.svg"> </a></div>
-        <p> Matching Profile</p>
+        <div class="back-arow"><a href="#"><img alt="ek vivaah" src="/images/back.svg"></a></div>
+        @if (MatchingProfile.ToList().Count > 0)
+        {
+            <p>Matching Profile</p>
+        }
+        else if (SentRequest.ToList().Count > 0)
+        {
+            <p>Sent Requests</p>
+        }
+        else if (AcceptedRequest.ToList().Count > 0)
+        {
+            <p>Accepted Requests</p>
+        }
+        else if (RejectedRequest.ToList().Count > 0)
+        {
+            <p>Rejected Requests</p>
+        }
+        else if (BlockedUser.ToList().Count > 0)
+        {
+            <p>Blocked Users</p>
+        }
     </div>
     <div id="divMessage"></div>
     <div class="maching-body">
@@ -33,8 +58,18 @@
                 <div class="view-pro user_title">
                     <ul>
                         <li class="fourty">
-                            @*<a href="#"> View Profile </a>*@
-                            <input type="button" value="View Profile" id="btnViewProfile_@item.UserId" onclick="ViewProfile('@item.UserId');" class="btn action-btn btn-info" />
+                            @*<a href="#" onclick="ViewProfile('@item.UserId');"> View Profile </a>*@
+                            @Html.ActionLink("View Profile", // <-- Link text
+
+                 "ViewProfile", // <-- Action Method Name
+
+                 "User", // <-- Controller Name
+
+new { UserId = item.UserId }, // <-- Route value
+
+                 null // <-- htmlArguments
+
+                 )
                         </li>
                         <li class="fourty"><a href="#"> Photo <span> 9</span> </a> </li>
                         <li> <a href="#">  <div class="heart"></div> </a> </li>

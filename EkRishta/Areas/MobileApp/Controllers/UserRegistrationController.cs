@@ -18,6 +18,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             objUserRegistration.ReligionDetails = new SelectList(ReligionDetails(), "Value", "Text");
             objUserRegistration.LanguageDetails = new SelectList(LanguageDetails(), "Value", "Text");
             objUserRegistration.StateDetails = new SelectList(StateDetails(), "Value", "Text");
+            objUserRegistration.CityDetails = new SelectList(CityDetails(), "Value", "Text");
             objUserRegistration.DOBDayDetails = new SelectList(DOBDayDetails(), "Value", "Text");
             objUserRegistration.DOBMonthDetails = new SelectList(DOBMonthDetails(), "Value", "Text");
             objUserRegistration.DOBYearDetails = new SelectList(DOBYearDetails(), "Value", "Text");

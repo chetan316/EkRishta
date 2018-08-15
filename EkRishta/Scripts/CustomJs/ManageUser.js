@@ -83,3 +83,47 @@ function AcceptRejectRequest(requestedUserId, requestStatus) {
         }
     });
 }
+
+function ViewProfile(UserId) {
+    debugger;
+    var obj = {
+        UserId: UserId
+    }
+    var formData = JSON.stringify(obj);
+    //window.location.href = "/User/ViewProfile/"+UserId;
+    $.ajax({
+        url: "/User/MyProfile",
+        data: formData,
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (data) {
+            //if (data != "") {
+            //    if (data == "Request already Sent") {
+            //        $("#divMessage").html("Request already Sent");
+            //        $("#divMessage").attr("class", "alert alert-info fade in");
+            //    }
+            //    else if (requestStatus == "Pending") {
+            //        $("#divMessage").html("Request Sent Successfully");
+            //        $("#divMessage").attr("class", "alert alert-success fade in");
+            //        $("#btnCancelRequest_" + requestedUserId).css('display', 'block');
+            //        $("#btnSendRequest_" + requestedUserId).css('display', 'none');
+            //    }
+            //    else if (requestStatus == "Cancelled") {
+            //        $("#divMessage").html("Request Cancelled Successfully");
+            //        $("#divMessage").attr("class", "alert alert-success fade in");
+            //        $("#btnCancelRequest_" + requestedUserId).css('display', 'none');
+            //        $("#btnSendRequest_" + requestedUserId).css('display', 'block');
+            //    }
+            //}
+            //else {
+            //    $("#divMessage").html("Error occurred. Please Try again");
+            //    $("#divMessage").attr("class", "alert alert-danger fade in");
+            //}
+            window.location.href = "/User/ViewProfile";
+        },
+        error: function (xhr) {
+            console.log(xhr.status + "-" + xhr.responseText);
+        }
+    });
+}

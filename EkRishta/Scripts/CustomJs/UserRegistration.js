@@ -22,7 +22,8 @@
             killAjax();
             $("#dvValidationMessage").html("");
         }
-    })
+    });
+
     $("#acNextMobile").on("click", function () {
         if ($("#txtMobileNo").val() == "") {
             $("#dvValidationMessage").html("Please Enter Mobile Number");
