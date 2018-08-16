@@ -38,13 +38,17 @@
         {
             <p>Blocked Users</p>
         }
+        else
+        {
+            <p>Profile</p>
+        }
     </div>
     <div id="divMessage"></div>
     <div class="maching-body">
         @{int ContactCount = 0;}
         @foreach (var item in Model)
         {
-            <div class=" user_sec">
+            <div class="user_sec">
                 <div class="user-bg">
                     <div class="Shield"> <img alt="ek vivaah " src="/images/wellness.svg"> </div>
 
