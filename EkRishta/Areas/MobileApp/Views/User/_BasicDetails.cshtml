@@ -2,7 +2,7 @@
 
 <ul id="ulBasicLabels">
     <li><strong>Name </strong> <p>: @Model.UserFirstName @Model.UserLastName  </p>  </li>
-    <li><strong>Profile Id  </strong> <p>: @Model.ProfileId </p>  </li>
+    <li><strong>Profile Id  </strong> <p>: @Model.UserProfileId </p>  </li>
     <li><strong>Birth Date </strong> <p>: @Model.DOB </p>  </li>
     <li><strong>Age </strong> <p>:  @Model.UserAge</p>  </li>
     <li><strong>Gender </strong> <p>: @(Model.UserGender == "M" ? "Male" : "Female") </p>  </li>
@@ -14,7 +14,7 @@
 
 <ul id="ulBasicEdit" style="display:none;">
     <li>
-        <strong>Name </strong>
+        <strong>Name </strong>:
         @Html.TextBoxFor(m => m.UserFirstName, htmlAttributes: new { @id = "txtFirstName", @placeholder = "First Name", })
         @Html.TextBoxFor(m => m.UserLastName, htmlAttributes: new { @id = "txtLastName", @placeholder = "Last Name", })
     </li>
@@ -28,17 +28,21 @@
         </div>
     </li>
     <li><strong>Age </strong> <p>:  @Model.UserAge</p>  </li>
-    <li><strong>Gender </strong>
-    @Html.DropDownListFor(m=>m.UserGender,new SelectList(new List<object> {new {value="M",text="Male"},
-                                                                            new { value="F",text="Female" } },"value","text"))
-     </li>
+    <li>
+        <strong>Gender </strong>:
+        @Html.DropDownListFor(m => m.UserGender, new SelectList(new List<object> {new {value="M",text="Male"},
+                                                                            new { value="F",text="Female" } }, "value", "text"), htmlAttributes: new { @id = "ddlGender" })
+    </li>
     <li>
         @Html.DropDownListFor(m => m.UserMaritialStatus, new SelectList(new List<object>{new {value="Unmarried",text = "Unmarried"},
                                                                                      new {value="Divorced",text="Divorced"},
                                                                                      new {value="Widow", text="Widow"},
-                                                                                     new {value="Widower", text="Widower"}}, "value", "text", 1))
+                                                                                     new {value="Widower", text="Widower"}}, "value", "text", 1), htmlAttributes: new { @id = "ddlMaritialStatus" })
     </li>
-    <li><strong>Email </strong> <p>: @Model.UserEmailId </p>  </li>
+    <li>
+    <strong>Email </strong>:
+    @Html.TextBoxFor(m => m.UserEmailId, htmlAttributes: new { @id = "txtEmail", @placeholder = "Enter Email"})
+     </li>
     <li><strong>Mobile No </strong> <p>: @Model.UserMobileNo</p>  </li>
 
 </ul>

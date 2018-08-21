@@ -102,6 +102,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.Income = Convert.ToString(dr["Income"]);
 
                         //UserBasicDetails
+                        objUserBasic.DOB = Convert.ToString(dr["DOB"]);
                         objUserBasic.DOBDay = Convert.ToString(dr["DOB"]).Split('-')[0];
                         objUserBasic.DOBMonth = Convert.ToString(dr["DOB"]).Split('-')[1];
                         objUserBasic.DOBYear = Convert.ToString(dr["DOB"]).Split('-')[2];
@@ -582,6 +583,21 @@ namespace EkRishta.Areas.MobileApp.Controllers
             objUserBasic.DOBMonthDetails = new SelectList(DOBMonthDetails(), "Value", "Text");
             objUserBasic.DOBYearDetails = new SelectList(DOBYearDetails(), "Value", "Text");
             return View(objUserBasic);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateBasicDetails(UserBasicDetails objUserBasicDetails)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
+            return null;
         }
     }
 }
