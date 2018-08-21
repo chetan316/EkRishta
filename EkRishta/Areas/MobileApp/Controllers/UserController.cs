@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using Areas.Models;
 
 namespace EkRishta.Areas.MobileApp.Controllers
 {
@@ -36,6 +37,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sda.Fill(dsResponse);
 
                 UserMaster objUserMaster = new UserMaster();
+                UserBasicDetails objUserBasic = new UserBasicDetails();
 
                 if (dsResponse != null && dsResponse.Tables[0] != null)
                 {
@@ -46,6 +48,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
                         objUserMaster.Age = Convert.ToString(dr["Age"]);
                         objUserMaster.DOB = Convert.ToString(dr["DOB"]);
+                        
                         objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
                         objUserMaster.MobileNo = Convert.ToString(dr["MobileNo"]);
                         objUserMaster.ProfileId = Convert.ToString(dr["ProfileId"]);
@@ -97,6 +100,25 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.CompanyName = Convert.ToString(dr["CompanyName"]);
                         objUserMaster.Designation = Convert.ToString(dr["Designation"]);
                         objUserMaster.Income = Convert.ToString(dr["Income"]);
+
+                        //UserBasicDetails
+                        objUserBasic.DOBDay = Convert.ToString(dr["DOB"]).Split('-')[0];
+                        objUserBasic.DOBMonth = Convert.ToString(dr["DOB"]).Split('-')[1];
+                        objUserBasic.DOBYear = Convert.ToString(dr["DOB"]).Split('-')[2];
+                        objUserBasic.UserFirstName = Convert.ToString(dr["FirstName"]);
+                        objUserBasic.UserLastName = Convert.ToString(dr["LastName"]);
+                        objUserBasic.UserAge = Convert.ToString(dr["Age"]);
+                        objUserBasic.UserGender = Convert.ToString(dr["Gender"]);
+                        objUserBasic.UserMaritialStatus = Convert.ToString(dr["MaritialStatus"]);
+                        objUserBasic.UserEmailId = Convert.ToString(dr["EmailId"]);
+                        objUserBasic.UserMobileNo = Convert.ToString(dr["MobileNo"]);
+                        objUserBasic.UserProfileId = Convert.ToString(dr["ProfileId"]);
+
+                        objUserBasic.DOBDayDetails = new SelectList(DOBDayDetails(), "Value", "Text");
+                        objUserBasic.DOBMonthDetails = new SelectList(DOBMonthDetails(), "Value", "Text");
+                        objUserBasic.DOBYearDetails = new SelectList(DOBYearDetails(), "Value", "Text");
+
+                        objUserMaster.objUserBasicDetails = objUserBasic;
                     }
                 }
 
@@ -551,6 +573,15 @@ namespace EkRishta.Areas.MobileApp.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult _BasicDetails()
+        {
+            UserBasicDetails objUserBasic = new UserBasicDetails();
+            objUserBasic.DOBDayDetails = new SelectList(DOBDayDetails(), "Value", "Text");
+            objUserBasic.DOBMonthDetails = new SelectList(DOBMonthDetails(), "Value", "Text");
+            objUserBasic.DOBYearDetails = new SelectList(DOBYearDetails(), "Value", "Text");
+            return View(objUserBasic);
         }
     }
 }

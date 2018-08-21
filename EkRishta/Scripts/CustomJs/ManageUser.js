@@ -127,3 +127,31 @@ function ViewProfile(UserId) {
         }
     });
 }
+
+function EditBasicDetails(cntrl) {
+    if (cntrl.innerHTML.toLowerCase() == "edit") {
+        $("#ulBasicLabels").css("display", "none");
+        $("#ulBasicEdit").css("display", "block");
+        cntrl.innerHTML = "Update";
+    }
+    else {
+        $("#ulBasicLabels").css("display", "block");
+        $("#ulBasicEdit").css("display", "none");
+        UpdateBasicDetails(cntrl);
+    }
+}
+
+function UpdateBasicDetails(cntrl) {
+    
+    $.ajax({
+        url: "User/UpdateBasicDetails",
+        data: "",
+        type: "POST",
+        success: function (htmlText) {
+            $('#partial').html(htmlText);
+        },
+        error: function (HttpRequest, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    })
+}

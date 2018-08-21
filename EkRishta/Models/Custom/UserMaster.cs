@@ -18,6 +18,7 @@ namespace Models.Custom
         public string MobileNo { get; set; }
 
         public string DOB { get; set; }
+        
 
         public string Age { get; set; }
 
@@ -117,5 +118,7 @@ namespace Models.Custom
         /// TO Identify from where request is initiated
         /// </summary>
         public string RequestSource { get; set; }
+
+        public Areas.Models.UserBasicDetails objUserBasicDetails { get; set; }
     }
 }
