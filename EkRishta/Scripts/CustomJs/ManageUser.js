@@ -135,20 +135,32 @@ function EditBasicDetails(cntrl) {
         cntrl.innerHTML = "Update";
     }
     else {
-        $("#ulBasicLabels").css("display", "block");
-        $("#ulBasicEdit").css("display", "none");
+        
         UpdateBasicDetails(cntrl);
     }
 }
 
 function UpdateBasicDetails(cntrl) {
-    
+    var formData = {
+        UserFirstName: $("#txtFirstName").val(),
+        UserLastName: $("#txtLastName").val(),
+        DOBDay: $("#ddlDOBDay").val(),
+        DOBMonth: $("#ddlDOBMonth").val(),
+        DOBYear: $("#ddlDOBYear").val(),
+        UserAge: $("#").val(),
+        UserGender: $("#ddlGender").val(),
+        UserMaritialStatus: $("#ddlMaritialStatus").val(),
+        UserEmailId: $("#txtEmail").val()
+    }
     $.ajax({
-        url: "User/UpdateBasicDetails",
-        data: "",
+        url: "/User/UpdateBasicDetails",
+        data: formData,
         type: "POST",
         success: function (htmlText) {
             $('#partial').html(htmlText);
+            $("#ulBasicLabels").css("display", "block");
+            $("#ulBasicEdit").css("display", "none");
+            cntrl.innerHTML = "Edit";
         },
         error: function (HttpRequest, textStatus, errorThrown) {
             console.log(textStatus);
