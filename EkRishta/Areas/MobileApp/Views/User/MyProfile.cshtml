@@ -41,7 +41,7 @@
                 <p> Basic Details</p>
                 <a onclick="EditBasicDetails(this);">Edit</a>
             </div>
-            <div class="details">
+            <div class="details" id="divBasicDetails">
                 @{Html.RenderPartial("~/Areas/MobileApp/Views/User/_BasicDetails.cshtml", Model.objUserBasicDetails);}
             </div>
             @*<div class="details">

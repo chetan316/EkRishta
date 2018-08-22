@@ -48,7 +48,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
                         objUserMaster.Age = Convert.ToString(dr["Age"]);
                         objUserMaster.DOB = Convert.ToString(dr["DOB"]);
-                        
+
                         objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
                         objUserMaster.MobileNo = Convert.ToString(dr["MobileNo"]);
                         objUserMaster.ProfileId = Convert.ToString(dr["ProfileId"]);
@@ -578,26 +578,82 @@ namespace EkRishta.Areas.MobileApp.Controllers
 
         public ActionResult _BasicDetails()
         {
-            UserBasicDetails objUserBasic = new UserBasicDetails();
-            objUserBasic.DOBDayDetails = new SelectList(DOBDayDetails(), "Value", "Text");
-            objUserBasic.DOBMonthDetails = new SelectList(DOBMonthDetails(), "Value", "Text");
-            objUserBasic.DOBYearDetails = new SelectList(DOBYearDetails(), "Value", "Text");
+            UserBasicDetails objUserBasic = BindBasicDetailsDropdown();
             return View(objUserBasic);
         }
 
         [HttpPost]
-        public JsonResult UpdateBasicDetails(UserBasicDetails objUserBasicDetails)
+        public ActionResult UpdateBasicDetails(UserBasicDetails objUserBasicDetails)
         {
+            DataSet dsResponse = new DataSet();
             try
             {
+                Models.User objUser = (Models.User)(Session["USER"]);
 
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                sqlCmd.Parameters.AddWithValue("@FirstName", objUserBasicDetails.UserFirstName);
+                sqlCmd.Parameters.AddWithValue("@LastName", objUserBasicDetails.UserLastName);
+                sqlCmd.Parameters.AddWithValue("@DOB", objUserBasicDetails.DOBDay.ToString() + "-" + objUserBasicDetails.DOBMonth.ToString() + "-" + objUserBasicDetails.DOBYear.ToString());
+                sqlCmd.Parameters.AddWithValue("@Age", objUserBasicDetails.UserAge);
+                sqlCmd.Parameters.AddWithValue("@Gender", objUserBasicDetails.UserGender);
+                sqlCmd.Parameters.AddWithValue("@EmailId", objUserBasicDetails.UserEmailId);
+                sqlCmd.Parameters.AddWithValue("@MaritialStatus", objUserBasicDetails.UserMaritialStatus);
+
+                sqlCmd.CommandText = "UpdateBasicDetails";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                UserBasicDetails objBasicDetails = new UserBasicDetails();
+                objBasicDetails = BindBasicDetailsDropdown();
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        objBasicDetails.UserFirstName = Convert.ToString(dr["FirstName"]);
+                        objBasicDetails.UserLastName = Convert.ToString(dr["LastName"]);
+                        objBasicDetails.UserGender = Convert.ToString(dr["Gender"]);
+                        objBasicDetails.UserAge = Convert.ToString(dr["Age"]);
+                        objBasicDetails.DOB = Convert.ToString(dr["DOB"]);
+                        objBasicDetails.DOBDay = Convert.ToString(dr["DOB"]).Split('-')[0];
+                        objBasicDetails.DOBMonth = Convert.ToString(dr["DOB"]).Split('-')[1];
+                        objBasicDetails.DOBYear = Convert.ToString(dr["DOB"]).Split('-')[2];
+                        objBasicDetails.UserEmailId = Convert.ToString(dr["EmailId"]);
+                        objBasicDetails.UserMobileNo = Convert.ToString(dr["MobileNo"]);
+                        objBasicDetails.UserProfileId = Convert.ToString(dr["ProfileId"]);
+                        objBasicDetails.UserMaritialStatus = Convert.ToString(dr["MaritialStatus"]);
+                    }
+                }
+                
+                return PartialView("~/Areas/MobileApp/Views/User/_BasicDetails.cshtml", objBasicDetails);
             }
             catch (Exception ex)
             {
-                
+
+                throw;
+                return null;
+            }
+        }
+
+        public UserBasicDetails BindBasicDetailsDropdown()
+        {
+                UserBasicDetails objUserBasic = new UserBasicDetails();
+            try
+            {
+                objUserBasic.DOBDayDetails = new SelectList(DOBDayDetails(), "Value", "Text");
+                objUserBasic.DOBMonthDetails = new SelectList(DOBMonthDetails(), "Value", "Text");
+                objUserBasic.DOBYearDetails = new SelectList(DOBYearDetails(), "Value", "Text");
+            }
+            catch (Exception ex)
+            {
+
                 throw;
             }
-            return null;
+            return objUserBasic;
         }
     }
 }

@@ -147,7 +147,7 @@ function UpdateBasicDetails(cntrl) {
         DOBDay: $("#ddlDOBDay").val(),
         DOBMonth: $("#ddlDOBMonth").val(),
         DOBYear: $("#ddlDOBYear").val(),
-        UserAge: $("#").val(),
+        UserAge: $("#hdnAge").val(),
         UserGender: $("#ddlGender").val(),
         UserMaritialStatus: $("#ddlMaritialStatus").val(),
         UserEmailId: $("#txtEmail").val()
@@ -157,7 +157,7 @@ function UpdateBasicDetails(cntrl) {
         data: formData,
         type: "POST",
         success: function (htmlText) {
-            $('#partial').html(htmlText);
+            $('#divBasicDetails').html(htmlText);
             $("#ulBasicLabels").css("display", "block");
             $("#ulBasicEdit").css("display", "none");
             cntrl.innerHTML = "Edit";
@@ -166,4 +166,16 @@ function UpdateBasicDetails(cntrl) {
             console.log(textStatus);
         }
     })
+}
+
+function CalculateAge() {
+    if ($('#ddlDOBMonth').val() != "0" && $('#ddlDOBDay').val() != "0" && $('#ddlDOBYear').val() != "0") {
+        var dob = new Date($('#ddlDOBMonth').val() + "-" + $('#ddlDOBDay').val() + "-" + $('#ddlDOBYear').val());
+        var today = new Date();
+        var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+
+        $('#hdnAge').val(age);
+        $('#pUserAge').html(age);
+        
+    }
 }

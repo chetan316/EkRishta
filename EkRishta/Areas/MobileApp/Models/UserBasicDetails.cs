@@ -23,5 +23,6 @@ namespace Areas.Models
         public string UserEmailId { get; set; }
         public string UserMobileNo { get; set; }
         public string UserProfileId { get; set; }
+        public int UserId { get; set; }
     }
 }

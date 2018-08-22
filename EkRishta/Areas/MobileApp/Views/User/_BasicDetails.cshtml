@@ -19,7 +19,7 @@
         @Html.TextBoxFor(m => m.UserLastName, htmlAttributes: new { @id = "txtLastName", @placeholder = "Last Name", })
     </li>
     <li><strong>Profile Id  </strong> <p>: @Model.UserProfileId </p>  </li>
-    <li>
+    <li><strong>DOB </strong>:
         <div class="deta_sec">
             <div class="select_opt">  @Html.DropDownListFor(m => m.DOBDay, new SelectList(Model.DOBDayDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBDay", @name = "DOBDayValue", @class = " DOBddl", @onchange = "CalculateAge()" }) </div>
             <div class="select_opt"> @Html.DropDownListFor(m => m.DOBMonth, new SelectList(Model.DOBMonthDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBMonth", @class = " DOBddl", @onchange = "CalculateAge()" }) </div>
@@ -27,7 +27,7 @@
             <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/user2.svg"> </div></div>
         </div>
     </li>
-    <li><strong>Age </strong> <p>:  @Model.UserAge</p>  </li>
+    <li><strong>Age </strong> <p id="pUserAge">:  @Model.UserAge</p>  @Html.HiddenFor(m => m.UserAge, htmlAttributes: new { @id = "hdnAge" })</li>
     <li>
         <strong>Gender </strong>:
         @Html.DropDownListFor(m => m.UserGender, new SelectList(new List<object> {new {value="M",text="Male"},
