@@ -44,35 +44,14 @@
             <div class="details" id="divBasicDetails">
                 @{Html.RenderPartial("~/Areas/MobileApp/Views/User/_BasicDetails.cshtml", Model.objUserBasicDetails);}
             </div>
-            @*<div class="details">
-                        <ul id="ulBasicLabels">
-                            <li><strong>Name </strong> <p>: @Model.FirstName @Model.LastName  </p>  </li>
-                            <li><strong>Profile Id  </strong> <p>: @Model.ProfileId </p>  </li>
-                            <li><strong>Birth Date </strong> <p>: @Model.DOB </p>  </li>
-                            <li><strong>Age </strong> <p>:  @Model.Age</p>  </li>
-                            <li><strong>Gender </strong> <p>: @Model.Gender </p>  </li>
-                            <li><strong>MaritialStatus  </strong> <p> : @Model.MaritialStatus</p>  </li>
-                            <li><strong>Email </strong> <p>: @Model.EmailId </p>  </li>
-                            <li><strong>Mobile No </strong> <p>: @Model.MobileNo</p>  </li>
 
-                        </ul>
-                        <ul id="ulBasicEdit" style="display:none;">
-                            @{Html.RenderPartial("~/Areas/MobileApp/Views/User/_BasicDetails.cshtml", Model.objUserBasicDetails);}
-
-                        </ul>
-                </div>*@
-
-            <div class="user_title"> <span> <img alt="matrimonial ek vivaah" src="/images/books.svg"></span> <p>Education/Occupation Details </p>   <a href="#"> Edit  </a> </div>
-            <div class="details">
-                <ul>
-                    <li><strong>Qualification </strong> <p> : @Model.Degree</p>  </li>
-                    <li><strong>Field </strong> <p>: @Model.Field </p>  </li>
-                    <li><strong>College Name  </strong> <p>: @Model.CollegeName  </p>  </li>
-                    <li><strong>Company Name  </strong> <p>: @Model.CompanyName </p>  </li>
-                    <li><strong>Designation </strong> <p>: @Model.Designation </p>  </li>
-                    <li><strong>Income </strong> <p>: @Model.Income </p>  </li>
-
-                </ul>
+            <div class="user_title">
+                <span><img alt="matrimonial ek vivaah" src="/images/books.svg"></span>
+                <p>Education/Occupation Details </p>
+                <a onclick="EditProfessionalDetails(this);">Edit</a>
+            </div>
+            <div class="details" id="divProfessionalDetails">
+                @{Html.RenderPartial("~/Areas/MobileApp/Views/User/_ProfessionalDetails.cshtml", Model.objUserProfessionalDetails);}
             </div>
 
             <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/Native.svg"> </span>  <p>Native Location  </p>   <a href="#"> Edit  </a> </div>
@@ -80,7 +59,6 @@
                 <ul>
                     <li> <strong>Address Line 1 </strong> <p> : @Model.Address1</p>  </li>
                     <li> <strong>Address Line 2 </strong> <p> : @Model.Address2</p>  </li>
-                    <li> <strong>College Name </strong> <p>: @Model.CollegeName </p>  </li>
                     <li> <strong>City </strong> <p> : @Model.CityName</p>  </li>
                     <li> <strong>State </strong> <p> : @Model.StateName </p>  </li>
                     <li> <strong>Country </strong> <p>:  @Model.CountryName</p>  </li>
@@ -135,4 +113,4 @@
 
 
     </div>
-}
+                    }
