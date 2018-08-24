@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "ViewProfile";
 }
+  <link href="~/Content/lightgallery.css" rel="stylesheet">
 
 @using (Html.BeginForm())
 {
@@ -16,21 +17,29 @@
         <div>
             <div class="user-bg">
                 <div class="user_sec">
-                    <div class="bg-cover">
-                        <a href="#"> Upload cover </a>
-                    </div>
+                   
                     <div class="ProfilePic profile_centre">
                         <img id="imgProfilePic" alt="Profile" src="@Model.ProfilePicPath" />
                     </div>
                 </div>
             </div>
+			<div class="user-details">
+                    <strong> @Model.FirstName @Model.LastName </strong>
+                </div>
+<div class="view-pro user_title besic_lik">
+                <ul>
+                    <li> <a href="#"> Basic </a> </li>
+                    <li> <a href="#"> About </a> </li>
+                    <li><a href="#">  Photo<span> 9</span> </a> </li>
 
+                </ul>
+            </div>
             <div class="clearfix"></div>
             <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/user.svg"></span> <p> Basic Details</p></div>
 
             <div class="details">
                 <ul>
-                    <li> <strong>Name </strong> <p>: @Model.FirstName @Model.LastName  </p>  </li>
+                   
                     <li> <strong>Profile Id  </strong> <p>: @Model.ProfileId </p>  </li>
                     <li> <strong>Age </strong> <p>:  @Model.Age</p>  </li>
                     <li> <strong>Birth Date </strong> <p>: @Model.DOB </p>  </li>
@@ -40,7 +49,31 @@
                     <li> <strong>Mobile No </strong> <p>: @Model.MobileNo</p>  </li>
                 </ul>
             </div>
-
+       <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/gallery.svg"></span> <p> Photos </p></div>
+	   <div class="details_gallery"> 
+			<div class="demo-gallery">
+            <ul id="lightgallery" class="list-unstyled">
+                <li data-src="/images/1.jpg" >
+                    <a href="">
+                        <img class="img-responsive" src="/images/thumb-1.jpg">
+                    </a>
+                </li>
+				
+                <li data-src="/images/2.jpg" >
+                    <a href="">
+                        <img class="img-responsive" src="/images/thumb-2.jpg">
+                    </a>
+                </li>
+				
+                <li data-src="/images/13.jpg" >
+                    <a href="">
+                        <img class="img-responsive" src="/images/thumb-13.jpg">
+                    </a>
+                </li>
+				      
+            </ul>
+        </div>
+			</div>
             <div class="user_title"> <span> <img alt="matrimonial ek vivaah" src="/images/books.svg"></span> <p>Education/Occupation Details </p></div>
             <div class="details">
                 <ul>
@@ -113,6 +146,12 @@
             </div>
         </div>
     </div>
+	     <script type="text/javascript">
+        $(document).ready(function(){
+            $('#lightgallery').lightGallery();
+        });
+        </script>
+          <script src="~/Scripts/lightgallery-all.min.js"></script>
 }
 
 

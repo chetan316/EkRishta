@@ -51,7 +51,7 @@ a {
 }
 
 .red-bg {
-    background: url('images/male-female.jpg') no-repeat;
+    background: url('/images/male-female.jpg') no-repeat;
 }
 /* Stuff after this is only to make things more pretty */
 input[type=radio] {
@@ -213,7 +213,7 @@ a:hover {
 }
 
 .user-bg {
-    background: url(images/1232.jpg) no-repeat;
+    background: url(/images/1232.jpg) no-repeat;
     background-size: cover;
     height: 160px;
     margin-bottom: 60px;
@@ -632,7 +632,7 @@ li.fourty {
     position: absolute;
     right: -9px;
     top: -26px;
-    background: url(images/heart.png) no-repeat;
+    background: url(/images/heart.png) no-repeat;
     background-position: 0 0;
     cursor: pointer;
     animation: fave-heart 1s steps(28);

@@ -2,119 +2,173 @@
 <html>
 <head>
     <meta charset="utf-8" />
-   <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no, minimum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no, minimum-scale=1.0" />
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/Mobile.css?rd=1" rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/css?family=Playball&amp;subset=latin-ext" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700" rel="stylesheet">
+    @*<link href="~/Content/jquery.mmenu.all.css?rd=1" rel="stylesheet" />*@
+    <link href="https://fonts.googleapis.com/css?family=Playball&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.0/jquery.mmenu.all.js"></script>
 
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico" />
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
-
-    @*<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/6.1.4/jquery.mmenu.all.css">
-    <link href="~/Content/jquery.mhead.css" rel="stylesheet" />*@
-
-    <style type="text/css">
-        .mh-head {
-            background: #4bb5ef;
-            color: #fff;
-        }
-
-        .mh-text {
-            font-size: 16px;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+    <!-- <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @*@Html.ActionLink("EkRishta", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @if (Session["USER"] != null)
+                        {
+
+                        }
+                    </ul>
                     @if (Session["USER"] != null)
                     {
-                        <li>
-                            @Html.ActionLink("Profile", "MyProfile", "User", new { area = "MobileApp" }, null)
-                        </li>
-                        <li>
-                            @Html.ActionLink("My Matches", "MatchingProfile", "User", new { area = "MobileApp" }, null)
-                        </li>
-                        <li>
-                            @Html.ActionLink("Sent Requests", "SentRequest", "User", new { area = "MobileApp" }, null)
-                        </li>
-                        <li>
-                            @Html.ActionLink("Accepted Requests", "AcceptedRequest", "User", new { area = "MobileApp" }, null)
-                        </li>
-                        <li>
-                            @Html.ActionLink("Blocked Requests", "BlockedUser", "User", new { area = "MobileApp" }, null)
-                        </li>
-                        <li>
-                            @Html.ActionLink("Profile Request", "ProfileRequest", "User", new { area = "MobileApp" }, null)
-                        </li>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @Html.ActionLink("Logout", "LogOut", "Login", new { area = "" },null)
+                            </li>
+                        </ul>
                     }
-                </ul>
-                @if (Session["USER"] != null)
-                {
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            @Html.ActionLink("Logout", "LogOut", "Login", new { area = "" },null)
-                        </li>
-                    </ul>
-                }
+                </div>
             </div>
         </div>
+    -->
+
+
+    <div class="main_maneu">
+        <nav id="menu">
+
+            <ul>
+
+
+
+                <li>
+                    <a href="#" class="useer_bg">
+                        <div class="us_box"> sdsdsddsdddddddd </div>
+                    </a>
+                </li>
+                @if (Session["USER"] != null)
+                {
+                    <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div> Home</a></li>
+                    <li>
+                        @Html.ActionLink("Profile", "MyProfile", "User", new { area = "MobileApp" }, null)
+                    </li>
+                    <li>
+                        @Html.ActionLink("My Matches", "MatchingProfile", "User", new { area = "MobileApp" }, null)
+                    </li>
+                    <li>
+                        @Html.ActionLink("Sent Requests", "SentRequest", "User", new { area = "MobileApp" }, null)
+                    </li>
+                    <li>
+                        @Html.ActionLink("Profile Request", "ProfileRequest", "User", new { area = "MobileApp" }, null)
+                    </li>
+
+
+
+
+                    <li>
+                        <span>Search </span>
+                        <ul>
+                            <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Search</a></li>
+                            <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Search id </a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Contact Details</a></li>
+                    <li>
+                        <span>Contact </span>
+                        <ul>
+                            <li><a href="#"><div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Send Interests </a></li>
+                            <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Accept </a></li>
+                            <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Blocked </a></li>
+                            <li><a href="#"><div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div> Declined </a></li>
+                        </ul>
+                    </li>
+
+
+                    <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div> Shortlisted</a></li>
+
+
+
+                    <li>
+                        <span>Setting </span>
+                        <ul>
+                            <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Change Password</a></li>
+                            <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Delete Profile</a></li>
+                            <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>About us</a></li>
+                            <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Contact us</a></li>
+                            <li>
+                                @if (Session["USER"] != null)
+                                {
+                                    <div class="btm_log">
+                                        @Html.ActionLink("Logout", "LogOut", "Login", new { area = "" }, null)
+                                    </div>
+                                }
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Profile Visitor</a></li>
+
+                }
+
+
+            </ul>
+
+
+
+
+        </nav>
     </div>
+
+
 
     <div class="content">
-        @RenderBody()       
-        
+        @RenderBody()
+
     </div>
-<div class="space_empty"> </div>
-	<div class="mobile-nav"> 
-	<nav> 
-	<ul>
-	<li> <a href="#"> <i class="icon-home"> <img id="imgProfilePic" class="round_class" alt="Profile" src="" /> Profile </a> </li>
-	<li> <a href="#"> <i class="icon-home"><img src="/images/search.svg" alt="ek vivaah"></i> Search </a></li>
-	<li> <a href="#"> <i class="icon-home"><img src="/images/my-profile.svg" alt="ek vivaah"></i> Matches </a></li>
-	<li> <a href="#"> <i class="icon-home"><img src="/images/menu.svg" alt="ek vivaah"></i>Menu </a></li>	
-	</ul>
-	</nav>
-	</div>
-	
-	
-	
-    @Scripts.Render("~/bundles/jquery")
+    <div class="space_empty"> </div>
+    <div class="mobile-nav">
+        <nav>
+            <ul>
+                <li> <a href="#"> <i class="icon-home"> <img src="/images/my-profile.svg" alt="ek vivaah"> </i> Profile </a> </li>
+                <li> <a href="#"> <i class="icon-home"><img src="/images/search.svg" alt="ek vivaah"></i> Search </a></li>
+                <li> <a href="#"> <i class="icon-home"><img src="/images/my-profile.svg" alt="ek vivaah"> </i> Matches </a></li>
+                <li class="mh-head Sticky"> <a href="#menu"> <i class="icon-home"><img src="/images/menu.svg" alt="ek vivaah"> </i>Menu </a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+
+            //	create a menu
+            $('#menu').mmenu();
+
+            //	fire the plugin
+            //$('.mh-head').mhead();
+
+            //	for demo only
+            $('a[href^="#/"]').click(function () {
+                alert('Thank you for clicking, but that\'s a demo link.');
+                return;
+            })
+        });
+    </script>
+
+    <!--@Scripts.Render("~/bundles/jquery")-->
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/6.1.4/jquery.mmenu.all.js"></script>
-    <script src="~/Scripts/CustomJs/jquery.mhead.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $(function () {
-
-                //	create a menu
-                $('#menu').mmenu();
-
-                //	fire the plugin
-                $('.mh-head').mhead();
-
-                //	for demo only
-                //$('a[href^="#/"]').click(function () {
-                //    alert('Thank you for clicking, but that\'s a demo link.');
-                //    return;
-                //})
-            });
-            });
-    </script>*@
-
 </body>
 </html>

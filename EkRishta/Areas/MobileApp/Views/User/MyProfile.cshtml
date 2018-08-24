@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "MyProfile";
 }
+<link href="~/Content/lightgallery.css" rel="stylesheet">
 <script src="~/Scripts/CustomJs/ManageUser.js?rd=1"></script>
 @using (Html.BeginForm())
 {
@@ -44,24 +45,31 @@
             <div class="details" id="divBasicDetails">
                 @{Html.RenderPartial("~/Areas/MobileApp/Views/User/_BasicDetails.cshtml", Model.objUserBasicDetails);}
             </div>
-            @*<div class="details">
-                        <ul id="ulBasicLabels">
-                            <li><strong>Name </strong> <p>: @Model.FirstName @Model.LastName  </p>  </li>
-                            <li><strong>Profile Id  </strong> <p>: @Model.ProfileId </p>  </li>
-                            <li><strong>Birth Date </strong> <p>: @Model.DOB </p>  </li>
-                            <li><strong>Age </strong> <p>:  @Model.Age</p>  </li>
-                            <li><strong>Gender </strong> <p>: @Model.Gender </p>  </li>
-                            <li><strong>MaritialStatus  </strong> <p> : @Model.MaritialStatus</p>  </li>
-                            <li><strong>Email </strong> <p>: @Model.EmailId </p>  </li>
-                            <li><strong>Mobile No </strong> <p>: @Model.MobileNo</p>  </li>
+            <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/gallery.svg"></span> <p> Photos </p></div>
+            <div class="details_gallery">
+                <div class="demo-gallery">
+                    <ul id="lightgallery" class="list-unstyled">
+                        <li data-src="/images/1.jpg">
+                            <a href="">
+                                <img class="img-responsive" src="/images/thumb-1.jpg">
+                            </a>
+                        </li>
 
-                        </ul>
-                        <ul id="ulBasicEdit" style="display:none;">
-                            @{Html.RenderPartial("~/Areas/MobileApp/Views/User/_BasicDetails.cshtml", Model.objUserBasicDetails);}
+                        <li data-src="/images/2.jpg">
+                            <a href="">
+                                <img class="img-responsive" src="/images/thumb-2.jpg">
+                            </a>
+                        </li>
 
-                        </ul>
-                </div>*@
+                        <li data-src="/images/13.jpg">
+                            <a href="">
+                                <img class="img-responsive" src="/images/thumb-13.jpg">
+                            </a>
+                        </li>
 
+                    </ul>
+                </div>
+            </div>
             <div class="user_title"> <span> <img alt="matrimonial ek vivaah" src="/images/books.svg"></span> <p>Education/Occupation Details </p>   <a href="#"> Edit  </a> </div>
             <div class="details">
                 <ul>
@@ -135,4 +143,13 @@
 
 
     </div>
+    
 }
+
+
+<script src="~/Scripts/lightgallery-all.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#lightgallery').lightGallery();
+    });
+</script>
