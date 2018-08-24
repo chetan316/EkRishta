@@ -47,7 +47,7 @@ namespace EkRishta.Controllers
                         objUser.ReligionId = Convert.ToString(dsResult.Tables[0].Rows[0]["ReligionId"]);
 
                         Session["USER"] = objUser;
-                        return RedirectToAction("MyProfile", "User", new { Area = "" });
+                        return RedirectToAction("MyProfile", "User", new { Area = "MobileApp" });
                     }
                     else
                     {

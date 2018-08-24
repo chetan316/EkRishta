@@ -136,7 +136,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserAddress.Address1 = Convert.ToString(dr["Address1"]);
                         objUserAddress.Address2 = Convert.ToString(dr["Address2"]);
                         objUserAddress.CityName = Convert.ToString(dr["CityName"]);
-                        objUserAddress.CityId = Convert.ToInt32(dr["CityName"]);
+                        objUserAddress.CityId = Convert.ToInt32(dr["CityId"]);
                         objUserAddress.StateName = Convert.ToString(dr["StateName"]);
                         objUserAddress.CountryName = Convert.ToString(dr["CountryName"]);
                         objUserAddress.Pincode = Convert.ToString(dr["Pincode"]);
@@ -150,9 +150,9 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 }
 
                 if (UserId == null)
-                    return View("~/Areas/MobileApp/Views/User/MyProfile.cshtml", objUserMaster);
+                    return View("MyProfile", objUserMaster);
                 else
-                    return RedirectToAction("ViewProfile", objUserMaster);//"~/Areas/MobileApp/Views/User/ViewProfile.cshtml", objUserMaster);
+                    return RedirectToAction("ViewProfile", objUserMaster);
 
             }
             catch (Exception ex)
@@ -216,7 +216,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             catch (Exception ex)
             {
             }
-            return View("~/Areas/MobileApp/Views/User/RequestInfo.cshtml", lstUserMaster);
+            return View("RequestInfo", lstUserMaster);
         }
 
         public ActionResult SentRequest()
@@ -272,7 +272,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             catch (Exception ex)
             {
             }
-            return View("~/Areas/MobileApp/Views/User/RequestInfo.cshtml", lstUserMaster);
+            return View("RequestInfo", lstUserMaster);
         }
 
         public ActionResult AcceptedRequest()
@@ -329,7 +329,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             {
                 throw;
             }
-            return View("~/Areas/MobileApp/Views/User/RequestInfo.cshtml", lstUserMaster);
+            return View("RequestInfo", lstUserMaster);
         }
 
         public ActionResult BlockedUser()
@@ -386,7 +386,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             {
                 throw;
             }
-            return View("~/Areas/MobileApp/Views/User/RequestInfo.cshtml", lstUserMaster);
+            return View("RequestInfo", lstUserMaster);
         }
 
         public ActionResult ProfileRequest()
@@ -442,7 +442,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             catch (Exception ex)
             {
             }
-            return View("~/Areas/MobileApp/Views/User/ProfileRequest.cshtml", lstUserMaster);
+            return View("ProfileRequest", lstUserMaster);
         }
 
         [HttpPost]
@@ -594,7 +594,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 //    return View("~/Areas/MobileApp/Views/User/MyProfile.cshtml", objUserMaster);
                 //else
                 //    return View("~/Areas/MobileApp/Views/User/ViewProfile.cshtml", objUserMaster);
-                return View("~/Areas/MobileApp/Views/User/ViewProfile.cshtml", objUserMaster);
+                return View("ViewProfile", objUserMaster);
             }
             catch (Exception ex)
             {
@@ -660,7 +660,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     }
                 }
                 
-                return PartialView("~/Areas/MobileApp/Views/User/_BasicDetails.cshtml", objBasicDetails);
+                return PartialView("_BasicDetails", objBasicDetails);
             }
             catch (Exception ex)
             {
@@ -709,7 +709,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     }
                 }
 
-                return PartialView("~/Areas/MobileApp/Views/User/_ProfessionalDetails.cshtml", objProfessionalDetails);
+                return PartialView("_ProfessionalDetails", objProfessionalDetails);
             }
             catch (Exception ex)
             {

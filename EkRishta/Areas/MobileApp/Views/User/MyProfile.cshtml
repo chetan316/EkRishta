@@ -42,7 +42,7 @@
                 <a onclick="EditBasicDetails(this);">Edit</a>
             </div>
             <div class="details" id="divBasicDetails">
-                @{Html.RenderPartial("~/Areas/MobileApp/Views/User/_BasicDetails.cshtml", Model.objUserBasicDetails);}
+                @Html.Partial("_BasicDetails", Model.objUserBasicDetails);
             </div>
 
             <div class="user_title">
@@ -51,7 +51,7 @@
                 <a onclick="EditProfessionalDetails(this);">Edit</a>
             </div>
             <div class="details" id="divProfessionalDetails">
-                @{Html.RenderPartial("~/Areas/MobileApp/Views/User/_ProfessionalDetails.cshtml", Model.objUserProfessionalDetails);}
+                @{Html.RenderPartial("_ProfessionalDetails", Model.objUserProfessionalDetails);}
             </div>
 
             <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/Native.svg"> </span>  <p>Native Location  </p>   <a href="#"> Edit  </a> </div>
