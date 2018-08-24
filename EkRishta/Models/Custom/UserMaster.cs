@@ -120,5 +120,7 @@ namespace Models.Custom
         public string RequestSource { get; set; }
 
         public Areas.Models.UserBasicDetails objUserBasicDetails { get; set; }
+        public Areas.Models.UserProfessionalDetails objUserProfessionalDetails { get; set; }
+        public Areas.Models.UserAddressDetails objUserAddressDetails { get; set; }
     }
 }

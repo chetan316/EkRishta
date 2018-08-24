@@ -135,7 +135,6 @@ function EditBasicDetails(cntrl) {
         cntrl.innerHTML = "Update";
     }
     else {
-        
         UpdateBasicDetails(cntrl);
     }
 }
@@ -150,7 +149,8 @@ function UpdateBasicDetails(cntrl) {
         UserAge: $("#hdnAge").val(),
         UserGender: $("#ddlGender").val(),
         UserMaritialStatus: $("#ddlMaritialStatus").val(),
-        UserEmailId: $("#txtEmail").val()
+        UserEmailId: $("#txtEmail").val(),
+        LanguageId: $("#ddlMotherTounge").val()
     }
     $.ajax({
         url: "/User/UpdateBasicDetails",
@@ -168,6 +168,43 @@ function UpdateBasicDetails(cntrl) {
     })
 }
 
+
+function EditProfessionalDetails(cntrl) {
+    if (cntrl.innerHTML.toLowerCase() == "edit") {
+        $("#ulProfessionalLabels").css("display", "none");
+        $("#ulProfessionalEdit").css("display", "block");
+        cntrl.innerHTML = "Update";
+    }
+    else {
+        UpdateProfessionalDetails(cntrl);
+    }
+}
+
+function UpdateProfessionalDetails(cntrl) {
+    var formData = {
+        Degree: $("#txtDegree").val(),
+        Field: $("#txtField").val(),
+        CollegeName: $("#txtCollegeName").val(),
+        CompanyName: $("#txtCompanyName").val(),
+        Designation: $("#txtDesignation").val(),
+        Income: $("#ddlIncome").val()
+    }
+    $.ajax({
+        url: "/User/UpdateProfessionalDetails",
+        data: formData,
+        type: "POST",
+        success: function (htmlText) {
+            $('#divProfessionalDetails').html(htmlText);
+            $("#ulProfessionalLabels").css("display", "block");
+            $("#ulProfessionalEdit").css("display", "none");
+            cntrl.innerHTML = "Edit";
+        },
+        error: function (HttpRequest, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    })
+}
+
 function CalculateAge() {
     if ($('#ddlDOBMonth').val() != "0" && $('#ddlDOBDay').val() != "0" && $('#ddlDOBYear').val() != "0") {
         var dob = new Date($('#ddlDOBMonth').val() + "-" + $('#ddlDOBDay').val() + "-" + $('#ddlDOBYear').val());
@@ -176,6 +213,5 @@ function CalculateAge() {
 
         $('#hdnAge').val(age);
         $('#pUserAge').html(age);
-        
     }
 }

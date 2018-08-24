@@ -38,6 +38,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
 
                 UserMaster objUserMaster = new UserMaster();
                 UserBasicDetails objUserBasic = new UserBasicDetails();
+                UserProfessionalDetails objUserProfessional = new UserProfessionalDetails();
+                UserAddressDetails objUserAddress = new UserAddressDetails();
 
                 if (dsResponse != null && dsResponse.Tables[0] != null)
                 {
@@ -94,14 +96,15 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.Star = Convert.ToString(dr["Star"]);
                         objUserMaster.Gotra = Convert.ToString(dr["Gotra"]);
 
-                        objUserMaster.CollegeName = Convert.ToString(dr["CollegeName"]);
-                        objUserMaster.Field = Convert.ToString(dr["Field"]);
-                        objUserMaster.Degree = Convert.ToString(dr["Degree"]);
-                        objUserMaster.CompanyName = Convert.ToString(dr["CompanyName"]);
-                        objUserMaster.Designation = Convert.ToString(dr["Designation"]);
-                        objUserMaster.Income = Convert.ToString(dr["Income"]);
+                        //objUserMaster.CollegeName = Convert.ToString(dr["CollegeName"]);
+                        //objUserMaster.Field = Convert.ToString(dr["Field"]);
+                        //objUserMaster.Degree = Convert.ToString(dr["Degree"]);
+                        //objUserMaster.CompanyName = Convert.ToString(dr["CompanyName"]);
+                        //objUserMaster.Designation = Convert.ToString(dr["Designation"]);
+                        //objUserMaster.Income = Convert.ToString(dr["Income"]);
 
                         //UserBasicDetails
+                        objUserBasic = BindBasicDetailsDropdown();
                         objUserBasic.DOB = Convert.ToString(dr["DOB"]);
                         objUserBasic.DOBDay = Convert.ToString(dr["DOB"]).Split('-')[0];
                         objUserBasic.DOBMonth = Convert.ToString(dr["DOB"]).Split('-')[1];
@@ -114,19 +117,42 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserBasic.UserEmailId = Convert.ToString(dr["EmailId"]);
                         objUserBasic.UserMobileNo = Convert.ToString(dr["MobileNo"]);
                         objUserBasic.UserProfileId = Convert.ToString(dr["ProfileId"]);
-
-                        objUserBasic.DOBDayDetails = new SelectList(DOBDayDetails(), "Value", "Text");
-                        objUserBasic.DOBMonthDetails = new SelectList(DOBMonthDetails(), "Value", "Text");
-                        objUserBasic.DOBYearDetails = new SelectList(DOBYearDetails(), "Value", "Text");
+                        objUserBasic.LanguageId = Convert.ToInt32(dr["MotherToungeId"]);
+                        objUserBasic.MotherTounge = Convert.ToString(dr["MotherTounge"]);
 
                         objUserMaster.objUserBasicDetails = objUserBasic;
+
+                        //Professional Details
+                        objUserProfessional.Degree = Convert.ToString(dr["Degree"]);
+                        objUserProfessional.Field = Convert.ToString(dr["Field"]);
+                        objUserProfessional.CollegeName = Convert.ToString(dr["CollegeName"]);
+                        objUserProfessional.CompanyName = Convert.ToString(dr["CompanyName"]);
+                        objUserProfessional.Designation = Convert.ToString(dr["Designation"]);
+                        objUserProfessional.Income = Convert.ToString(dr["Income"]);
+
+                        objUserMaster.objUserProfessionalDetails = objUserProfessional;
+
+                        //Address Details
+                        objUserAddress.Address1 = Convert.ToString(dr["Address1"]);
+                        objUserAddress.Address2 = Convert.ToString(dr["Address2"]);
+                        objUserAddress.CityName = Convert.ToString(dr["CityName"]);
+                        objUserAddress.CityId = Convert.ToInt32(dr["CityId"]);
+                        objUserAddress.StateName = Convert.ToString(dr["StateName"]);
+                        objUserAddress.CountryName = Convert.ToString(dr["CountryName"]);
+                        objUserAddress.Pincode = Convert.ToString(dr["Pincode"]);
+                        objUserAddress.AlternateAddress1 = Convert.ToString(dr["AlternateAddress1"]);
+                        objUserAddress.AlternateAddress2 = Convert.ToString(dr["AlternateAddress2"]);
+                        objUserAddress.AlternateCityName = "";//Convert.ToString(dr[""]);
+                        objUserAddress.AlternateStateName = "";// Convert.ToString(dr[""]);
+                        objUserAddress.AlternateCountryName = "";// Convert.ToString(dr[""]);
+                        objUserAddress.AlternatePincode = Convert.ToString(dr["AlternatePincode"]);
                     }
                 }
 
                 if (UserId == null)
-                    return View("~/Areas/MobileApp/Views/User/MyProfile.cshtml", objUserMaster);
+                    return View("MyProfile", objUserMaster);
                 else
-                    return RedirectToAction("ViewProfile", objUserMaster);//"~/Areas/MobileApp/Views/User/ViewProfile.cshtml", objUserMaster);
+                    return RedirectToAction("ViewProfile", objUserMaster);
 
             }
             catch (Exception ex)
@@ -190,7 +216,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             catch (Exception ex)
             {
             }
-            return View("~/Areas/MobileApp/Views/User/RequestInfo.cshtml", lstUserMaster);
+            return View("RequestInfo", lstUserMaster);
         }
 
         public ActionResult SentRequest()
@@ -246,7 +272,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             catch (Exception ex)
             {
             }
-            return View("~/Areas/MobileApp/Views/User/RequestInfo.cshtml", lstUserMaster);
+            return View("RequestInfo", lstUserMaster);
         }
 
         public ActionResult AcceptedRequest()
@@ -303,7 +329,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             {
                 throw;
             }
-            return View("~/Areas/MobileApp/Views/User/RequestInfo.cshtml", lstUserMaster);
+            return View("RequestInfo", lstUserMaster);
         }
 
         public ActionResult BlockedUser()
@@ -360,7 +386,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             {
                 throw;
             }
-            return View("~/Areas/MobileApp/Views/User/RequestInfo.cshtml", lstUserMaster);
+            return View("RequestInfo", lstUserMaster);
         }
 
         public ActionResult ProfileRequest()
@@ -416,7 +442,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             catch (Exception ex)
             {
             }
-            return View("~/Areas/MobileApp/Views/User/ProfileRequest.cshtml", lstUserMaster);
+            return View("ProfileRequest", lstUserMaster);
         }
 
         [HttpPost]
@@ -568,7 +594,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 //    return View("~/Areas/MobileApp/Views/User/MyProfile.cshtml", objUserMaster);
                 //else
                 //    return View("~/Areas/MobileApp/Views/User/ViewProfile.cshtml", objUserMaster);
-                return View("~/Areas/MobileApp/Views/User/ViewProfile.cshtml", objUserMaster);
+                return View("ViewProfile", objUserMaster);
             }
             catch (Exception ex)
             {
@@ -581,6 +607,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             UserBasicDetails objUserBasic = BindBasicDetailsDropdown();
             return View(objUserBasic);
         }
+
+        #region Update User Details
 
         [HttpPost]
         public ActionResult UpdateBasicDetails(UserBasicDetails objUserBasicDetails)
@@ -602,6 +630,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.Parameters.AddWithValue("@Gender", objUserBasicDetails.UserGender);
                 sqlCmd.Parameters.AddWithValue("@EmailId", objUserBasicDetails.UserEmailId);
                 sqlCmd.Parameters.AddWithValue("@MaritialStatus", objUserBasicDetails.UserMaritialStatus);
+                sqlCmd.Parameters.AddWithValue("@MotherTounge", objUserBasicDetails.LanguageId);
 
                 sqlCmd.CommandText = "UpdateBasicDetails";
                 sqlCmd.Connection = connString;
@@ -626,10 +655,61 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objBasicDetails.UserMobileNo = Convert.ToString(dr["MobileNo"]);
                         objBasicDetails.UserProfileId = Convert.ToString(dr["ProfileId"]);
                         objBasicDetails.UserMaritialStatus = Convert.ToString(dr["MaritialStatus"]);
+                        objBasicDetails.LanguageId = Convert.ToInt32(dr["MotherTounge"]);
+                        objBasicDetails.MotherTounge = Convert.ToString(dr["LanguageName"]);
                     }
                 }
                 
-                return PartialView("~/Areas/MobileApp/Views/User/_BasicDetails.cshtml", objBasicDetails);
+                return PartialView("_BasicDetails", objBasicDetails);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProfessionalDetails(UserProfessionalDetails objUserProfessionalDetails)
+        {
+            DataSet dsResponse = new DataSet();
+            try
+            {
+                Models.User objUser = (Models.User)(Session["USER"]);
+
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                sqlCmd.Parameters.AddWithValue("@Degree", objUserProfessionalDetails.Degree);
+                sqlCmd.Parameters.AddWithValue("@Field", objUserProfessionalDetails.Field);
+                sqlCmd.Parameters.AddWithValue("@CollegeName", objUserProfessionalDetails.CollegeName);
+                sqlCmd.Parameters.AddWithValue("@CompanyName", objUserProfessionalDetails.CompanyName);
+                sqlCmd.Parameters.AddWithValue("@Designation", objUserProfessionalDetails.Designation);
+                sqlCmd.Parameters.AddWithValue("@Income", objUserProfessionalDetails.Income);
+
+                sqlCmd.CommandText = "UpdateProfessionalDetails";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                UserProfessionalDetails objProfessionalDetails = new UserProfessionalDetails();
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        objProfessionalDetails.Degree = Convert.ToString(dr["Degree"]);
+                        objProfessionalDetails.Field = Convert.ToString(dr["Field"]);
+                        objProfessionalDetails.CollegeName = Convert.ToString(dr["CollegeName"]);
+                        objProfessionalDetails.CompanyName = Convert.ToString(dr["CompanyName"]);
+                        objProfessionalDetails.Designation = Convert.ToString(dr["Designation"]);
+                        objProfessionalDetails.Income = Convert.ToString(dr["Income"]);
+                    }
+                }
+
+                return PartialView("_ProfessionalDetails", objProfessionalDetails);
             }
             catch (Exception ex)
             {
@@ -647,6 +727,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 objUserBasic.DOBDayDetails = new SelectList(DOBDayDetails(), "Value", "Text");
                 objUserBasic.DOBMonthDetails = new SelectList(DOBMonthDetails(), "Value", "Text");
                 objUserBasic.DOBYearDetails = new SelectList(DOBYearDetails(), "Value", "Text");
+                objUserBasic.LanguageDetails = new SelectList(LanguageDetails(), "Value", "Text");
             }
             catch (Exception ex)
             {
@@ -655,5 +736,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             }
             return objUserBasic;
         }
+
+        #endregion
     }
 }

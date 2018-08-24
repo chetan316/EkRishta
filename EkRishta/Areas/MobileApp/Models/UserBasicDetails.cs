@@ -10,9 +10,6 @@ namespace Areas.Models
     {
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
-        public SelectList DOBDayDetails { get; set; }
-        public SelectList DOBMonthDetails { get; set; }
-        public SelectList DOBYearDetails { get; set; }
         public string DOB { get; set; }
         public string DOBDay { get; set; }
         public string DOBMonth { get; set; }
@@ -24,5 +21,12 @@ namespace Areas.Models
         public string UserMobileNo { get; set; }
         public string UserProfileId { get; set; }
         public int UserId { get; set; }
+        public int LanguageId { get; set; }
+        public string MotherTounge { get; set; }
+
+        public SelectList DOBDayDetails { get; set; }
+        public SelectList DOBMonthDetails { get; set; }
+        public SelectList DOBYearDetails { get; set; }
+        public SelectList LanguageDetails { get; set; }
     }
 }

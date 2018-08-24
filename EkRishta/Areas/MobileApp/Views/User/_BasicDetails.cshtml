@@ -6,7 +6,8 @@
     <li><strong>Birth Date </strong> <p>: @Model.DOB </p>  </li>
     <li><strong>Age </strong> <p>:  @Model.UserAge</p>  </li>
     <li><strong>Gender </strong> <p>: @(Model.UserGender == "M" ? "Male" : "Female") </p>  </li>
-    <li><strong>MaritialStatus  </strong> <p> : @Model.UserMaritialStatus</p>  </li>
+    <li><strong>Maritial Status  </strong> <p> : @Model.UserMaritialStatus</p>  </li>
+    <li><strong>Mother Tounge  </strong> <p> : @Model.MotherTounge</p>  </li>
     <li><strong>Email </strong> <p>: @Model.UserEmailId </p>  </li>
     <li><strong>Mobile No </strong> <p>: @Model.UserMobileNo</p>  </li>
 
@@ -33,11 +34,15 @@
         @Html.DropDownListFor(m => m.UserGender, new SelectList(new List<object> {new {value="M",text="Male"},
                                                                             new { value="F",text="Female" } }, "value", "text"), htmlAttributes: new { @id = "ddlGender" })
     </li>
-    <li>
+    <li><strong>Maritial Status</strong>:
         @Html.DropDownListFor(m => m.UserMaritialStatus, new SelectList(new List<object>{new {value="Unmarried",text = "Unmarried"},
                                                                                      new {value="Divorced",text="Divorced"},
                                                                                      new {value="Widow", text="Widow"},
                                                                                      new {value="Widower", text="Widower"}}, "value", "text", 1), htmlAttributes: new { @id = "ddlMaritialStatus" })
+    </li>
+    <li>
+        <strong>Mother Tounge</strong>:
+        @Html.DropDownListFor(m => m.LanguageId, new SelectList(Model.LanguageDetails,"Value","Text"), htmlAttributes: new { @id = "ddlMotherTounge" })
     </li>
     <li>
     <strong>Email </strong>:
