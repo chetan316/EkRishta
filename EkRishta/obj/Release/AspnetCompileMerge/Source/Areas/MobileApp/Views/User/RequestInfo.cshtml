@@ -1,0 +1,142 @@
+﻿@model IEnumerable<Models.Custom.UserMaster>
+
+@{
+    ViewBag.Title = "RequestInfo";
+}
+
+<script src="~/Scripts/CustomJs/ManageUser.js?rd=1"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    var MatchingProfile = Model.Where(m => m.RequestSource == "MatchingProfile");
+    var SentRequest = Model.Where(m => m.RequestSource == "SentRequest");
+    var AcceptedRequest = Model.Where(m => m.RequestSource == "AcceptedRequest");
+    var RejectedRequest = Model.Where(m => m.RequestSource == "RejectedRequest");
+    var BlockedUser = Model.Where(m => m.RequestSource == "BlockedUser");
+
+    <div class="user_title Profile">
+        <div class="back-arow"><a href="#"><img alt="ek vivaah" src="/images/back.svg"></a></div>
+        @if (MatchingProfile.ToList().Count > 0)
+        {
+            <p>Matching Profile</p>
+        }
+        else if (SentRequest.ToList().Count > 0)
+        {
+            <p>Sent Requests</p>
+        }
+        else if (AcceptedRequest.ToList().Count > 0)
+        {
+            <p>Accepted Requests</p>
+        }
+        else if (RejectedRequest.ToList().Count > 0)
+        {
+            <p>Rejected Requests</p>
+        }
+        else if (BlockedUser.ToList().Count > 0)
+        {
+            <p>Blocked Users</p>
+        }
+        else
+        {
+            <p>Request</p>
+        }
+    </div>
+    <div id="divMessage"></div>
+    <div class="maching-body">
+        @{int ContactCount = 0;}
+
+        @if (Model.Count() > 0)
+        {
+        foreach (var item in Model)
+        {
+            <div class="user_sec">
+                <div class="user-bg">
+                    <div class="Shield"> <img alt="ek vivaah " src="/images/wellness.svg"> </div>
+
+                    <div class="ProfilePic profile_centre">
+                        <img src="@item.ProfilePicPath" alt="ProfilePic" class="fl" />
+                    </div>
+                </div>
+                <div class="user-details">
+                    <strong> @item.FirstName @item.LastName</strong>
+                </div>
+                <div class="view-pro user_title">
+                    <ul>
+                        <li class="fourty">
+                            @*<a href="#" onclick="ViewProfile('@item.UserId');"> View Profile </a>*@
+                            @Html.ActionLink("View Profile", // <-- Link text
+
+          "ViewProfile", // <-- Action Method Name
+
+          "User", // <-- Controller Name
+
+new { UserId = item.UserId }, // <-- Route value
+
+          null // <-- htmlArguments
+
+          )
+                        </li>
+                        <li class="fourty"><a href="#"> Photo <span> 9</span> </a> </li>
+                        <li> <a href="#">  <div class="heart"></div> </a> </li>
+                    </ul>
+                </div>
+
+                <div class="user-details">
+
+                    <ul>
+                        <li>@item.Age</li>
+                        <li>@item.Height </li>
+                        <li>@item.ReligionName </li>
+                        <li>@item.CastName</li>
+                        <li>@item.MotherTounge </li>
+
+                        <li>@item.Degree </li>
+                        <li>@item.Designation</li>
+                        <li>
+                            @if (item.ShareCount >= 50)
+                            {
+                                ContactCount += 1;
+                                @item.MobileNo
+                            }
+                            else
+                            {
+                                <span>View Contact</span>
+                            }
+                        </li>
+                        <li> @item.CityName</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="action_sction">
+
+                    @*@if (item.RequestStatus == "P")
+                        {*@
+                    @*<input type="button" value="Cancel Request" id="btnCancelRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info @(item.RequestStatus=="P"?"displaybtn":"hidebtn")" />*@
+                    @*}*@
+                    @*@if (item.RequestStatus == "C" || item.RequestStatus == "N")
+                        {*@
+                    <input type="button" value="Request" id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info" />
+                    @*}*@
+                    @*@if (item.RequestStatus == "A")
+                        {
+                            <label>Accepted</label>
+                        }*@
+                    <div class="action-btn"> <a href="#">Contact </a> </div>
+                    <div class="action-btn no-bder"> <a href="#">Block </a> </div>
+
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+        }
+        }
+        else
+        {
+            <div>No Request available!!!</div>
+        }
+    </div>
+}

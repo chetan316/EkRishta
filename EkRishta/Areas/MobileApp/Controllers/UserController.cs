@@ -15,6 +15,10 @@ namespace EkRishta.Areas.MobileApp.Controllers
     [SessionAuthorize]
     public class UserController : BaseController
     {
+        public ActionResult Home()
+        {
+            return View();
+        }
         public ActionResult MyProfile(int? UserId)
         {
             string response = string.Empty;
@@ -660,7 +664,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     }
                 }
                 
-                return PartialView("_BasicDetails", objBasicDetails);
+                return PartialView("~/Areas/MobileApp/Views/User/_BasicDetails.cshtml", objBasicDetails);
             }
             catch (Exception ex)
             {
@@ -709,7 +713,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     }
                 }
 
-                return PartialView("_ProfessionalDetails", objProfessionalDetails);
+                return PartialView("~/Areas/MobileApp/Views/User/_ProfessionalDetails.cshtml", objProfessionalDetails);
             }
             catch (Exception ex)
             {

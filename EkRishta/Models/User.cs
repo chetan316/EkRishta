@@ -13,5 +13,7 @@ namespace Models
         public string EmailId { get; set; }
         public string ReligionId { get; set; }
         public int ShareCount { get; set; }
+        public string UserName { get; set; }
+        public string ProfilePicPath { get; set; }
     }
 }

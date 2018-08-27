@@ -51,22 +51,14 @@
 
     <div class="main_maneu">
         <nav id="menu">
-            @if (Session["USER"] != null)
-            {
-                Models.User obj = (Models.User)Session["USER"];
-                <ul>
-                    <li>
-                        <a href="#" class="useer_bg">
-                            <div class="m_icon">
-                                <img id="imgProfilePic" alt="Profile" src="@obj.ProfilePicPath" />
-                            </div>
-                            <div class="us_box">
-                                <span>@obj.UserName</span><br />
-                                <span>@obj.ProfileId</span>
-                            </div>
-                        </a>
-                    </li>
-
+            <ul>
+                <li>
+                    <a href="#" class="useer_bg">
+                        <div class="us_box">Ek Rishta</div>
+                    </a>
+                </li>
+                @if (Session["USER"] != null)
+                {
                     <li>
                         <a href='@Url.Action("Home", "User", new {area="MobileApp" })'>
                             <div class="m_icon">
@@ -123,8 +115,8 @@
                         </ul>
                     </li>
                     <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Profile Visitor</a></li>
-                </ul>
-            }
+                }
+            </ul>
         </nav>
     </div>
 

@@ -41,10 +41,12 @@ namespace EkRishta.Controllers
                     {
                         User objUser = new User();
                         objUser.UserId = Convert.ToInt32(dsResult.Tables[0].Rows[0]["UserId"]);
+                        objUser.UserName = Convert.ToString(dsResult.Tables[0].Rows[0]["FirstName"]) + " " + Convert.ToString(dsResult.Tables[0].Rows[0]["LastName"]);
                         objUser.ProfileId = Convert.ToString(dsResult.Tables[0].Rows[0]["ProfileId"]);
                         objUser.MobileNo = Convert.ToString(dsResult.Tables[0].Rows[0]["MobileNo"]);
                         objUser.EmailId = Convert.ToString(dsResult.Tables[0].Rows[0]["EmailId"]);
                         objUser.ReligionId = Convert.ToString(dsResult.Tables[0].Rows[0]["ReligionId"]);
+                        objUser.ProfilePicPath = "/Uploads/" + objUser.UserId + "/" + Convert.ToString(dsResult.Tables[0].Rows[0]["ProfilePicPath"]);
 
                         Session["USER"] = objUser;
                         return RedirectToAction("MyProfile", "User", new { Area = "MobileApp" });
