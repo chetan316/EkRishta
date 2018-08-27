@@ -85,7 +85,6 @@ function AcceptRejectRequest(requestedUserId, requestStatus) {
 }
 
 function ViewProfile(UserId) {
-    debugger;
     var obj = {
         UserId: UserId
     }
