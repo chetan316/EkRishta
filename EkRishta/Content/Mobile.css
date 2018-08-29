@@ -4,6 +4,7 @@
 
 body {
     background-color: #f4f4f4;
+    margin-top: 48px;
 }
 
 .fr {
@@ -112,7 +113,7 @@ img {
 }
 
 a:hover {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 /* profile css*/
 .user_sec {
@@ -188,7 +189,7 @@ a:hover {
 .ProfilePic.profile_centre {
     background-color: #fff;
     margin: 0 auto;
-    padding: 2px;
+    border: 2px solid #fff;
     border-radius: 4px;
     float: none;
     top: 80px;
@@ -668,7 +669,7 @@ li.fourty {
     }
 
 .mobile-nav {
-    padding: 0;
+    padding: 10px 0px;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -676,6 +677,7 @@ li.fourty {
     left: 0;
     box-shadow: 0 0 13px #adadad;
     max-width: 100%;
+    z-index: 99;
 }
 
     .mobile-nav nav, .mobile-nav nav ul {
@@ -699,6 +701,8 @@ li.fourty {
                     transition: all 0.5s ease 0s;
                     font-weight: 500;
                     font-style: normal;
+                    text-align: center;
+                    width: 100%;
                 }
 
                     .mobile-nav nav ul li a i {
@@ -729,8 +733,14 @@ nav ul li a {
 }
 
 .user_title.Profile {
+    top: 0;
     padding: 13px 10px;
     background: #ff0d3d;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    box-shadow: 0 2px 4px #383838;
+    margin-top: 0;
 }
 
     .user_title.Profile p {
@@ -745,4 +755,33 @@ nav ul li a {
 
 .round_class {
     border-radius: 81px;
+}
+
+.log_out.mm-listitem {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    background: #252525;
+    width: 100%;
+}
+
+.btm_log a {
+    color: #fff !important;
+}
+
+.us_box {
+    background: #ff0d3d;
+    height: 80px;
+}
+
+a.useer_bg {
+    padding: 0 !important;
+}
+
+.m_icon {
+    float: left;
+    width: 25px;
+    height: 25px;
+    margin-right: 11px;
 }

@@ -292,8 +292,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 Models.User objUser = (Models.User)(Session["USER"]);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
-                sqlCmd.Parameters.AddWithValue("@RequestStatus", "Accepted");
-                sqlCmd.CommandText = "GetRequestByStatus";
+                //sqlCmd.Parameters.AddWithValue("@RequestStatus", "Accepted");
+                sqlCmd.CommandText = "GetAcceptedRequest";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsResponse);
@@ -349,8 +349,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 Models.User objUser = (Models.User)(Session["USER"]);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
-                sqlCmd.Parameters.AddWithValue("@RequestStatus", "Blocked");
-                sqlCmd.CommandText = "GetRequestByStatus";
+                //sqlCmd.Parameters.AddWithValue("@RequestStatus", "Blocked");
+                sqlCmd.CommandText = "GetBlockedRequest";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsResponse);
