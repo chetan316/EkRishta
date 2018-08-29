@@ -153,6 +153,36 @@ namespace EkRishta
             return lstSelectItem;
         }
 
+        public List<SelectListItem> CastDetails()
+        {
+            DataSet dsCast = new DataSet();
+            List<SelectListItem> lstSelectItem = new List<SelectListItem>();
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.CommandText = "GetCastMaster";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsCast);
+
+                if (dsCast != null && dsCast.Tables[0].Rows.Count > 0)
+                {
+                    lstSelectItem.Add(new SelectListItem { Text = "Select Cast", Value = "0" });
+                    foreach (DataRow dr in dsCast.Tables[0].Rows)
+                    {
+                        lstSelectItem.Add(new SelectListItem { Text = Convert.ToString(dr["CastName"]), Value = Convert.ToString(dr["CastId"]) });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return lstSelectItem;
+        }
         public List<SelectListItem> LanguageDetails()
         {
             DataSet dsLanguage = new DataSet();

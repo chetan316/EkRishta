@@ -1,0 +1,33 @@
+﻿@model Areas.Models.UserReligionDetails
+
+<ul id="ulReligionLabels">
+    <li><strong>Religion </strong> <p>: @Model.ReligionName </p>  </li>
+    <li><strong>Cast </strong> <p>: @Model.CastName </p>  </li>
+    <li><strong>Moon Sign </strong> <p>: @Model.MoonSign </p>  </li>
+    <li><strong>Star </strong> <p>: @Model.Star </p>  </li>
+    <li><strong>Gotra </strong> <p>: @Model.Gotra </p>  </li>
+</ul>
+
+<ul id="ulReligionEdit" style="display:none;">
+    <li>
+        <strong>Religion</strong>:
+        @Html.DropDownListFor(m => m.ReligionId, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { @id="ddlReligion"})
+    </li>
+    <li>
+        <strong>Cast</strong>:
+        @Html.DropDownListFor(m => m.CastId, new SelectList(Model.CastDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlCast" })
+    </li>
+    <li>
+        <strong>Moon Sign</strong>:
+        @Html.TextBoxFor(m => m.MoonSign, htmlAttributes: new { @id = "txtMoonsign", @placeholder = "Enter Moon sign" })
+    </li>
+    <li>
+        <strong>Star</strong>:
+        @Html.TextBoxFor(m => m.Star, htmlAttributes: new { @id = "txtStar", @placeholder = "Enter Star" })
+    </li>
+    <li>
+        <strong>Gotra</strong>:
+        @Html.TextBoxFor(m => m.Gotra, htmlAttributes: new { @id = "txtGotra", @placeholder = "Enter Gotra" })
+    </li>
+</ul>
+

@@ -45,6 +45,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 UserProfessionalDetails objUserProfessional = new UserProfessionalDetails();
                 UserAddressDetails objUserAddress = new UserAddressDetails();
                 UserFamilyDetails objUserFamily = new UserFamilyDetails();
+                UserReligionDetails objUserReligion = new UserReligionDetails();
+                UserOtherDetails objUserOther = new UserOtherDetails();
 
                 if (dsResponse != null && dsResponse.Tables[0] != null)
                 {
@@ -80,7 +82,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
 
                         objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]);
                         objUserMaster.MotherTounge = Convert.ToString(dr["MotherTounge"]);
-                        objUserMaster.BirthCountry = Convert.ToString(dr["BirthCountry"]);
+                        objUserMaster.BirthCountry = Convert.ToString(dr["BirthCountryName"]);
                         objUserMaster.BirthPlace = Convert.ToString(dr["BirthPlace"]);
                         objUserMaster.BirthTime = Convert.ToString(dr["BirthTime"]);
                         objUserMaster.Height = Convert.ToString(dr["Height"]);
@@ -163,6 +165,36 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserFamily.FamilyDescription = Convert.ToString(dr["FamilyDescription"]);
 
                         objUserMaster.objUserFamilyDetails = objUserFamily;
+
+                        //Religion Details
+                        objUserReligion.CastDetails = new SelectList(CastDetails(), "Value", "Text");
+                        objUserReligion.ReligionDetails = new SelectList(ReligionDetails(), "Value", "Text");
+                        objUserReligion.ReligionId = Convert.ToInt32(dr["ReligionId"]);
+                        objUserReligion.ReligionName = Convert.ToString(dr["ReligionName"]);
+                        objUserReligion.CastId = Convert.ToInt32(dr["CastId"]);
+                        objUserReligion.CastName = Convert.ToString(dr["CastName"]);
+                        //objUserReligion.SubCastName = "";//Convert.ToString(dr[""]);
+                        objUserReligion.MoonSign = Convert.ToString(dr["MoonSign"]);
+                        objUserReligion.Star = Convert.ToString(dr["Star"]);
+                        objUserReligion.Gotra = Convert.ToString(dr["Gotra"]);
+
+                        objUserMaster.objUserReligionDetails = objUserReligion;
+
+                        //Physical & Lifestyle Details
+                        objUserOther.CountryDetails = new SelectList(CountryDetails(), "Value", "Text");
+                        objUserOther.Height = Convert.ToString(dr["Height"]);
+                        objUserOther.BodyType = Convert.ToString(dr["BodyType"]);
+                        objUserOther.SkinTone = Convert.ToString(dr["SkinTone"]);
+                        objUserOther.BloodGroup = Convert.ToString(dr["BloodGroup"]);
+                        objUserOther.IsSmoke = Convert.ToString(dr["IsSmoke"]);
+                        objUserOther.IsDrink = Convert.ToString(dr["IsDrink"]);
+                        objUserOther.IsPhysicalDisable = Convert.ToString(dr["IsPhysicalDisable"]);
+                        objUserOther.BirthTime = Convert.ToString(dr["BirthTime"]);
+                        objUserOther.BirthCountryName = Convert.ToString(dr["BirthCountryName"]);
+                        objUserOther.BirthCountryId = Convert.ToInt32(dr["BirthCountryId"]);
+                        objUserOther.BirthPlace = Convert.ToString(dr["BirthPlace"]);
+
+                        objUserMaster.objUserOtherDetails = objUserOther;
                     }
                 }
 
@@ -630,6 +662,19 @@ namespace EkRishta.Areas.MobileApp.Controllers
             UserAddressDetails objUserAddress = BindAddressDetailsDropdown();
             return View(objUserAddress);
         }
+        public ActionResult _ReligionDetails()
+        {
+            UserReligionDetails objUserReligion = new UserReligionDetails();
+            objUserReligion.ReligionDetails = new SelectList(ReligionDetails(), "Value", "Text");
+            objUserReligion.CastDetails = new SelectList(CastDetails(), "Value", "Text");
+            return View(objUserReligion);
+        }
+        public ActionResult _OtherDetails()
+        {
+            UserOtherDetails objUserOther = new UserOtherDetails();
+            objUserOther.CountryDetails = new SelectList(CountryDetails(), "Value", "Text");
+            return View(objUserOther);
+        }
 
         #region Update User Details
 
@@ -743,25 +788,25 @@ namespace EkRishta.Areas.MobileApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateAddressDetails(UserAddressDetails objUseAddressDetails)
+        public ActionResult UpdateAddressDetails(UserAddressDetails objUserAddressDetails)
         {
             DataSet dsResponse = new DataSet();
             try
             {
                 Models.User objUser = (Models.User)(Session["USER"]);
-                objUseAddressDetails.UserId = objUser.UserId;
+                objUserAddressDetails.UserId = objUser.UserId;
                 
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                sqlCmd.Parameters.AddWithValue("@UserId", objUseAddressDetails.UserId);
-                sqlCmd.Parameters.AddWithValue("@Address1", objUseAddressDetails.Address1);
-                sqlCmd.Parameters.AddWithValue("@Address2", objUseAddressDetails.Address2);
-                sqlCmd.Parameters.AddWithValue("@CityId", objUseAddressDetails.CityId);
-                sqlCmd.Parameters.AddWithValue("@StateId", objUseAddressDetails.StateId);
-                sqlCmd.Parameters.AddWithValue("@CountryId", objUseAddressDetails.CountryId);
-                sqlCmd.Parameters.AddWithValue("@Pincode", objUseAddressDetails.Pincode);
+                sqlCmd.Parameters.AddWithValue("@UserId", objUserAddressDetails.UserId);
+                sqlCmd.Parameters.AddWithValue("@Address1", objUserAddressDetails.Address1);
+                sqlCmd.Parameters.AddWithValue("@Address2", objUserAddressDetails.Address2);
+                sqlCmd.Parameters.AddWithValue("@CityId", objUserAddressDetails.CityId);
+                sqlCmd.Parameters.AddWithValue("@StateId", objUserAddressDetails.StateId);
+                sqlCmd.Parameters.AddWithValue("@CountryId", objUserAddressDetails.CountryId);
+                sqlCmd.Parameters.AddWithValue("@Pincode", objUserAddressDetails.Pincode);
 
                 sqlCmd.CommandText = "UpdateAddressDetails";
                 sqlCmd.Connection = connString;
@@ -787,6 +832,169 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 }
 
                 return PartialView("~/Areas/MobileApp/Views/User/_AddressDetails.cshtml", objAddressDetails);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateFamilyDetails(UserFamilyDetails objUserFamilyDetails)
+        {
+            DataSet dsResponse = new DataSet();
+            try
+            {
+                Models.User objUser = (Models.User)(Session["USER"]);
+                objUserFamilyDetails.UserId = objUser.UserId;
+
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@UserId", objUserFamilyDetails.UserId);
+                sqlCmd.Parameters.AddWithValue("@FatherName", objUserFamilyDetails.FatherName);
+                sqlCmd.Parameters.AddWithValue("@FatherProfession", objUserFamilyDetails.FatherProfession);
+                sqlCmd.Parameters.AddWithValue("@MotherName", objUserFamilyDetails.MotherName);
+                sqlCmd.Parameters.AddWithValue("@MotherProfession", objUserFamilyDetails.MotherProfession);
+                sqlCmd.Parameters.AddWithValue("@FamilyDescription", objUserFamilyDetails.FamilyDescription);
+
+                sqlCmd.CommandText = "UpdateFamilyDetails";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                UserFamilyDetails objFamilyDetails = new UserFamilyDetails();
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        objFamilyDetails.FatherName = Convert.ToString(dr["FatherName"]);
+                        objFamilyDetails.FatherProfession = Convert.ToString(dr["FatherProfession"]);
+                        objFamilyDetails.MotherName = Convert.ToString(dr["MotherName"]);
+                        objFamilyDetails.MotherProfession = Convert.ToString(dr["MotherProfession"]);
+                        objFamilyDetails.FamilyDescription = Convert.ToString(dr["FamilyDescription"]);
+                    }
+                }
+
+                return PartialView("~/Areas/MobileApp/Views/User/_FamilyDetails.cshtml", objFamilyDetails);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+                return null;
+            }
+        }
+
+        
+
+        [HttpPost]
+        public ActionResult UpdateReligionDetails(UserReligionDetails objUserReligionDetails)
+        {
+            DataSet dsResponse = new DataSet();
+            try
+            {
+                Models.User objUser = (Models.User)(Session["USER"]);
+                objUserReligionDetails.UserId = objUser.UserId;
+
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@UserId", objUserReligionDetails.UserId);
+                sqlCmd.Parameters.AddWithValue("@ReligionId", objUserReligionDetails.ReligionId);
+                sqlCmd.Parameters.AddWithValue("@CastId", objUserReligionDetails.CastId);
+                sqlCmd.Parameters.AddWithValue("@MoonSign", objUserReligionDetails.MoonSign);
+                sqlCmd.Parameters.AddWithValue("@Star", objUserReligionDetails.Star);
+                sqlCmd.Parameters.AddWithValue("@Gotra", objUserReligionDetails.Gotra);
+
+                sqlCmd.CommandText = "UpdateReligionDetails";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                UserReligionDetails objReligionDetails = new UserReligionDetails();
+                objReligionDetails.ReligionDetails = new SelectList(ReligionDetails(), "Value", "Text");
+                objReligionDetails.CastDetails = new SelectList(CastDetails(), "Value", "Text");
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        objReligionDetails.ReligionId = Convert.ToInt32(dr["ReligionId"]);
+                        objReligionDetails.ReligionName = Convert.ToString(dr["ReligionName"]);
+                        objReligionDetails.CastId = Convert.ToInt32(dr["CastId"]);
+                        objReligionDetails.CastName = Convert.ToString(dr["CastName"]);
+                        //objReligionDetails.SubCastName = "";//Convert.ToString(dr[""]);
+                        objReligionDetails.MoonSign = Convert.ToString(dr["MoonSign"]);
+                        objReligionDetails.Star = Convert.ToString(dr["Star"]);
+                        objReligionDetails.Gotra = Convert.ToString(dr["Gotra"]);
+                    }
+                }
+
+                return PartialView("~/Areas/MobileApp/Views/User/_ReligionDetails.cshtml", objReligionDetails);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateOtherDetails(UserOtherDetails objUserOtherDetails)
+        {
+            DataSet dsResponse = new DataSet();
+            try
+            {
+                Models.User objUser = (Models.User)(Session["USER"]);
+                objUserOtherDetails.UserId = objUser.UserId;
+
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@UserId", objUserOtherDetails.UserId);
+                sqlCmd.Parameters.AddWithValue("@Height", objUserOtherDetails.Height);
+                sqlCmd.Parameters.AddWithValue("@BodyType", objUserOtherDetails.BodyType);
+                sqlCmd.Parameters.AddWithValue("@SkinTone", objUserOtherDetails.SkinTone);
+                sqlCmd.Parameters.AddWithValue("@BloodGroup", objUserOtherDetails.BloodGroup);
+                sqlCmd.Parameters.AddWithValue("@IsSmoke", objUserOtherDetails.IsSmoke);
+                sqlCmd.Parameters.AddWithValue("@IsDrink", objUserOtherDetails.IsDrink);
+                sqlCmd.Parameters.AddWithValue("@IsPhysicalDisable", objUserOtherDetails.IsPhysicalDisable);
+                sqlCmd.Parameters.AddWithValue("@BirthPlace", objUserOtherDetails.BirthPlace);
+                sqlCmd.Parameters.AddWithValue("@BirthTime", objUserOtherDetails.BirthTime);
+                sqlCmd.Parameters.AddWithValue("@BirthCountryId", objUserOtherDetails.BirthCountryId);
+
+                sqlCmd.CommandText = "UpdateOtherDetails";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                UserOtherDetails objOtherDetails = new UserOtherDetails();
+                objOtherDetails.CountryDetails = new SelectList(CountryDetails(), "Value", "Text");
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        objOtherDetails.Height = Convert.ToString(dr["Height"]);
+                        objOtherDetails.BodyType = Convert.ToString(dr["BodyType"]);
+                        objOtherDetails.SkinTone = Convert.ToString(dr["SkinTone"]);
+                        objOtherDetails.BloodGroup = Convert.ToString(dr["BloodGroup"]);
+                        objOtherDetails.IsSmoke = Convert.ToString(dr["IsSmoke"]);
+                        objOtherDetails.IsDrink = Convert.ToString(dr["IsDrink"]);
+                        objOtherDetails.IsPhysicalDisable = Convert.ToString(dr["IsPhysicalDisable"]);
+                        objOtherDetails.BirthTime = Convert.ToString(dr["BirthTime"]);
+                        objOtherDetails.BirthCountryName = Convert.ToString(dr["BirthCountryName"]);
+                        objOtherDetails.BirthCountryId = Convert.ToInt32(dr["BirthCountryId"]);
+                        objOtherDetails.BirthPlace = Convert.ToString(dr["BirthPlace"]);
+                    }
+                }
+
+                return PartialView("~/Areas/MobileApp/Views/User/_OtherDetails.cshtml", objOtherDetails);
             }
             catch (Exception ex)
             {

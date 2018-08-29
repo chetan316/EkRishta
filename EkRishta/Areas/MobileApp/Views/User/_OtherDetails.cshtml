@@ -1,0 +1,32 @@
+﻿@model Areas.Models.UserOtherDetails
+
+<ul id="ulOtherLabels">
+        <li><strong>Height </strong> <p> : @Model.Height</p>  </li>
+        <li><strong>Body Type </strong> <p>: @Model.BodyType </p>  </li>
+        <li><strong>Skin Tone </strong> <p> : @Model.SkinTone</p>  </li>
+        <li><strong>Blood Group </strong> <p>: @Model.BloodGroup </p>  </li>
+        <li><strong>Smoke </strong> <p> : @Model.IsSmoke</p>  </li>
+        <li><strong>Drink </strong> <p> : @Model.IsDrink</p>  </li>
+
+
+</ul>
+
+<ul id="ulOtherEdit" style="display:none;">
+    <li>
+        <strong>Height </strong>:
+        @Html.TextBoxFor(m => m.Height, htmlAttributes: new { @id = "txtHeight", @placeholder = "Enter Height", })
+    </li>
+    <li>
+        <strong>Body Type</strong>:
+        @Html.TextBoxFor(m => m.BodyType, htmlAttributes: new { @id = "txtAddress2", @placeholder = "Enter Body Type", })
+    </li>
+    
+    <li>
+        <strong>Country</strong>:
+        @Html.DropDownListFor(m => m.BirthCountryId, new SelectList(Model.CountryDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlCountry" })
+    </li>
+    <li>
+        <strong>Income</strong>:
+        @Html.TextBoxFor(m => m.Pincode, htmlAttributes: new { @id = "txtPincode", @placeholder = "Enter Pincodes" })
+    </li>
+</ul>
