@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Areas.Models
 {
@@ -26,5 +27,10 @@ namespace Areas.Models
         public int AlternateCountryId { get; set; }
         public string AlternateCountryName { get; set; }
         public string AlternatePincode { get; set; }
+        public int UserId { get; set; }
+
+        public SelectList StateDetails { get; set; }
+        public SelectList CityDetails { get; set; }
+        public SelectList CountryDetails { get; set; }
     }
 }

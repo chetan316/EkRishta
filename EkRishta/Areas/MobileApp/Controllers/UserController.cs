@@ -44,6 +44,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 UserBasicDetails objUserBasic = new UserBasicDetails();
                 UserProfessionalDetails objUserProfessional = new UserProfessionalDetails();
                 UserAddressDetails objUserAddress = new UserAddressDetails();
+                UserFamilyDetails objUserFamily = new UserFamilyDetails();
 
                 if (dsResponse != null && dsResponse.Tables[0] != null)
                 {
@@ -137,6 +138,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.objUserProfessionalDetails = objUserProfessional;
 
                         //Address Details
+                        objUserAddress = BindAddressDetailsDropdown();
                         objUserAddress.Address1 = Convert.ToString(dr["Address1"]);
                         objUserAddress.Address2 = Convert.ToString(dr["Address2"]);
                         objUserAddress.CityName = Convert.ToString(dr["CityName"]);
@@ -150,6 +152,17 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserAddress.AlternateStateName = "";// Convert.ToString(dr[""]);
                         objUserAddress.AlternateCountryName = "";// Convert.ToString(dr[""]);
                         objUserAddress.AlternatePincode = Convert.ToString(dr["AlternatePincode"]);
+
+                        objUserMaster.objUserAddressDetails = objUserAddress;
+
+                        //Family Details
+                        objUserFamily.FatherName = Convert.ToString(dr["FatherName"]);
+                        objUserFamily.FatherProfession = Convert.ToString(dr["FatherProfession"]);
+                        objUserFamily.MotherName = Convert.ToString(dr["MotherName"]);
+                        objUserFamily.MotherProfession = Convert.ToString(dr["MotherProfession"]);
+                        objUserFamily.FamilyDescription = Convert.ToString(dr["FamilyDescription"]);
+
+                        objUserMaster.objUserFamilyDetails = objUserFamily;
                     }
                 }
 
@@ -612,6 +625,12 @@ namespace EkRishta.Areas.MobileApp.Controllers
             return View(objUserBasic);
         }
 
+        public ActionResult _AddressDetails()
+        {
+            UserAddressDetails objUserAddress = BindAddressDetailsDropdown();
+            return View(objUserAddress);
+        }
+
         #region Update User Details
 
         [HttpPost]
@@ -723,6 +742,60 @@ namespace EkRishta.Areas.MobileApp.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult UpdateAddressDetails(UserAddressDetails objUseAddressDetails)
+        {
+            DataSet dsResponse = new DataSet();
+            try
+            {
+                Models.User objUser = (Models.User)(Session["USER"]);
+                objUseAddressDetails.UserId = objUser.UserId;
+                
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@UserId", objUseAddressDetails.UserId);
+                sqlCmd.Parameters.AddWithValue("@Address1", objUseAddressDetails.Address1);
+                sqlCmd.Parameters.AddWithValue("@Address2", objUseAddressDetails.Address2);
+                sqlCmd.Parameters.AddWithValue("@CityId", objUseAddressDetails.CityId);
+                sqlCmd.Parameters.AddWithValue("@StateId", objUseAddressDetails.StateId);
+                sqlCmd.Parameters.AddWithValue("@CountryId", objUseAddressDetails.CountryId);
+                sqlCmd.Parameters.AddWithValue("@Pincode", objUseAddressDetails.Pincode);
+
+                sqlCmd.CommandText = "UpdateAddressDetails";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                UserAddressDetails objAddressDetails = new UserAddressDetails();
+                objAddressDetails = BindAddressDetailsDropdown();
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        objAddressDetails.Address1 = Convert.ToString(dr["Address1"]);
+                        objAddressDetails.Address2 = Convert.ToString(dr["Address2"]);
+                        objAddressDetails.CityId = Convert.ToInt32(dr["CityId"]);
+                        objAddressDetails.CityName = Convert.ToString(dr["CityName"]);
+                        objAddressDetails.StateId = Convert.ToInt32(dr["StateId"]);
+                        objAddressDetails.StateName = Convert.ToString(dr["StateName"]);
+                        objAddressDetails.CountryId = Convert.ToInt32(dr["CountryId"]);
+                        objAddressDetails.CountryName = Convert.ToString(dr["CountryName"]);
+                        objAddressDetails.Pincode = Convert.ToString(dr["Pincode"]);
+                    }
+                }
+
+                return PartialView("~/Areas/MobileApp/Views/User/_AddressDetails.cshtml", objAddressDetails);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+                return null;
+            }
+        }
+
         public UserBasicDetails BindBasicDetailsDropdown()
         {
                 UserBasicDetails objUserBasic = new UserBasicDetails();
@@ -739,6 +812,22 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 throw;
             }
             return objUserBasic;
+        }
+        public UserAddressDetails BindAddressDetailsDropdown()
+        {
+            UserAddressDetails objUserAddress = new UserAddressDetails();
+            try
+            {
+                objUserAddress.CityDetails = new SelectList(CityDetails(), "Value", "Text");
+                objUserAddress.StateDetails = new SelectList(StateDetails(), "Value", "Text");
+                objUserAddress.CountryDetails = new SelectList(CountryDetails(), "Value", "Text");
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return objUserAddress;
         }
 
         #endregion
