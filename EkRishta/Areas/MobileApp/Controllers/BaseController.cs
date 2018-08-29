@@ -186,7 +186,7 @@ namespace EkRishta
 
         public List<SelectListItem> StateDetails()
         {
-            DataSet dsLanguage = new DataSet();
+            DataSet dsState = new DataSet();
             List<SelectListItem> lstSelectItem = new List<SelectListItem>();
             try
             {
@@ -197,12 +197,12 @@ namespace EkRishta
                 sqlCmd.CommandText = "GetStateMaster";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
-                sda.Fill(dsLanguage);
+                sda.Fill(dsState);
 
-                if (dsLanguage != null && dsLanguage.Tables[0].Rows.Count > 0)
+                if (dsState != null && dsState.Tables[0].Rows.Count > 0)
                 {
                     lstSelectItem.Add(new SelectListItem { Text = "Select State", Value = "0" });
-                    foreach (DataRow dr in dsLanguage.Tables[0].Rows)
+                    foreach (DataRow dr in dsState.Tables[0].Rows)
                     {
                         lstSelectItem.Add(new SelectListItem { Text = Convert.ToString(dr["StateName"]), Value = Convert.ToString(dr["StateId"]) });
                     }
@@ -217,7 +217,7 @@ namespace EkRishta
 
         public List<SelectListItem> CityDetails()
         {
-            DataSet dsLanguage = new DataSet();
+            DataSet dsCity = new DataSet();
             List<SelectListItem> lstSelectItem = new List<SelectListItem>();
             try
             {
@@ -228,14 +228,44 @@ namespace EkRishta
                 sqlCmd.CommandText = "GetCityMaster";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
-                sda.Fill(dsLanguage);
+                sda.Fill(dsCity);
 
-                if (dsLanguage != null && dsLanguage.Tables[0].Rows.Count > 0)
+                if (dsCity != null && dsCity.Tables[0].Rows.Count > 0)
                 {
                     lstSelectItem.Add(new SelectListItem { Text = "Select City", Value = "0" });
-                    foreach (DataRow dr in dsLanguage.Tables[0].Rows)
+                    foreach (DataRow dr in dsCity.Tables[0].Rows)
                     {
                         lstSelectItem.Add(new SelectListItem { Text = Convert.ToString(dr["CityName"]), Value = Convert.ToString(dr["CityId"]) });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return lstSelectItem;
+        }
+        public List<SelectListItem> CountryDetails()
+        {
+            DataSet dsCountry = new DataSet();
+            List<SelectListItem> lstSelectItem = new List<SelectListItem>();
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.CommandText = "GetCountryMaster";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsCountry);
+
+                if (dsCountry != null && dsCountry.Tables[0].Rows.Count > 0)
+                {
+                    lstSelectItem.Add(new SelectListItem { Text = "Select Country", Value = "0" });
+                    foreach (DataRow dr in dsCountry.Tables[0].Rows)
+                    {
+                        lstSelectItem.Add(new SelectListItem { Text = Convert.ToString(dr["CountryName"]), Value = Convert.ToString(dr["CountryId"]) });
                     }
                 }
             }

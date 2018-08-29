@@ -122,5 +122,6 @@ namespace Models.Custom
         public Areas.Models.UserBasicDetails objUserBasicDetails { get; set; }
         public Areas.Models.UserProfessionalDetails objUserProfessionalDetails { get; set; }
         public Areas.Models.UserAddressDetails objUserAddressDetails { get; set; }
+        public Areas.Models.UserFamilyDetails objUserFamilyDetails { get; set; }
     }
 }
