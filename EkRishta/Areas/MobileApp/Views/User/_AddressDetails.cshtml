@@ -16,7 +16,7 @@
             @Html.TextBoxFor(m => m.Address1, htmlAttributes: new { @id = "txtAddress1", @placeholder = "Enter Address", })
     </li>
     <li>
-        <strong>Field</strong>:
+        <strong>Address2</strong>:
         @Html.TextBoxFor(m => m.Address2, htmlAttributes: new { @id = "txtAddress2", @placeholder = "Enter Address", })
     </li>
     <li>
@@ -32,8 +32,8 @@
         @Html.DropDownListFor(m => m.CountryId, new SelectList(Model.CountryDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlCountry" })
     </li>
     <li>
-        <strong>Income</strong>:
-        @Html.TextBoxFor(m => m.Pincode, htmlAttributes: new { @id = "txtPincode", @placeholder = "Enter Pincodes" })
+        <strong>Pincode</strong>:
+        @Html.TextBoxFor(m => m.Pincode, htmlAttributes: new { @id = "txtPincode", @placeholder = "Enter Pincode" })
     </li>
 </ul>
 

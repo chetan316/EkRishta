@@ -180,7 +180,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
 
                         objUserMaster.objUserReligionDetails = objUserReligion;
 
-                        //Physical & Lifestyle Details
+                        //Physical & Lifestyle Details(Other Details)
                         objUserOther.CountryDetails = new SelectList(CountryDetails(), "Value", "Text");
                         objUserOther.Height = Convert.ToString(dr["Height"]);
                         objUserOther.BodyType = Convert.ToString(dr["BodyType"]);
@@ -967,7 +967,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.Parameters.AddWithValue("@IsPhysicalDisable", objUserOtherDetails.IsPhysicalDisable);
                 sqlCmd.Parameters.AddWithValue("@BirthPlace", objUserOtherDetails.BirthPlace);
                 sqlCmd.Parameters.AddWithValue("@BirthTime", objUserOtherDetails.BirthTime);
-                sqlCmd.Parameters.AddWithValue("@BirthCountryId", objUserOtherDetails.BirthCountryId);
+                //sqlCmd.Parameters.AddWithValue("@BirthCountryId", objUserOtherDetails.BirthCountryId);
 
                 sqlCmd.CommandText = "UpdateOtherDetails";
                 sqlCmd.Connection = connString;

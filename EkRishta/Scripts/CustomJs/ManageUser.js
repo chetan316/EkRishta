@@ -127,6 +127,7 @@ function ViewProfile(UserId) {
     });
 }
 
+/*----------------------------------------------------Update Profile Block---------------------------------------------------------------------------------*/
 function EditBasicDetails(cntrl) {
     if (cntrl.innerHTML.toLowerCase() == "edit") {
         $("#ulBasicLabels").css("display", "none");
@@ -196,6 +197,152 @@ function UpdateProfessionalDetails(cntrl) {
             $('#divProfessionalDetails').html(htmlText);
             $("#ulProfessionalLabels").css("display", "block");
             $("#ulProfessionalEdit").css("display", "none");
+            cntrl.innerHTML = "Edit";
+        },
+        error: function (HttpRequest, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    })
+}
+
+function EditAddressDetails(cntrl) {
+    if (cntrl.innerHTML.toLowerCase() == "edit") {
+        $("#ulAddressLabels").css("display", "none");
+        $("#ulAddressEdit").css("display", "block");
+        cntrl.innerHTML = "Update";
+    }
+    else {
+        UpdateAddressDetails(cntrl);
+    }
+}
+
+function UpdateAddressDetails(cntrl) {
+    var formData = {
+        Address1: $("#txtAddress1").val(),
+        Address2: $("#txtAddress2").val(),
+        CityId: $("#ddlCity").val(),
+        StateId: $("#ddlState").val(),
+        CountryId: $("#ddlCountry").val(),
+        Pincode: $("#txtPincode").val()
+    }
+    $.ajax({
+        url: "/User/UpdateAddressDetails",
+        data: formData,
+        type: "POST",
+        success: function (htmlText) {
+            $('#divAddressDetails').html(htmlText);
+            $("#ulAddressLabels").css("display", "block");
+            $("#ulAddressEdit").css("display", "none");
+            cntrl.innerHTML = "Edit";
+        },
+        error: function (HttpRequest, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    })
+}
+
+function EditFamilyDetails(cntrl) {
+    if (cntrl.innerHTML.toLowerCase() == "edit") {
+        $("#ulFamilyLabels").css("display", "none");
+        $("#ulFamilyEdit").css("display", "block");
+        cntrl.innerHTML = "Update";
+    }
+    else {
+        UpdateFamilyDetails(cntrl);
+    }
+}
+
+function UpdateFamilyDetails(cntrl) {
+    var formData = {
+        FatherName: $("#txtFatherName").val(),
+        FatherProfession: $("#txtFatherProfession").val(),
+        MotherName: $("#txtMotherName").val(),
+        MotherProfession: $("#txtMotherProfession").val(),
+        FamilyDescription: $("#txtFamilyDescription").val()
+    }
+    $.ajax({
+        url: "/User/UpdateFamilyDetails",
+        data: formData,
+        type: "POST",
+        success: function (htmlText) {
+            $('#divFamilyDetails').html(htmlText);
+            $("#ulFamilyLabels").css("display", "block");
+            $("#ulFamilyEdit").css("display", "none");
+            cntrl.innerHTML = "Edit";
+        },
+        error: function (HttpRequest, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    })
+}
+
+function EditReligionDetails(cntrl) {
+    if (cntrl.innerHTML.toLowerCase() == "edit") {
+        $("#ulReligionLabels").css("display", "none");
+        $("#ulReligionEdit").css("display", "block");
+        cntrl.innerHTML = "Update";
+    }
+    else {
+        UpdateReligionDetails(cntrl);
+    }
+}
+
+function UpdateReligionDetails(cntrl) {
+    var formData = {
+        ReligionId: $("#ddlReligion").val(),
+        CastId: $("#ddlCast").val(),
+        MoonSign: $("#txtMoonsign").val(),
+        Star: $("#txtStar").val(),
+        Gotra: $("#txtGotra").val()
+    }
+    $.ajax({
+        url: "/User/UpdateReligionDetails",
+        data: formData,
+        type: "POST",
+        success: function (htmlText) {
+            $('#divReligionDetails').html(htmlText);
+            $("#ulReligionLabels").css("display", "block");
+            $("#ulReligionEdit").css("display", "none");
+            cntrl.innerHTML = "Edit";
+        },
+        error: function (HttpRequest, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    })
+}
+
+function EditOtherDetails(cntrl) {
+    if (cntrl.innerHTML.toLowerCase() == "edit") {
+        $("#ulOtherLabels").css("display", "none");
+        $("#ulOtherEdit").css("display", "block");
+        cntrl.innerHTML = "Update";
+    }
+    else {
+        UpdateOtherDetails(cntrl);
+    }
+}
+
+function UpdateOtherDetails(cntrl) {
+    var formData = {
+        Height: $("#txtHeight").val(),
+        BodyType: $("#txtBodyType").val(),
+        SkinTone: $("#txtSkinTone").val(),
+        BloodGroup: $("#ddlBloodGroup").val(),
+        BirthPlace: $("#txtBirthPlace").val(),
+        BirthTime: $("#txtBirthTime").val(),
+        IsSmoke: $("#ddlSmoke").val(),
+        IsDrink: $("#ddlDrink").val(),
+        IsPhysicalDisable: $("#ddlPhysicalDisable").val(),
+        IdealpartnerDescription: $("#txtIdealpartnerDescription").val()
+    }
+    $.ajax({
+        url: "/User/UpdateOtherDetails",
+        data: formData,
+        type: "POST",
+        success: function (htmlText) {
+            $('#divOtherDetails').html(htmlText);
+            $("#ulOtherLabels").css("display", "block");
+            $("#ulOtherEdit").css("display", "none");
             cntrl.innerHTML = "Edit";
         },
         error: function (HttpRequest, textStatus, errorThrown) {

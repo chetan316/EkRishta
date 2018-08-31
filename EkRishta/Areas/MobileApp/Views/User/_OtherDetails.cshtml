@@ -1,12 +1,17 @@
 ﻿@model Areas.Models.UserOtherDetails
 
 <ul id="ulOtherLabels">
-        <li><strong>Height </strong> <p> : @Model.Height</p>  </li>
-        <li><strong>Body Type </strong> <p>: @Model.BodyType </p>  </li>
-        <li><strong>Skin Tone </strong> <p> : @Model.SkinTone</p>  </li>
-        <li><strong>Blood Group </strong> <p>: @Model.BloodGroup </p>  </li>
-        <li><strong>Smoke </strong> <p> : @Model.IsSmoke</p>  </li>
-        <li><strong>Drink </strong> <p> : @Model.IsDrink</p>  </li>
+    <li><strong>Height </strong> <p> : @Model.Height</p>  </li>
+    <li><strong>Body Type </strong> <p>: @Model.BodyType </p>  </li>
+    <li><strong>Skin Tone </strong> <p> : @Model.SkinTone</p>  </li>
+    <li><strong>Blood Group </strong> <p>: @Model.BloodGroup </p>  </li>
+    <li><strong>Birth Place </strong> <p>: @Model.BirthPlace </p>  </li>
+    <li><strong>Birth Time</strong> <p>: @Model.BirthTime </p>  </li>
+    <li><strong>Birth Country</strong> <p>: @Model.BirthCountryName </p>  </li>
+    <li><strong>Smoke </strong> <p> : @Model.IsSmoke</p>  </li>
+    <li><strong>Drink </strong> <p> : @Model.IsDrink</p>  </li>
+    <li><strong>Physical Disable </strong> <p> : @Model.IsPhysicalDisable</p>  </li>
+    <li><strong>Ideal Partner Description </strong> <p> : @Model.IdealpartnerDescription</p>  </li>
 
 
 </ul>
@@ -18,15 +23,61 @@
     </li>
     <li>
         <strong>Body Type</strong>:
-        @Html.TextBoxFor(m => m.BodyType, htmlAttributes: new { @id = "txtAddress2", @placeholder = "Enter Body Type", })
+        @Html.TextBoxFor(m => m.BodyType, htmlAttributes: new { @id = "txtBodyType", @placeholder = "Enter Body Type", })
     </li>
-    
+
+    <li>
+        <strong>Skin Tone</strong>:
+        @Html.TextBoxFor(m => m.SkinTone, htmlAttributes: new { @id = "txtSkinTone", @placeholder = "Enter Skin Tone", })
+        
+    </li>
+    <li>
+        <strong>Blood Group</strong>:
+        @Html.DropDownListFor(m => m.BloodGroup, new SelectList(new List<object> { new { value ="", text="Select"},
+                                                                                   new{value="A+",text="A+" },
+                                                                                   new{value="A-",text="A-" },
+                                                                                   new{value="B+",text="B+" },
+                                                                                   new{value="B-",text="B-" },
+                                                                                   new{value="O+",text="O+" },
+                                                                                   new{value="O-",text="O-" },
+                                                                                   new{value="AB+",text="AB+" },
+                                                                                   new{value="AB-",text="AB-" }},"Value", "Text"), htmlAttributes: new { @id = "ddlBloodGroup" })
+    </li>
+    <li>
+        <strong>Birth Place</strong>:
+        @Html.TextBoxFor(m => m.BirthPlace, htmlAttributes: new { @id = "txtBirthPlace", @placeholder = "Enter Birth Place", })
+
+    </li>
+    <li>
+        <strong>Birth Time</strong>:
+        @Html.TextBoxFor(m => m.BirthTime, htmlAttributes: new { @id = "txtBirthTime", @placeholder = "Enter Birth Time", })
+
+    </li>
     <li>
         <strong>Country</strong>:
-        @Html.DropDownListFor(m => m.BirthCountryId, new SelectList(Model.CountryDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlCountry" })
+        @Html.DropDownListFor(m => m.BirthCountryId, new SelectList(Model.CountryDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlBirthCountry" })
     </li>
     <li>
-        <strong>Income</strong>:
-        @Html.TextBoxFor(m => m.Pincode, htmlAttributes: new { @id = "txtPincode", @placeholder = "Enter Pincodes" })
+        <strong>Smoke</strong>:
+        @Html.DropDownListFor(m => m.IsSmoke,new SelectList(new List<object> { new { value = "1", text = "Yes" },
+                                                                               new { value = "0", text = "No" }},"Value","Text"),htmlAttributes:new { @id="ddlSmoke"})
+
+    </li>
+    <li>
+        <strong>Drink</strong>:
+        @Html.DropDownListFor(m => m.IsDrink, new SelectList(new List<object> { new { value = "1", text = "Yes" },
+                                                                                new { value = "0", text = "No" }}, "Value", "Text"), htmlAttributes: new { @id = "ddlDrink" })
+
+    </li>
+    <li>
+        <strong>Physical Disable</strong>:
+        @Html.DropDownListFor(m => m.IsPhysicalDisable, new SelectList(new List<object> { new { value = "1", text = "Yes" },
+                                                                                          new { value = "0", text = "No" }}, "Value", "Text"), htmlAttributes: new { @id = "ddlPhysicalDisable" })
+
+    </li>
+    <li>
+        <strong>Ideal Partner Description</strong>:
+        @Html.TextAreaFor(m => m.IdealpartnerDescription, htmlAttributes: new { @id = "txtIdealpartnerDescription", @placeholder = "Enter Ideal Partner Description", })
+
     </li>
 </ul>
