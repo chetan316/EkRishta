@@ -50,8 +50,8 @@
     });
 }
 
-function ShortlistProfile(shortlistedUserId, requestStatus) {
-    requestStatus = (requestStatus == "" || requestStatus == "NS") ? "S" : "NS";
+function ShortlistProfile(shortlistedUserId, requestStatus,cntrl) {
+    requestStatus = (requestStatus == "" || requestStatus == "NS") ? "NS" : requestStatus;
     var obj = {
         RequestedUserId: shortlistedUserId,
         RequestStatus: requestStatus
@@ -65,6 +65,8 @@ function ShortlistProfile(shortlistedUserId, requestStatus) {
         //dataType: "html",
         success: function (data) {
             if (data != "") {
+                var newrequestStatus = requestStatus=="NS"?"S":"NS";
+                $(cntrl).attr('onclick', 'ShortlistProfile('+shortlistedUserId+',\''+newrequestStatus+'\',this'+')')
                 //if (data == "Request already Sent") {
                 //    $("#divMessage").html("Request already Sent");
                 //    $("#divMessage").attr("class", "alert alert-info fade in");
