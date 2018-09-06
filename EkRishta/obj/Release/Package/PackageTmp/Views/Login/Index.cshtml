@@ -1,0 +1,65 @@
+﻿@model Models.Login
+
+@{
+    Layout = null;
+    ViewBag.Title = "Login";
+} <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no, minimum-scale=1.0" />
+<link href="~/Content/Mobile.css?rd=1" rel="stylesheet" />
+@Styles.Render("~/Content/css")
+
+
+@{ Html.EnableClientValidation(); }
+@using (Html.BeginForm("Login", "Login", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    if (@ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger fade in">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+    <style>
+        body {
+            padding-top: 0;
+        }
+    </style>
+    <div class="bg-login">
+        <img alt="ek vivaah " src="/images/banner2.jpg">
+    </div>
+
+    <div class="login-body">
+        <div class="login-name">
+            Login
+        </div>
+
+
+        <div class="input">
+            <div class="picuser"><img alt="ek vivaah " src="/images/user.svg"> </div>
+            @Html.TextBoxFor(a => a.MobileNo, htmlAttributes: new { @class = "form", @placeholder = "Enter Email Id or Mobile No", })
+        </div>
+        <div class="input">
+            @Html.ValidationMessageFor(a => a.MobileNo)
+    </div>
+    <div class="input">
+        <div class="picuser"><img alt="ek vivaah " src="/images/wellness.svg"> </div>
+        @Html.TextBoxFor(a => a.LoginPassword, htmlAttributes: new { @class = "form", @placeholder = "Password", @type = "password" })
+    </div>
+    <div class="input">
+        @Html.ValidationMessageFor(a => a.LoginPassword)
+</div>
+
+<div class="login-btn"> <input type="submit" value="Login" /></div>
+
+</div>
+
+    <div class="Register">
+        @Html.ActionLink("Register Here", "RegisterUser", "MobileApp/UserRegistration")
+    </div>
+
+
+}
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")

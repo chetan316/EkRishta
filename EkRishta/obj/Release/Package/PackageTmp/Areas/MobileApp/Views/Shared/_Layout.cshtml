@@ -81,13 +81,10 @@
                         @Html.ActionLink("My Matches", "MatchingProfile", "User", new { area = "MobileApp" }, null)
                     </li>
                     <li>
-                        @Html.ActionLink("Pending Requests", "SentRequest", "User", new { area = "MobileApp" }, null)
+                        @Html.ActionLink("Sent Requests", "SentRequest", "User", new { area = "MobileApp" }, null)
                     </li>
                     <li>
-                        @Html.ActionLink("Accepted Requests", "AcceptedRequest", "User", new { area = "MobileApp",RequestType="Accepted" }, null)
-                    </li>
-                    <li>
-                        @Html.ActionLink("Accepted Me", "AcceptedRequest", "User", new { area = "MobileApp", RequestType = "AcceptedMe" }, null)
+                        @Html.ActionLink("Accepted Requests", "AcceptedRequest", "User", new { area = "MobileApp" }, null)
                     </li>
                     <li>
                         @Html.ActionLink("Blocked Profiles", "BlockedUser", "User", new { area = "MobileApp" }, null)
