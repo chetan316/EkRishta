@@ -1,0 +1,33 @@
+﻿@model Areas.Models.UserFamilyDetails
+
+<ul id="ulFamilyLabels">
+    <li><strong>Father Name </strong> <p> : @Model.FatherName</p>  </li>
+    <li><strong>Father Profession </strong> <p>: @Model.FatherProfession </p>  </li>
+    <li><strong>Mother Name  </strong> <p>: @Model.MotherName  </p>  </li>
+    <li><strong>Mother Profession</strong> <p>: @Model.MotherProfession </p>  </li>
+    <li><strong>Family Description </strong> <p>: @Model.FamilyDescription </p>  </li>
+</ul>
+
+<ul id="ulFamilyEdit" style="display:none;">
+    <li>
+        <strong>Father Name</strong>:
+        @Html.TextBoxFor(m => m.FatherName, htmlAttributes: new { @id = "txtFatherName", @placeholder = "Enter Father Name" })
+    </li>
+    <li>
+        <strong>Father Profession</strong>:
+        @Html.TextBoxFor(m => m.FatherProfession, htmlAttributes: new { @id = "txtFatherProfession", @placeholder = "Enter Father Profession" })
+    </li>
+    <li>
+        <strong>Mother Name</strong>:
+        @Html.TextBoxFor(m => m.MotherName, htmlAttributes: new { @id = "txtMotherName", @placeholder = "Enter Mother Name" })
+    </li>
+    <li>
+        <strong>Mother Profession</strong>:
+        @Html.TextBoxFor(m => m.MotherProfession, htmlAttributes: new { @id = "txtMotherProfession", @placeholder = "Enter Mother Profession" })
+    </li>
+    <li>
+        <strong>Family Description</strong>:
+        @Html.TextAreaFor(m => m.FamilyDescription, htmlAttributes: new { @id = "txtFamilyDescription", @placeholder = "Enter Family Description" })
+    </li>
+</ul>
+

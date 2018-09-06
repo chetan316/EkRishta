@@ -89,9 +89,9 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.BodyType = Convert.ToString(dr["BodyType"]);
                         objUserMaster.SkinTone = Convert.ToString(dr["SkinTone"]);
                         objUserMaster.BloodGroup = Convert.ToString(dr["BloodGroup"]);
-                        objUserMaster.IsSmoke = Convert.ToString(dr["IsSmoke"]);
-                        objUserMaster.IsDrink = Convert.ToString(dr["IsDrink"]);
-                        objUserMaster.IsPhysicalDisable = Convert.ToString(dr["IsPhysicalDisable"]);
+                        objUserMaster.IsSmoke = Convert.ToString(dr["IsSmoke"]) == string.Empty ? "Not Specified" : Convert.ToString(dr["IsSmoke"]);
+                        objUserMaster.IsDrink = Convert.ToString(dr["IsDrink"]) == string.Empty ? "Not Specified" : Convert.ToString(dr["IsDrink"]);
+                        objUserMaster.IsPhysicalDisable = Convert.ToString(dr["IsPhysicalDisable"]) == string.Empty ? "Not Specified" : Convert.ToString(dr["IsPhysicalDisable"]);
                         objUserMaster.CallTime = Convert.ToString(dr["CallTime"]);
                         objUserMaster.ProfileCreatedBy = Convert.ToString(dr["ProfileCreatedBy"]);
                         objUserMaster.ProfilePicPath = "/Uploads/" + objUser.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
@@ -186,13 +186,14 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserOther.BodyType = Convert.ToString(dr["BodyType"]);
                         objUserOther.SkinTone = Convert.ToString(dr["SkinTone"]);
                         objUserOther.BloodGroup = Convert.ToString(dr["BloodGroup"]);
-                        objUserOther.IsSmoke = Convert.ToString(dr["IsSmoke"]);
-                        objUserOther.IsDrink = Convert.ToString(dr["IsDrink"]);
-                        objUserOther.IsPhysicalDisable = Convert.ToString(dr["IsPhysicalDisable"]);
+                        objUserOther.IsSmoke = Convert.ToString(dr["IsSmoke"]).Trim() == string.Empty ? "Not Specified" : Convert.ToString(dr["IsSmoke"]);
+                        objUserOther.IsDrink = Convert.ToString(dr["IsDrink"]).Trim() == string.Empty ? "Not Specified" : Convert.ToString(dr["IsDrink"]);
+                        objUserOther.IsPhysicalDisable = Convert.ToString(dr["IsPhysicalDisable"]).Trim() == string.Empty ? "Not Specified" : Convert.ToString(dr["IsPhysicalDisable"]);
                         objUserOther.BirthTime = Convert.ToString(dr["BirthTime"]);
                         objUserOther.BirthCountryName = Convert.ToString(dr["BirthCountryName"]);
                         objUserOther.BirthCountryId = Convert.ToInt32(dr["BirthCountryId"]);
                         objUserOther.BirthPlace = Convert.ToString(dr["BirthPlace"]);
+                        objUserOther.IdealpartnerDescription = Convert.ToString(dr["IdealpartnerDescription"]);
 
                         objUserMaster.objUserOtherDetails = objUserOther;
                     }
@@ -396,6 +397,63 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 //sqlCmd.Parameters.AddWithValue("@RequestStatus", "Blocked");
                 sqlCmd.CommandText = "GetBlockedRequest";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        UserMaster objUserMaster = new UserMaster();
+
+                        objUserMaster.RequestSource = MethodInfo.GetCurrentMethod().Name;
+                        objUserMaster.UserId = Convert.ToInt32(dr["UserId"]);
+                        objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
+                        objUserMaster.LastName = Convert.ToString(dr["LastName"]);
+                        objUserMaster.ProfileId = Convert.ToString(dr["ProfileId"]);
+                        objUserMaster.MobileNo = Convert.ToString(dr["MobileNo"]);
+                        objUserMaster.DOB = Convert.ToString(dr["DOB"]);
+                        objUserMaster.Age = Convert.ToString(dr["Age"]);
+                        objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
+                        objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
+                        objUserMaster.IsSurnameVisible = Convert.ToString(dr["IsSurnameVisible"]);
+                        objUserMaster.IsDPVisible = Convert.ToString(dr["IsDPVisible"]);
+                        objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]);
+                        objUserMaster.Height = Convert.ToString(dr["Height"]);
+                        objUserMaster.ProfilePicPath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
+                        objUserMaster.ReligionId = Convert.ToInt32(dr["ReligionId"]);
+                        objUserMaster.ReligionName = Convert.ToString(dr["ReligionName"]);
+                        objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
+                        objUserMaster.CastName = Convert.ToString(dr["CastName"]);
+                        objUserMaster.ShareCount = objUser.ShareCount;
+
+                        lstUserMaster.Add(objUserMaster);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return View("RequestInfo", lstUserMaster);
+        }
+
+        public ActionResult RejectedRequest()
+        {
+            DataSet dsResponse = new DataSet();
+            List<UserMaster> lstUserMaster = new List<UserMaster>();
+
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                Models.User objUser = (Models.User)(Session["USER"]);
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                //sqlCmd.Parameters.AddWithValue("@RequestStatus", "Blocked");
+                sqlCmd.CommandText = "GetRejectedRequest ";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsResponse);

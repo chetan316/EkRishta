@@ -1,0 +1,175 @@
+﻿@model Models.UserRegistration
+@{
+    ViewBag.Title = "RegisterUser";
+}
+<link href="~/Content/Mobile.css?rd=1" rel="stylesheet" />
+<div class="user_title Profile">  <p> Register User</p>    </div>
+<style>
+    .mobile-nav {
+        display: none;
+    }
+
+    body {
+        padding-top: 0px;
+        background: #ff0d3d;
+    }
+
+    .navbar.navbar-inverse.navbar-fixed-top {
+        display: none;
+    }
+
+    .user_title {
+        margin-top: 0;
+        clear: both;
+        overflow: hidden;
+        background: #fff;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 10px;
+        color: #252525;
+        box-shadow: 0 8px 7px #5a2222;
+    }
+
+    .input {
+        clear: both;
+        margin-bottom: 1px;
+        position: relative;
+    }
+</style>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmRegister" }))
+{
+    @Html.AntiForgeryToken()
+    @*<div id="dvValidationMessage" class="alert alert-danger fade in">
+        </div>*@
+    <div id="dvValidationMessage">
+    </div>
+    <div class="bg-login">
+        <img alt="Profile" src="/images/banner2.jpg">
+    </div>
+    @Html.HiddenFor(m => m.UserId, new { @id = "hdnUserId" })
+    <div id="dvGender" class="ac gender">
+        <div class="select_tile">select  </div>
+
+
+        @Html.RadioButtonFor(m => m.Gender, "M", htmlAttributes: new { @id = "rdbMale", @checked = "" }) @Html.Label("I am Male", htmlAttributes: new { @for = "rdbMale", @style = "background:url('/images/male.png') no-repeat;background-size: contain;" })
+        @Html.RadioButtonFor(m => m.Gender, "F", htmlAttributes: new { @id = "rdbFemale" }) @Html.Label("I am Female", htmlAttributes: new { @for = "rdbFemale", @style = "background:url('/images/female.png') no-repeat;background-size: contain;" })
+        <br />
+        <div class="Register next">
+            <a id="acNextGender">Next</a>
+        </div>
+    </div>
+
+    <div id="dvMobile" class="ac" style="display:none;">
+        <div class="select_tile"> Your Mobile Number  </div>
+        <div class="input">
+            <div class="picuser"><img alt="ek vivaah " src="/images/smartphone.svg"> </div>
+            @Html.TextBoxFor(m => m.MobileNo, htmlAttributes: new { @id = "txtMobileNo", @placeholder = "Enter Mobile No", @type = "number", @maxlength = "10" })
+        </div>
+        <br />
+        <div class="Register next">
+            <input type="button" id="acNextMobile" disabled="disabled" value="Next" />
+        </div>
+    </div>
+
+    <div id="dvOTP" class="ac" style="display:none;">
+        <div class="select_tile"> OTP Number </div>
+        <div class="input">
+            <div class="picuser"><img alt="ek vivaah " src="/images/smartphone.svg"> </div>
+            @Html.TextBoxFor(m => m.OTP, htmlAttributes: new { @id = "txtOTP", @placeholder = "Enter OTP", @type = "number" })
+        </div>
+        <div class="Register next">
+            <a id="acNextOTP">Save And Next</a>
+        </div>
+    </div>
+
+    <div id="dvLoginDetails" class="ac" style="display:none;">
+        <div class="select_tile"> Login Details </div>
+
+        <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/mail.svg"> </div>@Html.TextBoxFor(m => m.EmailId, htmlAttributes: new { @id = "txtEmail", @placeholder = "Enter Email", })</div>
+        <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/shield.svg"> </div>@Html.TextBoxFor(m => m.Password, htmlAttributes: new { @id = "txtPassword", @placeholder = "Enter Password", @type = "password", })</div>
+        <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/shield.svg"> </div>	@Html.TextBoxFor(m => m.Password, htmlAttributes: new { @id = "txtConfirmPassword", @placeholder = "Enter Password", @type = "password", })</div>
+        <br />
+        <div class="Register next">
+            <a id="acNextLoginDetails">Save And Next</a>
+        </div>
+    </div>
+
+
+    <div id="dvProfileCreatedFor" class="ac" style="display:none;">
+        <h3>Profile Created By</h3>
+        <div class="Guardian">  @Html.RadioButtonFor(m => m.ProfileCreatedBy, "1", htmlAttributes: new { @id = "rdbSelf", @checked = "" }) @Html.Label("Self", htmlAttributes: new { @for = "rdbSelf", @style = "background:url('/images/self.png') no-repeat;background-size: contain;" })</div>
+        <div class="Guardian"> @Html.RadioButtonFor(m => m.ProfileCreatedBy, "2", htmlAttributes: new { @id = "rdbParent" }) @Html.Label("Parent/Guardian", htmlAttributes: new { @for = "rdbParent", @style = "background:url('/images/parents.png') no-repeat;background-size: contain;" })</div>
+        <div class="Guardian"> @Html.RadioButtonFor(m => m.ProfileCreatedBy, "3", htmlAttributes: new { @id = "rdbFriend" }) @Html.Label("Sibling/Friend", htmlAttributes: new { @for = "rdbFriend", @style = "background:url('/images/sib.png') no-repeat;background-size: contain;" })</div>
+        <br />
+        <div class="Register next">
+            <a id="acNextProfileCreatedDetails">Save And Next</a>
+        </div>
+    </div>
+    <div id="dvContactDetails" class="ac" style="display:none;">
+        <h3>Contact Details</h3>
+        <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/user2.svg"> </div> @Html.TextBoxFor(m => m.FirstName, htmlAttributes: new { @id = "txtFirstName", @placeholder = "First Name", })	  </div>
+        <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/user2.svg"> </div> @Html.TextBoxFor(m => m.LastName, htmlAttributes: new { @id = "txtLastName", @placeholder = "Last Name", })	  </div>
+        <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/smartphone.svg"> </div> @Html.TextBoxFor(m => m.MobileNo, htmlAttributes: new { @id = "txtContactMobileNo", @placeholder = "Mobile Number", @disabled = "disabled", })	  </div>
+        <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/mail.svg"> </div> @Html.TextBoxFor(m => m.EmailId, htmlAttributes: new { @id = "txtContactEmailId", @placeholder = "Email Id", @disabled = "disabled", })	  </div>
+        <div class="deta_sec">
+            <div class="select_opt">  @Html.DropDownListFor(m => m.DOBDay, new SelectList(Model.DOBDayDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBDay", @name = "DOBDayValue", @class = " DOBddl", @onchange = "CalculateAge()" }) </div>
+            <div class="select_opt"> @Html.DropDownListFor(m => m.DOBMonth, new SelectList(Model.DOBMonthDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBMonth", @class = " DOBddl", @onchange = "CalculateAge()" }) </div>
+            <div class="select_opt"> @Html.DropDownListFor(m => m.DOBYear, new SelectList(Model.DOBYearDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBYear", @class = " DOBddl", @onchange = "CalculateAge()" }) </div>
+            <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/user2.svg"> </div> @Html.HiddenFor(m => m.Age, htmlAttributes: new { @id = "hdnAge" })</div>
+        </div>
+        <div class="input">
+            <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/clock.svg"> </div></div>
+            @Html.TextBoxFor(m => m.CallTime, htmlAttributes: new { @id = "txtContactTime", @placeholder = "Call to Time", })
+        </div>
+        <div class="Register next">
+            <a id="acNextContactDetails">Save And Next</a>
+        </div>
+    </div>
+    <div id="dvBasicDetails" class="ac" style="display:none;">
+        <h3>Basic Details</h3>
+        <div class="input">
+            @Html.DropDownListFor(m => m.MaritialStatus, new SelectList(new List<object>{new {value="Unmarried",text = "Unmarried"},
+                                                                                     new {value="Divorced",text="Divorced"},
+                                                                                     new {value="Widow", text="Widow"},
+                                                                                     new {value="Widower", text="Widower"}}, "value", "text", 1), htmlAttributes: new { @class = "form-" })
+        </div>
+
+        <div class="input">  @Html.DropDownListFor(m => m.ReligionId, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { @class = "form-" })</div>
+        <div class="input"> @Html.DropDownListFor(m => m.MotherTounge, new SelectList(Model.LanguageDetails, "Value", "Text"), htmlAttributes: new { @class = "form-" })</div>
+        @Html.DropDownListFor(m => m.StateId, new SelectList(Model.StateDetails, "Value", "Text"), htmlAttributes: new { @class = "form-" })
+        @Html.DropDownListFor(m => m.CityId, new SelectList(Model.CityDetails, "Value", "Text"), htmlAttributes: new { @class = "form-" })
+
+        <div class="input">
+            @Html.DropDownListFor(m => m.Income, new SelectList(new List<object>{new {value=0,text = "Income"},
+                                                                                     new {value="Upto 1 Lakh",text = "Upto 1 Lakh"},
+                                                                                     new {value="1-2 Lakh",text="1-2 Lakh"},
+                                                                                     new {value="2-4 Lakh", text="2-4 Lakh"},
+                                                                                     new {value="4-6 Lakh", text="4-6 Lakh"},
+                                                                                     new {value="6-8 Lakh", text="6-8 Lakh"},
+                                                                                     new {value="8-10 Lakh", text="8-10 Lakh"},
+                                                                                     new {value="More than 10 Lakh", text="More than 10 Lakh"}}, "value", "text", 1), htmlAttributes: new { @class = "form-" })
+        </div>
+        <br />
+        <div class="Register next">
+            <a id="acNextBasicDetails">Save And Next</a>
+        </div>
+    </div>
+    <div id="dvPhoto" class="ac" style="display:none;">
+        <h3>Add your Profile Photo</h3>
+        <input id="fuPhoto" type="file" name="file-5[]" class="inputfile inputfile-4" data-multiple-caption="{count} files selected" multiple />
+        <label for="fuPhoto">
+            <figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg></figure>
+            <br /><input type="button" id="btnUpload" value="Upload Photo" class="form-control btn-primary ac" />
+    </div>
+
+    <div id="dvSuccessMessage"></div>
+    @*<div class="alert alert-success alert-dismissible fade in">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Success!</strong> This alert box could indicate a successful or positive action.
+        </div>*@
+}
+@section scripts{
+    <script src="~/Scripts/CustomJs/common.js?rd=1"></script>
+    <script src="~/Scripts/CustomJs/UserRegistration.js?rd=1"></script>
+    <script>(function (e, t, n) { var r = e.querySelectorAll("html")[0]; r.className = r.className.replace(/(^|\s)no-js(\s|$)/, "$1js$2") })(document, window, 0);</script>
+}
