@@ -118,6 +118,7 @@ namespace Models.Custom
         /// TO Identify from where request is initiated
         /// </summary>
         public string RequestSource { get; set; }
+        public string IsShortlisted { get; set; }
 
         public Areas.Models.UserBasicDetails objUserBasicDetails { get; set; }
         public Areas.Models.UserProfessionalDetails objUserProfessionalDetails { get; set; }
