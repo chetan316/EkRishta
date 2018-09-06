@@ -258,6 +258,14 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         //objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
                         objUserMaster.ShareCount = objUser.ShareCount;
 
+                        foreach (DataRow dr1 in dsResponse.Tables[1].Rows)
+                        {
+                            int UserId = Convert.ToInt32(dr1["ShortlistedUserId"]);
+                            if (objUserMaster.UserId == UserId)
+                                objUserMaster.IsShortlisted = "S";
+                            else
+                                objUserMaster.IsShortlisted = "NS";
+                        }
                         lstUserMaster.Add(objUserMaster);
                     }
                 }
@@ -324,7 +332,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             return View("RequestInfo", lstUserMaster);
         }
 
-        public ActionResult AcceptedRequest()
+        public ActionResult AcceptedRequest(string RequestType)
         {
             DataSet dsResponse = new DataSet();
             List<UserMaster> lstUserMaster = new List<UserMaster>();
@@ -337,7 +345,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 Models.User objUser = (Models.User)(Session["USER"]);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
-                //sqlCmd.Parameters.AddWithValue("@RequestStatus", "Accepted");
+                sqlCmd.Parameters.AddWithValue("@RequestType", RequestType);
                 sqlCmd.CommandText = "GetAcceptedRequest";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
@@ -609,7 +617,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
 
                         objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]);
                         objUserMaster.MotherTounge = Convert.ToString(dr["MotherTounge"]);
-                        objUserMaster.BirthCountry = Convert.ToString(dr["BirthCountry"]);
+                        objUserMaster.BirthCountry = Convert.ToString(dr["BirthCountryName"]);
                         objUserMaster.BirthPlace = Convert.ToString(dr["BirthPlace"]);
                         objUserMaster.BirthTime = Convert.ToString(dr["BirthTime"]);
                         objUserMaster.Height = Convert.ToString(dr["Height"]);
@@ -727,7 +735,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objBasicDetails.MotherTounge = Convert.ToString(dr["LanguageName"]);
                     }
                 }
-                
+
                 return PartialView("~/Areas/MobileApp/Views/User/_BasicDetails.cshtml", objBasicDetails);
             }
             catch (Exception ex)
@@ -795,7 +803,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             {
                 Models.User objUser = (Models.User)(Session["USER"]);
                 objUserAddressDetails.UserId = objUser.UserId;
-                
+
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
@@ -889,7 +897,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             }
         }
 
-        
+
 
         [HttpPost]
         public ActionResult UpdateReligionDetails(UserReligionDetails objUserReligionDetails)
@@ -1006,7 +1014,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
 
         public UserBasicDetails BindBasicDetailsDropdown()
         {
-                UserBasicDetails objUserBasic = new UserBasicDetails();
+            UserBasicDetails objUserBasic = new UserBasicDetails();
             try
             {
                 objUserBasic.DOBDayDetails = new SelectList(DOBDayDetails(), "Value", "Text");
@@ -1038,6 +1046,39 @@ namespace EkRishta.Areas.MobileApp.Controllers
             return objUserAddress;
         }
 
+        #endregion
+
+        #region Shortlist Profile
+        [HttpPost]
+        public ActionResult ManageShortlistedProfile(ManageRequest objManageRequest)
+        {
+            DataSet dsResponse = new DataSet();
+            string jsonResponse = string.Empty;
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                Models.User objUser = (Models.User)(Session["USER"]);
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                sqlCmd.Parameters.AddWithValue("@ShortlistedUserId", objManageRequest.RequestedUserId);
+                sqlCmd.Parameters.AddWithValue("@Status", objManageRequest.RequestStatus);
+                sqlCmd.CommandText = "ManageShortlistedProfiles";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+                if (dsResponse != null && dsResponse.Tables[0] != null && dsResponse.Tables[0].Rows.Count > 0)
+                {
+                    jsonResponse = Convert.ToString(dsResponse.Tables[0].Rows[0]["Result"]);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(jsonResponse, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }
