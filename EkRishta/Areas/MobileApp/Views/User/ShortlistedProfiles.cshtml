@@ -22,7 +22,7 @@
         {
             foreach (var item in Model)
             {
-                <div class="user_sec">
+                <div class="user_sec_@item.UserId">
                     <div class="user-bg">
                         <div class="Shield"> <img alt="ek vivaah " src="/images/wellness.svg"> </div>
 
@@ -40,7 +40,11 @@
                                 @Html.ActionLink("View Profile", "ViewProfile", "User", new { UserId = item.UserId }, null)
                             </li>
                             <li class="fourty"><a href="#"> Photo <span> 9</span> </a> </li>
-                            <li> <a href="#">  <div class="heart"></div> </a> </li>
+                            <li>
+                                <a onclick="ShortlistProfile('@item.UserId','@item.IsShortlisted',this,'ShortlistedProfiles');">
+                                    <div class="heart"></div>
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
@@ -72,7 +76,8 @@
 
                     <div class="action_sction">
                         <input type="button" value="Request" id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info" />
-                        <input type="button" value="Request" id="btnShortlist_@item.UserId" onclick="ShortlistProfile('@item.UserId');" class="btn action-btn btn-info" />
+                        @*<input type="button" value="Request" id="btnShortlist_@item.UserId" onclick="ShortlistProfile('@item.UserId');" class="btn action-btn btn-info" />*@
+
                         <input type="button" value="Block" id="btnBlockRequest_@item.UserId" onclick="SendRequest('@item.UserId','Blocked');" class="btn action-btn btn-info" />
                     </div>
                 </div>
@@ -85,4 +90,4 @@
             <div>No Request available!!!</div>
         }
     </div>
-            }
+}

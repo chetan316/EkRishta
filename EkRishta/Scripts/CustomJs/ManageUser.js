@@ -50,8 +50,8 @@
     });
 }
 
-function ShortlistProfile(shortlistedUserId, requestStatus,cntrl) {
-    requestStatus = (requestStatus == "" || requestStatus == "NS") ? "NS" : requestStatus;
+function ShortlistProfile(shortlistedUserId, requestStatus,cntrl,source) {
+    requestStatus = (requestStatus == "" || requestStatus == "NS") ? "S" : "NS";
     var obj = {
         RequestedUserId: shortlistedUserId,
         RequestStatus: requestStatus
@@ -62,30 +62,15 @@ function ShortlistProfile(shortlistedUserId, requestStatus,cntrl) {
         data: formData,
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        //dataType: "html",
         success: function (data) {
             if (data != "") {
-                var newrequestStatus = requestStatus=="NS"?"S":"NS";
-                $(cntrl).attr('onclick', 'ShortlistProfile('+shortlistedUserId+',\''+newrequestStatus+'\',this'+')')
-                //if (data == "Request already Sent") {
-                //    $("#divMessage").html("Request already Sent");
-                //    $("#divMessage").attr("class", "alert alert-info fade in");
-                //}
-                //else if (requestStatus == "Pending") {
-                //    $("#divMessage").html("Request Sent Successfully");
-                //    $("#divMessage").attr("class", "alert alert-success fade in");
-                //    $("#btnCancelRequest_" + requestedUserId).css('display', 'block');
-                //    $("#btnSendRequest_" + requestedUserId).css('display', 'none');
-                //}
-                //else if (requestStatus == "Cancelled") {
-                //    $("#divMessage").html("Request Cancelled Successfully");
-                //    $("#divMessage").attr("class", "alert alert-success fade in");
-                //    $("#btnCancelRequest_" + requestedUserId).css('display', 'none');
-                //    $("#btnSendRequest_" + requestedUserId).css('display', 'block');
-                //}
+                $(cntrl).attr('onclick', 'ShortlistProfile(' + shortlistedUserId + ',\'' + requestStatus + '\',this' + ')')
+                if (source != undefined) {
+                    $(".user_sec_" + shortlistedUserId).css("display", "none");
+                }
             }
             else {
-                $("#divMessage").html("Error occurred. Please Try again");
+                $("#divMessage").html("Something went wrong. Please Try again");
                 $("#divMessage").attr("class", "alert alert-danger fade in");
             }
         },

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Models.Custom.UserMaster>
 
 @{
-    ViewBag.Title = "RequestInfo";
+    ViewBag.Title = "Profile Visitors";
 }
 
 <script src="~/Scripts/CustomJs/ManageUser.js?rd=1"></script>
@@ -10,38 +10,9 @@
 {
     @Html.AntiForgeryToken()
 
-    var MatchingProfile = Model.Where(m => m.RequestSource == "MatchingProfile");
-    var SentRequest = Model.Where(m => m.RequestSource == "SentRequest");
-    var AcceptedRequest = Model.Where(m => m.RequestSource == "AcceptedRequest");
-    var RejectedRequest = Model.Where(m => m.RequestSource == "RejectedRequest");
-    var BlockedUser = Model.Where(m => m.RequestSource == "BlockedUser");
-
     <div class="user_title Profile">
         <div class="back-arow"><a href="#"><img alt="ek vivaah" src="/images/back.svg"></a></div>
-        @if (MatchingProfile.ToList().Count > 0)
-        {
-            <p>Matching Profile</p>
-        }
-        else if (SentRequest.ToList().Count > 0)
-        {
-            <p>Sent Requests</p>
-        }
-        else if (AcceptedRequest.ToList().Count > 0)
-        {
-            <p>Accepted Requests</p>
-        }
-        else if (RejectedRequest.ToList().Count > 0)
-        {
-            <p>Rejected Requests</p>
-        }
-        else if (BlockedUser.ToList().Count > 0)
-        {
-            <p>Blocked Users</p>
-        }
-        else
-        {
-            <p>Request</p>
-        }
+        <p>Profile Visitors</p>
     </div>
     <div id="divMessage"></div>
     <div class="maching-body">
@@ -51,7 +22,7 @@
         {
             foreach (var item in Model)
             {
-                <div class="user_sec">
+                <div class="user_sec_@item.UserId">
                     <div class="user-bg">
                         <div class="Shield"> <img alt="ek vivaah " src="/images/wellness.svg"> </div>
 
@@ -68,18 +39,11 @@
                                 @Html.ActionLink("View Profile", "ViewProfile", "User", new { UserId = item.UserId }, null)
                             </li>
                             <li class="fourty"><a href="#"> Photo <span> 9</span> </a> </li>
-
                             <li>
-                                @{
-                                    if (item.RequestSource == "MatchingProfile")
-                                    {
-                                        <a onclick="ShortlistProfile('@item.UserId','@item.IsShortlisted',this);">
-                                            <div class="heart"></div>
-                                        </a>
-                                    }
-                                }
+                                <a onclick="ShortlistProfile('@item.UserId','@item.IsShortlisted',this);">
+                                    <div class="heart"></div>
+                                </a>
                             </li>
-
                         </ul>
                     </div>
 
@@ -110,30 +74,15 @@
                     </div>
 
                     <div class="action_sction">
-
-                        @*@if (item.RequestStatus == "P")
-                            {*@
-                        @*<input type="button" value="Cancel Request" id="btnCancelRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info @(item.RequestStatus=="P"?"displaybtn":"hidebtn")" />*@
-                        @*}*@
-                        @*@if (item.RequestStatus == "C" || item.RequestStatus == "N")
-                            {*@
                         <input type="button" value="Request" id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info" />
-                        @*}*@
-                        @*@if (item.RequestStatus == "A")
-                            {
-                                <label>Accepted</label>
-                            }*@
-                        <div class="action-btn"> <a href="#">Contact </a> </div>
-                        @*<div class="action-btn no-bder"><a href="#">Block</a></div>*@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-
             }
         }
         else
         {
-            <div>No Request available!!!</div>
+            <div>No Profile Visiors</div>
         }
     </div>
 }
