@@ -66,7 +66,7 @@ function ShortlistProfile(shortlistedUserId, requestStatus,cntrl,source) {
             if (data != "") {
                 $(cntrl).attr('onclick', 'ShortlistProfile(' + shortlistedUserId + ',\'' + requestStatus + '\',this' + ')')
                 if (source != undefined) {
-                    $(".user_sec_" + shortlistedUserId).css("display", "none");
+                    $("#user_sec_" + shortlistedUserId).css("display", "none");
                 }
             }
             else {
