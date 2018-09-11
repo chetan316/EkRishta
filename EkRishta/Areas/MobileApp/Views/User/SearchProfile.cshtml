@@ -1,0 +1,24 @@
+﻿@model Models.Custom.UserMaster
+
+@{
+    ViewBag.Title = "Search Profiles";
+}
+
+<script src="~/Scripts/CustomJs/ManageUser.js?rd=1"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="user_title Profile">
+        <div class="back-arow"><a href="#"><img alt="ek vivaah" src="/images/back.svg"></a></div>
+        <p>Search Profile</p>
+    </div>
+    <div id="divMessage"></div>
+    <div class="maching-body">
+        <ul>
+
+        </ul>
+    </div>
+}
+

@@ -1232,7 +1232,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
         }
         #endregion
 
-        public ActionResult ManageProfileVisitors(int? VisitedUserId, string ActionType)
+        public ActionResult ManageProfileVisitors(int VisitedUserId, string ActionType)
         {
             List<UserMaster> lstUserMaster = new List<UserMaster>();
                 DataSet dsResponse = new DataSet();
