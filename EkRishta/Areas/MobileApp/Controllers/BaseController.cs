@@ -12,6 +12,10 @@ namespace EkRishta
 {
     public class BaseController : Controller
     {
+        public BaseController()
+        {
+            ViewBag.JSRefNo = ConfigurationManager.AppSettings["JSRefNo"];
+        }
         public ActionResult Index()
         {
             return View();

@@ -1,0 +1,26 @@
+﻿@model Areas.Models.SearchUserProfile
+@{
+    ViewBag.Title = "SearchProfileById";
+}
+
+@using (Html.BeginForm("SearchProfile", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="user_title Profile">
+        <div class="back-arow"><a href="#"><img alt="ek vivaah" src="/images/back.svg"></a></div>
+        <p>Search Profile</p>
+    </div>
+    <div id="divMessage"></div>
+    <div class="maching-body" id="divSearchByProfileId">
+        <ul>
+            <li>
+                <strong>Profile ID </strong>:
+                @Html.TextBoxFor(m => m.ProfileId, htmlAttributes: new { @id = "txtProfileId", @placeholder = "Enter Profile ID" })
+            </li>
+        </ul>
+    </div>
+    <div class="action_sction">
+        <input type="submit" value="Search" id="btnSearchById" class="btn action-btn btn-info" style="background-color:#ff0d3d;color:white;" />
+    </div>
+}

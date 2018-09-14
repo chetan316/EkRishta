@@ -17,7 +17,9 @@
     .navbar.navbar-inverse.navbar-fixed-top {
         display: none;
     }
-
+    .Guardian {
+    font-size: 0;
+}
     .user_title {
         margin-top: 0;
         clear: both;
@@ -29,7 +31,19 @@
         color: #252525;
         box-shadow: 0 8px 7px #5a2222;
     }
-
+    .select_opt {
+    float: left;
+    width: 30%;
+    margin: 4px 0px 3px 8px;
+}
+	select {
+    border: 1px solid #e60030;
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    background: #e60030;
+    color: #fff;
+}
     .input {
         clear: both;
         margin-bottom: 1px;
@@ -49,8 +63,6 @@
     @Html.HiddenFor(m => m.UserId, new { @id = "hdnUserId" })
     <div id="dvGender" class="ac gender">
         <div class="select_tile">select  </div>
-
-
         @Html.RadioButtonFor(m => m.Gender, "M", htmlAttributes: new { @id = "rdbMale", @checked = "" }) @Html.Label("I am Male", htmlAttributes: new { @for = "rdbMale", @style = "background:url('/images/male.png') no-repeat;background-size: contain;" })
         @Html.RadioButtonFor(m => m.Gender, "F", htmlAttributes: new { @id = "rdbFemale" }) @Html.Label("I am Female", htmlAttributes: new { @for = "rdbFemale", @style = "background:url('/images/female.png') no-repeat;background-size: contain;" })
         <br />
@@ -87,7 +99,7 @@
 
         <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/mail.svg"> </div>@Html.TextBoxFor(m => m.EmailId, htmlAttributes: new { @id = "txtEmail", @placeholder = "Enter Email", })</div>
         <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/shield.svg"> </div>@Html.TextBoxFor(m => m.Password, htmlAttributes: new { @id = "txtPassword", @placeholder = "Enter Password", @type = "password", })</div>
-        <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/shield.svg"> </div>	@Html.TextBoxFor(m => m.Password, htmlAttributes: new { @id = "txtConfirmPassword", @placeholder = "Enter Password", @type = "password", })</div>
+        <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/shield.svg"> </div>	@Html.TextBoxFor(m => m.Password, htmlAttributes: new { @id = "txtConfirmPassword", @placeholder = "Confirm Password", @type = "password", })</div>
         <br />
         <div class="Register next">
             <a id="acNextLoginDetails">Save And Next</a>
@@ -96,17 +108,17 @@
 
 
     <div id="dvProfileCreatedFor" class="ac" style="display:none;">
-        <h3>Profile Created By</h3>
-        <div class="Guardian">  @Html.RadioButtonFor(m => m.ProfileCreatedBy, "1", htmlAttributes: new { @id = "rdbSelf", @checked = "" }) @Html.Label("Self", htmlAttributes: new { @for = "rdbSelf", @style = "background:url('/images/self.png') no-repeat;background-size: contain;" })</div>
-        <div class="Guardian"> @Html.RadioButtonFor(m => m.ProfileCreatedBy, "2", htmlAttributes: new { @id = "rdbParent" }) @Html.Label("Parent/Guardian", htmlAttributes: new { @for = "rdbParent", @style = "background:url('/images/parents.png') no-repeat;background-size: contain;" })</div>
-        <div class="Guardian"> @Html.RadioButtonFor(m => m.ProfileCreatedBy, "3", htmlAttributes: new { @id = "rdbFriend" }) @Html.Label("Sibling/Friend", htmlAttributes: new { @for = "rdbFriend", @style = "background:url('/images/sib.png') no-repeat;background-size: contain;" })</div>
+        <div class="select_tile">Profile Created By</div>
+        <div class="Guardian">  @Html.RadioButtonFor(m => m.ProfileCreatedBy, "1", htmlAttributes: new { @id = "rdbSelf", @checked = "" }) @Html.Label("Self", htmlAttributes: new { @for = "rdbSelf", @style = "background:url('/images/self.png') no-repeat;background-size: contain;color: #fff;" })</div>
+        <div class="Guardian"> @Html.RadioButtonFor(m => m.ProfileCreatedBy, "2", htmlAttributes: new { @id = "rdbParent" }) @Html.Label("Parent/Guardian", htmlAttributes: new { @for = "rdbParent", @style = "background:url('/images/parents.png') no-repeat;background-size: contain;color: #fff;" })</div>
+        <div class="Guardian"> @Html.RadioButtonFor(m => m.ProfileCreatedBy, "3", htmlAttributes: new { @id = "rdbFriend" }) @Html.Label("Sibling/Friend", htmlAttributes: new { @for = "rdbFriend", @style = "background:url('/images/sib.png') no-repeat;background-size: contain;color: #fff;" })</div>
         <br />
         <div class="Register next">
             <a id="acNextProfileCreatedDetails">Save And Next</a>
         </div>
     </div>
     <div id="dvContactDetails" class="ac" style="display:none;">
-        <h3>Contact Details</h3>
+        <div class="select_tile" style="padding:10px 0;">Contact Details</div>
         <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/user2.svg"> </div> @Html.TextBoxFor(m => m.FirstName, htmlAttributes: new { @id = "txtFirstName", @placeholder = "First Name", })	  </div>
         <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/user2.svg"> </div> @Html.TextBoxFor(m => m.LastName, htmlAttributes: new { @id = "txtLastName", @placeholder = "Last Name", })	  </div>
         <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/smartphone.svg"> </div> @Html.TextBoxFor(m => m.MobileNo, htmlAttributes: new { @id = "txtContactMobileNo", @placeholder = "Mobile Number", @disabled = "disabled", })	  </div>
@@ -114,13 +126,12 @@
         <div class="deta_sec">
             <div class="select_opt">  @Html.DropDownListFor(m => m.DOBDay, new SelectList(Model.DOBDayDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBDay", @name = "DOBDayValue", @class = " DOBddl", @onchange = "CalculateAge()" }) </div>
             <div class="select_opt"> @Html.DropDownListFor(m => m.DOBMonth, new SelectList(Model.DOBMonthDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBMonth", @class = " DOBddl", @onchange = "CalculateAge()" }) </div>
-            <div class="select_opt"> @Html.DropDownListFor(m => m.DOBYear, new SelectList(Model.DOBYearDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBYear", @class = " DOBddl", @onchange = "CalculateAge()" }) </div>
-            <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/user2.svg"> </div> @Html.HiddenFor(m => m.Age, htmlAttributes: new { @id = "hdnAge" })</div>
+            <div class="select_opt"> @Html.DropDownListFor(m => m.DOBYear, new SelectList(Model.DOBYearDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlDOBYear", @class = " DOBddl", @onchange = "CalculateAge()" }) @Html.HiddenFor(m => m.Age, htmlAttributes: new { @id = "hdnAge" })</div>
         </div>
-        <div class="input">
-            <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/clock.svg"> </div></div>
-            @Html.TextBoxFor(m => m.CallTime, htmlAttributes: new { @id = "txtContactTime", @placeholder = "Call to Time", })
-        </div>
+        @*<div class="input">
+                <div class="input"> <div class="picuser"><img alt="ek vivaah " src="/images/clock.svg"> </div></div>
+                @Html.TextBoxFor(m => m.CallTime, htmlAttributes: new { @id = "txtContactTime", @placeholder = "Call to Time", })
+            </div>*@
         <div class="Register next">
             <a id="acNextContactDetails">Save And Next</a>
         </div>
@@ -131,13 +142,13 @@
             @Html.DropDownListFor(m => m.MaritialStatus, new SelectList(new List<object>{new {value="Unmarried",text = "Unmarried"},
                                                                                      new {value="Divorced",text="Divorced"},
                                                                                      new {value="Widow", text="Widow"},
-                                                                                     new {value="Widower", text="Widower"}}, "value", "text", 1), htmlAttributes: new { @class = "form-" })
+                                                                                     new {value="Widower", text="Widower"}}, "value", "text", 1), htmlAttributes: new { @class = "" })
         </div>
 
-        <div class="input">  @Html.DropDownListFor(m => m.ReligionId, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { @class = "form-" })</div>
-        <div class="input"> @Html.DropDownListFor(m => m.MotherTounge, new SelectList(Model.LanguageDetails, "Value", "Text"), htmlAttributes: new { @class = "form-" })</div>
-        @Html.DropDownListFor(m => m.StateId, new SelectList(Model.StateDetails, "Value", "Text"), htmlAttributes: new { @class = "form-" })
-        @Html.DropDownListFor(m => m.CityId, new SelectList(Model.CityDetails, "Value", "Text"), htmlAttributes: new { @class = "form-" })
+        <div class="input">  @Html.DropDownListFor(m => m.ReligionId, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { id = "ddlReligion" })</div>
+        <div class="input"> @Html.DropDownListFor(m => m.MotherTounge, new SelectList(Model.LanguageDetails, "Value", "Text"), htmlAttributes: new { id = "ddlMotherTounge" })</div>
+        @Html.DropDownListFor(m => m.StateId, new SelectList(Model.StateDetails, "Value", "Text"), htmlAttributes: new { id = "ddlState" })
+        @Html.DropDownListFor(m => m.CityId, new SelectList(Model.CityDetails, "Value", "Text"), htmlAttributes: new { id = "ddlCity" })
 
         <div class="input">
             @Html.DropDownListFor(m => m.Income, new SelectList(new List<object>{new {value=0,text = "Income"},
@@ -147,7 +158,7 @@
                                                                                      new {value="4-6 Lakh", text="4-6 Lakh"},
                                                                                      new {value="6-8 Lakh", text="6-8 Lakh"},
                                                                                      new {value="8-10 Lakh", text="8-10 Lakh"},
-                                                                                     new {value="More than 10 Lakh", text="More than 10 Lakh"}}, "value", "text", 1), htmlAttributes: new { @class = "form-" })
+                                                                                     new {value="More than 10 Lakh", text="More than 10 Lakh"}}, "value", "text", 1), htmlAttributes: new { id = "ddlIncome" })
         </div>
         <br />
         <div class="Register next">
@@ -169,7 +180,7 @@
         </div>*@
 }
 @section scripts{
-    <script src="~/Scripts/CustomJs/common.js?rd=1"></script>
-    <script src="~/Scripts/CustomJs/UserRegistration.js?rd=1"></script>
+    <script src="~/Scripts/CustomJs/common.js?rd=@ViewBag.JSRefNo"></script>
+    <script src="~/Scripts/CustomJs/UserRegistration.js?rd=@ViewBag.JSRefNo"></script>
     <script>(function (e, t, n) { var r = e.querySelectorAll("html")[0]; r.className = r.className.replace(/(^|\s)no-js(\s|$)/, "$1js$2") })(document, window, 0);</script>
 }

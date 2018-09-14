@@ -84,7 +84,7 @@
                         @Html.ActionLink("Pending Requests", "SentRequest", "User", new { area = "MobileApp" }, null)
                     </li>
                     <li>
-                        @Html.ActionLink("Accepted Requests", "AcceptedRequest", "User", new { area = "MobileApp",RequestType="Accepted" }, null)
+                        @Html.ActionLink("Accepted Requests", "AcceptedRequest", "User", new { area = "MobileApp", RequestType = "Accepted" }, null)
                     </li>
                     <li>
                         @Html.ActionLink("Accepted Me", "AcceptedRequest", "User", new { area = "MobileApp", RequestType = "AcceptedMe" }, null)
@@ -101,9 +101,24 @@
                     <li>
                         <span>Search </span>
                         <ul>
-                            <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Search</a></li>
-                            <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Search id </a></li>
+                            <li>
+                                <a href='@Url.Action("SearchProfile", "User", new {area="MobileApp" })'>
+                                    <div class="m_icon">
+                                        <img src="/images/my-profile.svg" alt="ek vivaah">
+                                    </div> Search
+                                </a>
+                            </li>
+                            <li>
+                                <a href='@Url.Action("SearchProfileById", "User", new { area = "MobileApp" })'>
+                                    <div class="m_icon">
+                                        <img src="/images/my-profile.svg" alt="ek vivaah">
+                                    </div> Search Id
+                                </a>
+                            </li>
                         </ul>
+                    </li>
+                    <li>
+                        @Html.ActionLink("Upload Photos", "UploadPhotos", "User", new { area = "MobileApp" }, null)
                     </li>
                     <li><a href="#">Contact Details</a></li>
                     <li>
@@ -115,7 +130,13 @@
                             <li><a href="#"><div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div> Declined </a></li>
                         </ul>
                     </li>
-                    <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div> Shortlisted</a></li>
+                    <li>
+                        <a href='@Url.Action("ShortlistedProfile", "User", new {area="MobileApp" })'>
+                            <div class="m_icon">
+                                <img src="/images/my-profile.svg" alt="ek vivaah">
+                            </div> Shortlisted
+                        </a>
+                    </li>
                     <li>
                         <span>Setting </span>
                         <ul>
@@ -128,7 +149,13 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Profile Visitor</a></li>
+                    <li>
+                        <a href='@Url.Action("ManageProfileVisitors", "User", new { area = "MobileApp", VisitedUserId = 0, ActionType = "S" })'>
+                            <div class="m_icon">
+                                <img src="/images/my-profile.svg" alt="ek vivaah">
+                            </div> Profile Visitors
+                        </a>
+                    </li>
                 </ul>
             }
         </nav>
@@ -143,9 +170,27 @@
     <div class="mobile-nav">
         <nav>
             <ul>
-                <li> <a href="#"> <i class="icon-home"> <img src="/images/my-profile.svg" alt="ek vivaah"> </i> Profile </a> </li>
-                <li> <a href="#"> <i class="icon-home"><img src="/images/search.svg" alt="ek vivaah"></i> Search </a></li>
-                <li> <a href="#"> <i class="icon-home"><img src="/images/my-profile.svg" alt="ek vivaah"> </i> Matches </a></li>
+                <li>
+                    <a href='@Url.Action("MyProfile", "User", new { area = "MobileApp" })'>
+                        <i class="icon-home">
+                            <img src="/images/my-profile.svg" alt="ek vivaah">
+                        </i>Profile
+                    </a>
+                </li>
+                <li>
+                    <a href='@Url.Action("SearchProfile", "User", new { area = "MobileApp" })'>
+                        <i class="icon-home">
+                            <img src="/images/search.svg" alt="ek vivaah">
+                        </i>Search
+                    </a>
+                </li>
+                <li>
+                    <a href='@Url.Action("MatchingProfile", "User", new { area = "MobileApp" })'>
+                        <i class="icon-home">
+                            <img src="/images/my-profile.svg" alt="ek vivaah">
+                        </i>Matches
+                    </a>
+                </li>
                 <li class="mh-head Sticky"> <a href="#menu"> <i class="icon-home"><img src="/images/menu.svg" alt="ek vivaah"> </i>Menu </a></li>
             </ul>
         </nav>

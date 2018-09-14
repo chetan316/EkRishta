@@ -46,7 +46,7 @@
                     <li> <strong>Gender </strong> <p>: @Model.Gender </p>  </li>
                     <li> <strong>MaritialStatus  </strong> <p> : @Model.MaritialStatus</p>  </li>
                     <li> <strong>Email </strong> <p>: @Model.EmailId </p>  </li>
-                    <li> <strong>Mobile No </strong> <p>: @Model.MobileNo</p>  </li>
+                    <li> <strong>Mobile No </strong> <p>: @(Model.ShareCount >= 50 ? Model.MobileNo : "View Contact") </p>  </li>
                 </ul>
             </div>
             <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/gallery.svg"></span> <p> Photos </p></div>

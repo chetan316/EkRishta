@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
-namespace Models.Custom
+namespace Areas.Models
 {
-    public class UserMaster
+    public class SearchUserProfile
     {
         public int UserId { get; set; }
 
@@ -18,9 +19,11 @@ namespace Models.Custom
         public string MobileNo { get; set; }
 
         public string DOB { get; set; }
-        
+
 
         public string Age { get; set; }
+        public string FromAge { get; set; }
+        public string ToAge { get; set; }
 
         public string Gender { get; set; }
 
@@ -73,6 +76,7 @@ namespace Models.Custom
         public int UserOtherDetailsId { get; set; }
         public string MaritialStatus { get; set; }
         public string MotherTounge { get; set; }
+        public string MotherToungeId { get; set; }
         public string BirthCountry { get; set; }
         public string BirthPlace { get; set; }
         public string BirthTime { get; set; }
@@ -92,7 +96,7 @@ namespace Models.Custom
         /// Religion Details Table
         /// </summary>
         public int UserReligionId { get; set; }
-        public int ReligionId { get; set; }
+        public string ReligionId { get; set; }
         public string ReligionName { get; set; }
         public int CastId { get; set; }
         public string CastName { get; set; }
@@ -113,20 +117,9 @@ namespace Models.Custom
         public string Designation { get; set; }
         public string Income { get; set; }
 
-        public string RequestStatus { get; set; }
-        /// <summary>
-        /// TO Identify from where request is initiated
-        /// </summary>
-        public string RequestSource { get; set; }
         public string IsShortlisted { get; set; }
 
-        public Areas.Models.UserBasicDetails objUserBasicDetails { get; set; }
-        public Areas.Models.UserProfessionalDetails objUserProfessionalDetails { get; set; }
-        public Areas.Models.UserAddressDetails objUserAddressDetails { get; set; }
-        public Areas.Models.UserFamilyDetails objUserFamilyDetails { get; set; }
-        public Areas.Models.UserReligionDetails objUserReligionDetails { get; set; }
-        public Areas.Models.UserOtherDetails objUserOtherDetails { get; set; }
-
-        public List<Areas.Models.ImageUpload> lstImages { get; set; }
+        public SelectList ReligionDetails { get; set; }
+        public SelectList LanguageDetails { get; set; }
     }
 }

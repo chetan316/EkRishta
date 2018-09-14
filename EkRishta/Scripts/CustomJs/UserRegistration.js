@@ -63,8 +63,25 @@
 
     $("#acNextLoginDetails").on("click", function () {
         ClearValidationDiv();
-        $("#dvLoginDetails").css("display", "none");
-        $("#dvProfileCreatedFor").css("display", "block");
+        if ($("#txtEmail").val() == "") {
+            $("#dvValidationMessage").html("Please Enter Email Id");
+        }
+        else if ($("#txtEmail").val() != "" && !isEmail($("#txtEmail").val())) {
+                $("#dvValidationMessage").html("Please Enter Valid Email Id");
+        }
+        else if ($("#txtPassword").val() == "") {
+            $("#dvValidationMessage").html("Please Enter Password");
+        }
+        else if ($("#txtConfirmPassword").val() == "") {
+            $("#dvValidationMessage").html("Please Enter Confirm Password");
+        }
+        else if ($("#txtPassword").val() != "" && $("#txtConfirmPassword").val() != "" && ($("#txtPassword").val() != $("#txtConfirmPassword").val())) {
+            $("#dvValidationMessage").html("Password and Confirm Password do not match");
+        }
+        else {
+            $("#dvLoginDetails").css("display", "none");
+            $("#dvProfileCreatedFor").css("display", "block");
+        }
     });
 
     $("#acNextProfileCreatedDetails").on("click", function () {
@@ -77,16 +94,44 @@
 
     $("#acNextContactDetails").on("click", function () {
         ClearValidationDiv();
-        $("#dvContactDetails").css("display", "none");
-        $("#dvBasicDetails").css("display", "block");
+        if ($("#txtFirstName").val().trim() == "") {
+            $("#dvValidationMessage").html("Please Enter First Name");
+        }
+        else if ($("#txtLastName").val().trim() == "") {
+            $("#dvValidationMessage").html("Please Enter Last Name");
+        }
+        else if ($("#ddlDOBDay").val() == "0" || $("#ddlDOBMonth").val() == "0" || $("#ddlDOBYear").val() == "0") {
+            $("#dvValidationMessage").html("Please Select Valid DOB");
+        }
+        else {
+            $("#dvContactDetails").css("display", "none");
+            $("#dvBasicDetails").css("display", "block");
+        }
     });
 
     $("#acNextBasicDetails").on("click", function () {
         ClearValidationDiv();
-        var IsUserRegistered = RegisterUser();
-        if (IsUserRegistered) {
-            $("#dvBasicDetails").css("display", "none");
-            $("#dvPhoto").css("display", "block");
+        if ($("#ddlReligion").val() == "0") {
+            $("#dvValidationMessage").html("Please Select Religion");
+        }
+        else if ($("#ddlMotherTounge").val() == "0") {
+            $("#dvValidationMessage").html("Please Select Mother Tounge");
+        }
+        else if ($("#ddlState").val() == "0") {
+            $("#dvValidationMessage").html("Please Select State");
+        }
+        else if ($("#ddlCity").val() == "0") {
+            $("#dvValidationMessage").html("Please Select City");
+        }
+        else if ($("#ddlIncome").val() == "0") {
+            $("#dvValidationMessage").html("Please Select Income");
+        }
+        else {
+            var IsUserRegistered = RegisterUser();
+            if (IsUserRegistered) {
+                $("#dvBasicDetails").css("display", "none");
+                $("#dvPhoto").css("display", "block");
+            }
         }
     })
 });
@@ -99,6 +144,8 @@ $("#btnUpload").click(function () {
         var files = fileUpload.files;
 
         if (fileUpload.files.length > 0) {
+            $("#btnUpload").val("Uploading...");
+            $("#btnUpload").prop("disabled", true);
             $("#dvValidationMessage").html("");
 
             // Create FormData object
@@ -119,6 +166,8 @@ $("#btnUpload").click(function () {
                 processData: false, // Not to process data
                 data: fileData,
                 success: function (result) {
+                    $("#btnUpload").val("Upload");
+                    $("#btnUpload").prop("disabled", false);
                     console.log(result);
                     $("#dvSuccessMessage").html("<strong>Registration Successful</strong>");
                     $("#dvSuccessMessage").attr("class", "alert alert-success ac");
@@ -234,4 +283,9 @@ function CalculateAge() {
 
         $('#hdnAge').val(age);
     }
+}
+
+function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
 }

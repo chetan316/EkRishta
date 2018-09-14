@@ -4,7 +4,7 @@
     ViewBag.Title = "MyProfile";
 }
 <link href="~/Content/lightgallery.css" rel="stylesheet">
-<script src="~/Scripts/CustomJs/ManageUser.js?rd=1"></script>
+<script src="~/Scripts/CustomJs/ManageUser.js?rd=@ViewBag.JSRefNo"></script>
 
 @using (Html.BeginForm())
 {
@@ -50,23 +50,31 @@
             <div class="details_gallery">
                 <div class="demo-gallery">
                     <ul id="lightgallery" class="list-unstyled">
-                        <li data-src="/images/1.jpg">
-                            <a href="">
-                                <img class="img-responsive" src="/images/thumb-1.jpg">
-                            </a>
-                        </li>
+                        @foreach (var item in Model.lstImages)
+                        {
+                            <li data-src="@item.ImagePath">
+                                <a href="">
+                                    <img class="img-responsive" src="@item.ImagePath" style="width:154px;height:104px" />
+                                </a>
+                            </li>
+                        }
+                        @*<li data-src="/images/1.jpg">
+                                <a href="">
+                                    <img class="img-responsive" src="/images/thumb-1.jpg">
+                                </a>
+                            </li>
 
-                        <li data-src="/images/2.jpg">
-                            <a href="">
-                                <img class="img-responsive" src="/images/thumb-2.jpg">
-                            </a>
-                        </li>
+                            <li data-src="/images/2.jpg">
+                                <a href="">
+                                    <img class="img-responsive" src="/images/thumb-2.jpg">
+                                </a>
+                            </li>
 
-                        <li data-src="/images/13.jpg">
-                            <a href="">
-                                <img class="img-responsive" src="/images/thumb-13.jpg">
-                            </a>
-                        </li>
+                            <li data-src="/images/13.jpg">
+                                <a href="">
+                                    <img class="img-responsive" src="/images/thumb-13.jpg">
+                                </a>
+                            </li>*@
 
                     </ul>
                 </div>
@@ -152,7 +160,7 @@
             </div>
         </div>
     </div>
-                    }
+}
 
 <script type="text/javascript">
     $(document).ready(function () {

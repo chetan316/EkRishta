@@ -47,7 +47,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.Parameters.AddWithValue("@Age", objUserRegistration.Age);
                 sqlCmd.Parameters.AddWithValue("@MaritialStatus", objUserRegistration.MaritialStatus);
                 sqlCmd.Parameters.AddWithValue("@MotherTounge", objUserRegistration.MotherTounge);
-                sqlCmd.Parameters.AddWithValue("@CallTime", objUserRegistration.CallTime);
+                //sqlCmd.Parameters.AddWithValue("@CallTime", objUserRegistration.CallTime);
                 sqlCmd.Parameters.AddWithValue("@ProfileCreatedBy", objUserRegistration.ProfileCreatedBy);
                 sqlCmd.Parameters.AddWithValue("@Income", objUserRegistration.Income);
                 sqlCmd.Parameters.AddWithValue("@ReligionId", objUserRegistration.ReligionId);

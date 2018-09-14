@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Areas.Models.ImageUpload>
+@{
+    ViewBag.Title = "UploadPhotos";
+}
+<link href="~/Content/lightgallery.css" rel="stylesheet">
+
+@using (Html.BeginForm("UploadPhotos", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="divMessage"></div>
+    <div class="user_title Profile">
+        <p>Upload Photos</p>
+
+    </div>
+    <div class="maching-body">
+        <div>
+            <input type="file" name="ImageFile" id="uploadPhoto">
+
+            <input type="submit" value="Upload" style="color:#fff;background-color:#ff0d3d" id="btnUploadImage" />
+        </div>
+
+        <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/gallery.svg"></span> <p> Photos </p></div>
+        <div class="details_gallery">
+            <div class="demo-gallery">
+                <ul id="lightgallery" class="list-unstyled">
+                    @foreach (var item in Model)
+                    {
+                        <li data-src="@item.ImagePath">
+                            <input type="hidden" value="@item.ImageId" />
+                            <a href="">
+                                <img class="img-responsive" src="@item.ImagePath" style="width:154px;height:104px" />
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnUploadImage").on("click", function (e) {
+            if (window.FormData !== undefined) {
+
+                var fileUpload = $("#uploadPhoto").get(0);
+                var files = fileUpload.files;
+
+                if (fileUpload.files.length == 0) {
+                    e.preventDefault();
+                    $("#divMessage").html("Please Select Photo");
+                }
+            }
+        });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#lightgallery').lightGallery();
+    });
+    </script>
+    <script src="~/Scripts/lightgallery-all.min.js"></script>
+}

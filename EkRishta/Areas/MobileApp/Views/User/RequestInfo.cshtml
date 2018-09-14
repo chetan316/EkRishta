@@ -4,7 +4,7 @@
     ViewBag.Title = "RequestInfo";
 }
 
-<script src="~/Scripts/CustomJs/ManageUser.js?rd=1"></script>
+<script src="~/Scripts/CustomJs/ManageUser.js?rd=@ViewBag.JSRefNo"></script>
 
 @using (Html.BeginForm())
 {
@@ -15,6 +15,7 @@
     var AcceptedRequest = Model.Where(m => m.RequestSource == "AcceptedRequest");
     var RejectedRequest = Model.Where(m => m.RequestSource == "RejectedRequest");
     var BlockedUser = Model.Where(m => m.RequestSource == "BlockedUser");
+    var SearchProfile = Model.Where(m => m.RequestSource == "SearchProfile");
 
     <div class="user_title Profile">
         <div class="back-arow"><a href="#"><img alt="ek vivaah" src="/images/back.svg"></a></div>
@@ -37,6 +38,10 @@
         else if (BlockedUser.ToList().Count > 0)
         {
             <p>Blocked Users</p>
+        }
+        else if (SearchProfile.ToList().Count > 0)
+        {
+            <p>Search Profiles</p>
         }
         else
         {

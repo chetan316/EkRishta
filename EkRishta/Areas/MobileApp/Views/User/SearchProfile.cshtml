@@ -1,12 +1,12 @@
-﻿@model Models.Custom.UserMaster
+﻿@model Areas.Models.SearchUserProfile
 
 @{
     ViewBag.Title = "Search Profiles";
 }
 
-<script src="~/Scripts/CustomJs/ManageUser.js?rd=1"></script>
+<script src="~/Scripts/CustomJs/ManageUser.js?rd=@ViewBag.JSRefNo"></script>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("SearchProfile", "User", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -15,10 +15,51 @@
         <p>Search Profile</p>
     </div>
     <div id="divMessage"></div>
-    <div class="maching-body">
+    <div class="maching-body" id="divAdvancedSearch">
         <ul>
-
+            <li>
+                <strong>Age</strong>:
+                @Html.TextBoxFor(m => m.FromAge, htmlAttributes: new { @id = "txtFromAge", @placeholder = "Enter Age" })
+                @Html.TextBoxFor(m => m.ToAge, htmlAttributes: new { @id = "txtToAge", @placeholder = "Enter Age" })
+            </li>
         </ul>
+        <ul>
+            <li>
+                <strong>Religion</strong>:
+                @Html.DropDownListFor(m => m.ReligionId, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlReligion" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Maritial Status</strong>:
+                @Html.DropDownListFor(m => m.MaritialStatus, new SelectList(new List<object>{new {value="Unmarried",text = "Unmarried"},
+                                                                                     new {value="Divorced",text="Divorced"},
+                                                                                     new {value="Widow", text="Widow"},
+                                                                                     new {value="Widower", text="Widower"}}, "value", "text", 1), htmlAttributes: new { @id = "ddlMaritialStatus" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Income</strong>:
+                @Html.DropDownListFor(m => m.Income, new SelectList(new List<object>{new {value=0,text = "Income"},
+                                                                                     new {value="Upto 1 Lakh",text = "Upto 1 Lakh"},
+                                                                                     new {value="1-2 Lakh",text="1-2 Lakh"},
+                                                                                     new {value="2-4 Lakh", text="2-4 Lakh"},
+                                                                                     new {value="4-6 Lakh", text="4-6 Lakh"},
+                                                                                     new {value="6-8 Lakh", text="6-8 Lakh"},
+                                                                                     new {value="8-10 Lakh", text="8-10 Lakh"},
+                                                                                     new {value="More than 10 Lakh", text="More than 10 Lakh"}}, "value", "text"), htmlAttributes: new { @id = "ddlIncome" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Mother Tounge</strong>:
+                @Html.DropDownListFor(m => m.MotherToungeId, new SelectList(Model.LanguageDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlMotherTounge" })
+            </li>
+        </ul>
+    </div>
+    <div class="action_sction">
+        <input type="submit" value="Search" id="btnSearch" class="btn action-btn btn-info" style="background-color:#ff0d3d;color:white;"/>
     </div>
 }
 
