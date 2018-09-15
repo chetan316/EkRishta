@@ -14,6 +14,7 @@ namespace EkRishta.Areas.MobileApp
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
+
             context.MapRoute(
                 "MobileApp_default",
                 "MobileApp/{controller}/{action}/{id}",

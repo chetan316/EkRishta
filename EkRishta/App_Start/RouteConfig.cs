@@ -13,6 +13,9 @@ namespace EkRishta
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute("Area", "", new { area = "MobileApp", controller = "Login", action = "MobileIndex" },
+                                      new[] { "EkRishta.Areas.MobileApp.Controllers" });
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

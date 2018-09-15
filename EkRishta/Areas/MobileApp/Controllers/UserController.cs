@@ -967,8 +967,6 @@ namespace EkRishta.Areas.MobileApp.Controllers
             }
         }
 
-
-
         [HttpPost]
         public ActionResult UpdateReligionDetails(UserReligionDetails objUserReligionDetails)
         {
@@ -1045,7 +1043,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.Parameters.AddWithValue("@IsPhysicalDisable", objUserOtherDetails.IsPhysicalDisable);
                 sqlCmd.Parameters.AddWithValue("@BirthPlace", objUserOtherDetails.BirthPlace);
                 sqlCmd.Parameters.AddWithValue("@BirthTime", objUserOtherDetails.BirthTime);
-                //sqlCmd.Parameters.AddWithValue("@BirthCountryId", objUserOtherDetails.BirthCountryId);
+                sqlCmd.Parameters.AddWithValue("@BirthCountryId", objUserOtherDetails.BirthCountryId);
 
                 sqlCmd.CommandText = "UpdateOtherDetails";
                 sqlCmd.Connection = connString;

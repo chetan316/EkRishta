@@ -11,7 +11,7 @@
     <li><strong>Smoke </strong> <p> : @Model.IsSmoke</p>  </li>
     <li><strong>Drink </strong> <p> : @Model.IsDrink</p>  </li>
     <li><strong>Physical Disable </strong> <p> : @Model.IsPhysicalDisable</p>  </li>
-    <li><strong>Ideal Partner</strong> <p> : @Model.IdealpartnerDescription</p>  </li>
+    @*<li><strong>Ideal Partner</strong> <p> : @Model.IdealpartnerDescription</p>  </li>*@
 
 
 </ul>
@@ -74,28 +74,28 @@
     </li>
     <li>
         <strong>Smoke</strong>:
-        @Html.DropDownListFor(m => m.IsSmoke, new SelectList(new List<object> { new { value = "1", text = "Yes"},
-                                                                               new { value = "0", text = "No", Selected="True"}}, "Value", "Text", 0), htmlAttributes: new { @id = "ddlSmoke" })
+        @Html.DropDownListFor(m => m.IsSmoke, new SelectList(new List<object> { new { value = "0", text = "No"},
+                                                                                new { value = "1", text = "Yes"}}, "Value", "Text", 0), htmlAttributes: new { @id = "ddlSmoke" })
 
     </li>
     <li>
         <strong>Drink</strong>:
-        @Html.DropDownListFor(m => m.IsDrink, new SelectList(new List<object> { new { value = "1", text = "Yes" },
-                                                                                new { value = "0", text = "No" }}, "Value", "Text"), htmlAttributes: new { @id = "ddlDrink" })
+        @Html.DropDownListFor(m => m.IsDrink, new SelectList(new List<object> { new { value = "0", text = "No" },
+                                                                                new { value = "1", text = "Yes" }}, "Value", "Text"), htmlAttributes: new { @id = "ddlDrink" })
 
     </li>
     <li>
         <strong>Physical Disable</strong>:
-        @Html.DropDownListFor(m => m.IsPhysicalDisable, new SelectList(new List<object> { new { value = "1", text = "Yes" },
-                                                                                          new { value = "0", text = "No" }}, "Value", "Text", 0), htmlAttributes: new { @id = "ddlPhysicalDisable" })
+        @Html.DropDownListFor(m => m.IsPhysicalDisable, new SelectList(new List<object> { new { value = "0", text = "No"},
+                                                                                          new { value = "1", text = "Yes" }}, "Value", "Text", 0), htmlAttributes: new { @id = "ddlPhysicalDisable" })
 
     </li>
-    <li>
+    @*<li>
         <strong>Ideal Partner</strong>:
         @{
             Model.IdealpartnerDescription = Model.IdealpartnerDescription == "Not Specified" ? "" : Model.IdealpartnerDescription;
             @Html.TextAreaFor(m => m.IdealpartnerDescription, htmlAttributes: new { @id = "txtIdealpartnerDescription", @placeholder = "Enter Ideal Partner Description", })
         }
 
-    </li>
+    </li>*@
 </ul>

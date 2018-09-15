@@ -57,10 +57,10 @@
                 <ul>
                     <li>
                         <a href="#" class="useer_bg">
-                            <div class="m_icon">
+                            <div class="m_icon user_pik">
                                 <img id="imgProfilePic" alt="Profile" src="@obj.ProfilePicPath" />
                             </div>
-                            <div class="us_box">
+                            <div class="us_box neme_user">
                                 <span>@obj.UserName</span><br />
                                 <span>@obj.ProfileId</span>
                             </div>
@@ -75,28 +75,61 @@
                         </a>
                     </li>
                     <li>
-                        @Html.ActionLink("Profile", "MyProfile", "User", new { area = "MobileApp" }, null)
+                        <a href='@Url.Action("MyProfile", "User", new { area = "MobileApp" })'>
+                            <div class="m_icon">
+                                <img src="/images/my-profile.svg" alt="ek vivaah">
+                            </div> Profile
+                        </a>
+                        @*@Html.ActionLink("Profile", "MyProfile", "User", new { area = "MobileApp" }, null)*@
                     </li>
                     <li>
-                        @Html.ActionLink("My Matches", "MatchingProfile", "User", new { area = "MobileApp" }, null)
+                        <a href='@Url.Action("MatchingProfile", "User", new { area = "MobileApp" })'>
+                            <div class="m_icon">
+                                <img src="/images/my-profile.svg" alt="ek vivaah">
+                            </div> My Matches
+                        </a>
                     </li>
                     <li>
-                        @Html.ActionLink("Pending Requests", "SentRequest", "User", new { area = "MobileApp" }, null)
+                        <a href='@Url.Action("SentRequest", "User", new { area = "MobileApp" })'>
+                            <div class="m_icon">
+                                <img src="/images/my-profile.svg" alt="ek vivaah">
+                            </div> Pending Requests
+                        </a>
                     </li>
                     <li>
-                        @Html.ActionLink("Accepted Requests", "AcceptedRequest", "User", new { area = "MobileApp", RequestType = "Accepted" }, null)
+                        <a href='@Url.Action("AcceptedRequest", "User", new { area = "MobileApp", RequestType = "Accepted" })'>
+                            <div class="m_icon">
+                                <img src="/images/my-profile.svg" alt="ek vivaah">
+                            </div> Accepted Requests
+                        </a>
                     </li>
                     <li>
-                        @Html.ActionLink("Accepted Me", "AcceptedRequest", "User", new { area = "MobileApp", RequestType = "AcceptedMe" }, null)
+                        <a href='@Url.Action("AcceptedRequest", "User", new { area = "MobileApp", RequestType = "AcceptedMe" })'>
+                            <div class="m_icon">
+                                <img src="/images/my-profile.svg" alt="ek vivaah">
+                            </div> Accepted Me
+                        </a>
                     </li>
                     <li>
-                        @Html.ActionLink("Blocked Profiles", "BlockedUser", "User", new { area = "MobileApp" }, null)
+                        <a href='@Url.Action("BlockedUser", "User", new { area = "MobileApp" })'>
+                            <div class="m_icon">
+                                <img src="/images/my-profile.svg" alt="ek vivaah">
+                            </div> Blocked Profiles
+                        </a>
                     </li>
                     <li>
-                        @Html.ActionLink("Declined Request", "RejectedRequest", "User", new { area = "MobileApp" }, null)
+                        <a href='@Url.Action("RejectedRequest", "User", new { area = "MobileApp" })'>
+                            <div class="m_icon">
+                                <img src="/images/my-profile.svg" alt="ek vivaah">
+                            </div> Declined Request
+                        </a>
                     </li>
                     <li>
-                        @Html.ActionLink("Profile Request", "ProfileRequest", "User", new { area = "MobileApp" }, null)
+                        <a href='@Url.Action("ProfileRequest", "User", new { area = "MobileApp" })'>
+                            <div class="m_icon">
+                                <img src="/images/my-profile.svg" alt="ek vivaah">
+                            </div> Profile Request
+                        </a>
                     </li>
                     <li>
                         <span>Search </span>
@@ -118,10 +151,15 @@
                         </ul>
                     </li>
                     <li>
-                        @Html.ActionLink("Upload Photos", "UploadPhotos", "User", new { area = "MobileApp" }, null)
+                        <a href='@Url.Action("UploadPhotos", "User", new { area = "MobileApp" })'>
+                            <div class="m_icon">
+                                <img src="/images/my-profile.svg" alt="ek vivaah">
+                            </div> Upload Photos
+                        </a>
+                        @*@Html.ActionLink("Upload Photos", "UploadPhotos", "User", new { area = "MobileApp" }, null)*@
                     </li>
                     <li><a href="#">Contact Details</a></li>
-                    <li>
+                    @*<li>
                         <span>Contact </span>
                         <ul>
                             <li><a href="#"><div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Send Interests </a></li>
@@ -129,7 +167,7 @@
                             <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Blocked </a></li>
                             <li><a href="#"><div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div> Declined </a></li>
                         </ul>
-                    </li>
+                    </li>*@
                     <li>
                         <a href='@Url.Action("ShortlistedProfile", "User", new {area="MobileApp" })'>
                             <div class="m_icon">
@@ -145,7 +183,7 @@
                             <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>About us</a></li>
                             <li><a href="#"> <div class="m_icon"> <img src="/images/my-profile.svg" alt="ek vivaah"> </div>Contact us</a></li>
                             <li>
-                                @Html.ActionLink("Logout", "LogOut", "Login", new { area = "" }, null)
+                                @Html.ActionLink("Logout", "MobileLogOut", "Login", new { area = "MobileApp" }, null)
                             </li>
                         </ul>
                     </li>
