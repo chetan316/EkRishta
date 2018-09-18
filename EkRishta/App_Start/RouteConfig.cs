@@ -13,8 +13,10 @@ namespace EkRishta
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute("Area", "", new { area = "MobileApp", controller = "Login", action = "MobileIndex" },
-                                      new[] { "EkRishta.Areas.MobileApp.Controllers" });
+            //routes.MapRoute("Area", "", new { area = "MobileApp", controller = "Login", action = "MobileIndex" },
+            //                          new[] { "EkRishta.Areas.MobileApp.Controllers" });
+            routes.MapRoute("Area", "", new { area = "WebApp", controller = "Login", action = "WebIndex" },
+                                     new[] { "EkRishta.Areas.WebApp.Controllers" });
 
             routes.MapRoute(
                 name: "Default",

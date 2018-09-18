@@ -1,0 +1,32 @@
+﻿@model Models.Custom.UserMaster
+
+@{
+    ViewBag.Title = "Search Profile";
+}
+
+<script src="~/Scripts/CustomJs/ManageUser.js?rd=1"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="user_title Profile">
+        <div class="back-arow"><a href="#"><img alt="ek vivaah" src="/images/back.svg"></a></div>
+        <p>Search Profile</p>
+    </div>
+    <div id="divMessage"></div>
+    <div class="maching-body">
+        <ul>
+            <li>
+                <strong>Profile ID </strong>:
+                @Html.TextBoxFor(m => m.ProfileId, htmlAttributes: new { @id = "txtProfileId", @placeholder = "Enter Profile ID" })
+            </li>
+        </ul>
+    </div>
+    <div class="ac">
+        <input type="button" id="btnSearchById" value="Search" class="form-control btn-primary ac" />
+    </div>
+}
+
+
+

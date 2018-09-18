@@ -9,7 +9,7 @@
 
 
 @{ Html.EnableClientValidation(); }
-@using (Html.BeginForm("MobileLogin", "Login", FormMethod.Post))
+@using (Html.BeginForm("MobileLogin", "Login",new { Area="MobileApp"},FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -54,7 +54,7 @@
     </div>
 
     <div class="Register">
-        @Html.ActionLink("Register Here", "RegisterUser", "UserRegistration")
+        @Html.ActionLink("Register Here", "RegisterUser", "UserRegistration",new { Area="MobileApp"}, null)
     </div>
 
 
