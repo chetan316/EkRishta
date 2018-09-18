@@ -1,0 +1,127 @@
+﻿@model Areas.Models.UserPreference
+@{
+    ViewBag.Title = "Search Profiles";
+}
+
+<script src="~/Scripts/CustomJs/ManageUser.js?rd=@ViewBag.JSRefNo"></script>
+
+@using (Html.BeginForm("SetPreference", "UserPreferences", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="user_title Profile">
+        <div class="back-arow"><a href="#"><img alt="ek vivaah" src="/images/back.svg"></a></div>
+        <p>Set Preference</p>
+    </div>
+    <div id="divMessage"></div>
+    <div class="maching-body" id="divPreference">
+        <ul>
+            <li>
+                <strong>Age</strong>:
+                @Html.TextBoxFor(m => m.FromAge, htmlAttributes: new { @id = "txtFromAge", @placeholder = "Enter Age" })
+                @Html.TextBoxFor(m => m.ToAge, htmlAttributes: new { @id = "txtToAge", @placeholder = "Enter Age" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Height</strong>:
+                @Html.TextBoxFor(m => m.FromHeight, htmlAttributes: new { @id = "txtFromHeight", @placeholder = "Enter Height" })
+                @Html.TextBoxFor(m => m.ToHeight, htmlAttributes: new { @id = "txtToHeight", @placeholder = "Enter Height" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Maritial Status</strong>:
+                @Html.DropDownListFor(m => m.MaritialStatus, new SelectList(new List<object>{new {value="Unmarried",text = "Unmarried"},
+                                                                                     new {value="Divorced",text="Divorced"},
+                                                                                     new {value="Widow", text="Widow"},
+                                                                                     new {value="Widower", text="Widower"}}, "value", "text", 1), htmlAttributes: new { @id = "ddlMaritialStatus" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>City</strong>:
+                @Html.DropDownListFor(m => m.CityId, new SelectList(Model.CityDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlCity" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Religion</strong>:
+                @Html.DropDownListFor(m => m.ReligionId, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlReligion" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Cast</strong>:
+                @Html.DropDownListFor(m => m.CasteId, new SelectList(Model.CasteDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlCast" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Mother Tounge</strong>:
+                @Html.DropDownListFor(m => m.MotherToungeId, new SelectList(Model.LanguageDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlMotherTounge" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Income</strong>:
+                @Html.DropDownListFor(m => m.Income, new SelectList(new List<object>{new {value=0,text = "Income"},
+                                                                                     new {value="Upto 1 Lakh",text = "Upto 1 Lakh"},
+                                                                                     new {value="1-2 Lakh",text="1-2 Lakh"},
+                                                                                     new {value="2-4 Lakh", text="2-4 Lakh"},
+                                                                                     new {value="4-6 Lakh", text="4-6 Lakh"},
+                                                                                     new {value="6-8 Lakh", text="6-8 Lakh"},
+                                                                                     new {value="8-10 Lakh", text="8-10 Lakh"},
+                                                                                     new {value="More than 10 Lakh", text="More than 10 Lakh"}}, "value", "text"), htmlAttributes: new { @id = "ddlIncome" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Smoke</strong>:
+                @Html.DropDownListFor(m => m.IsSmoke, new SelectList(new List<object> { new { value = "0", text = "No"},
+                                                                                new { value = "1", text = "Yes"}}, "Value", "Text", 0), htmlAttributes: new { @id = "ddlSmoke" })
+
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Drink</strong>:
+                @Html.DropDownListFor(m => m.IsDrink, new SelectList(new List<object> { new { value = "0", text = "No" },
+                                                                                new { value = "1", text = "Yes" }}, "Value", "Text"), htmlAttributes: new { @id = "ddlDrink" })
+
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Skin Tone</strong>:
+                @{
+                    Model.SkinTone = Model.SkinTone == "Not Specified" ? "" : Model.SkinTone;
+                    @Html.TextBoxFor(m => m.SkinTone, htmlAttributes: new { @id = "txtSkinTone", @placeholder = "Enter Skin Tone", })
+                }
+
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>Body Type</strong>:
+                @{
+                    Model.BodyType = Model.BodyType == "Not Specified" ? "" : Model.BodyType;
+                    @Html.TextBoxFor(m => m.BodyType, htmlAttributes: new { @id = "txtBodyType", @placeholder = "Enter Body Type", })
+                }
+            </li>
+
+        </ul>
+        <ul>
+            <li>
+                <strong>Physical Disable</strong>:
+                @Html.DropDownListFor(m => m.IsPhysicalDisable, new SelectList(new List<object> { new { value = "0", text = "No"},
+                                                                                          new { value = "1", text = "Yes" }}, "Value", "Text", 0), htmlAttributes: new { @id = "ddlPhysicalDisable" })
+
+            </li>
+        </ul>
+    </div>
+    <div class="action_sction">
+        <input type="submit" value="Save" id="btnSave" class="btn action-btn btn-info" style="background-color:#ff0d3d;color:white;" />
+    </div>
+}
+
