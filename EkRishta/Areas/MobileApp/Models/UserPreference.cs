@@ -17,8 +17,8 @@ namespace Areas.Models
         public string MaritialStatus { get; set; }
         public int CityId { get; set; }
         public string CityName { get; set; }
-        //public int CountryId { get; set; }
-        //public string CountryName { get; set; }
+        public int CountryId { get; set; }
+        public string CountryName { get; set; }
         public int UserReligionId { get; set; }
         public string ReligionId { get; set; }
         public string ReligionName { get; set; }
@@ -33,7 +33,8 @@ namespace Areas.Models
         public string SkinTone { get; set; }
         public string BodyType { get; set; }
         public string IsPhysicalDisable { get; set; }
-        
+        public string Action { get; set; }
+
         public SelectList ReligionDetails { get; set; }
         public SelectList LanguageDetails { get; set; }
         public SelectList StateDetails { get; set; }
