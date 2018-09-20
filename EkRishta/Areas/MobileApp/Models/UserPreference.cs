@@ -10,6 +10,7 @@ namespace Areas.Models
     {
         public int UserId { get; set; }
 
+        public int UserPreferenceId { get; set; }
         public string FromAge { get; set; }
         public string ToAge { get; set; }
         public string FromHeight { get; set; }

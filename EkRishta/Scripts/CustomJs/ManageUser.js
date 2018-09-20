@@ -389,6 +389,24 @@ function UpdateOtherDetails(cntrl) {
     })
 }
 
+function EditUserPreference() {
+    var formData = {}
+    $.ajax({
+        url: "/UserPreferences/ManageUserPreferences",
+        data: {},
+        type: "POST",
+        success: function (htmlText) {
+            $('#divOtherDetails').html(htmlText);
+            $("#ulOtherLabels").css("display", "block");
+            $("#ulOtherEdit").css("display", "none");
+            cntrl.innerHTML = "Edit";
+        },
+        error: function (HttpRequest, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    })
+}
+
 function CalculateAge() {
     if ($('#ddlDOBMonth').val() != "0" && $('#ddlDOBDay').val() != "0" && $('#ddlDOBYear').val() != "0") {
         var dob = new Date($('#ddlDOBMonth').val() + "-" + $('#ddlDOBDay').val() + "-" + $('#ddlDOBYear').val());

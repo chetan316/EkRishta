@@ -75,19 +75,18 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sda.Fill(dsResponse);
 
                 //if(dsResponse)
-                return View("UserPreferences");
+                return RedirectToAction("ManageUserPreferences");
             }
             catch (Exception ex)
-            {
-
-            }
-            
+            {}
+            return View();
         }
 
-        public ActionResult UserPreferences()
+        public ActionResult ManageUserPreferences(UserPreference objUserPreference)
         {
             DataSet dsResponse = new DataSet();
-            UserPreference objUserPreference = new UserPreference();
+            UserPreference objPreference = new UserPreference();
+
             try
             {
                 Models.User objUser = (Models.User)(Session["USER"]);
@@ -104,11 +103,43 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsResponse);
+
+                if (dsResponse != null && dsResponse.Tables.Count > 0 && dsResponse.Tables[0].Rows.Count > 0)
+                {
+                    objPreference.ReligionDetails = new SelectList(ReligionDetails(), "Value", "Text");
+                    objPreference.LanguageDetails = new SelectList(LanguageDetails(), "Value", "Text");
+                    objPreference.StateDetails = new SelectList(StateDetails(), "Value", "Text");
+                    objPreference.CityDetails = new SelectList(CityDetails(), "Value", "Text");
+                    objPreference.CasteDetails = new SelectList(CastDetails(), "Value", "Text");
+
+                    objPreference.UserPreferenceId = Convert.ToInt32(dsResponse.Tables[0].Rows[0]["UserPreferenceId"]);
+                    objPreference.FromAge = Convert.ToString(dsResponse.Tables[0].Rows[0]["FromAge"]);
+                    objPreference.ToAge = Convert.ToString(dsResponse.Tables[0].Rows[0]["ToAge"]);
+                    objPreference.FromHeight = Convert.ToString(dsResponse.Tables[0].Rows[0]["FromHeight"]);
+                    objPreference.ToHeight = Convert.ToString(dsResponse.Tables[0].Rows[0]["ToHeight"]);
+                    objPreference.MaritialStatus = Convert.ToString(dsResponse.Tables[0].Rows[0]["MaritialStatus"]);
+                    objPreference.CityId = Convert.ToInt32(dsResponse.Tables[0].Rows[0]["CityId"]);
+                    objPreference.CityName = Convert.ToString(dsResponse.Tables[0].Rows[0]["CityName"]);
+                    objPreference.CountryId = Convert.ToInt32(dsResponse.Tables[0].Rows[0]["CountryId"]);
+                    objPreference.CountryName = Convert.ToString(dsResponse.Tables[0].Rows[0]["CountryName"]);
+                    objPreference.ReligionId = Convert.ToString(dsResponse.Tables[0].Rows[0]["ReligionId"]);
+                    objPreference.ReligionName = Convert.ToString(dsResponse.Tables[0].Rows[0]["ReligionName"]);
+                    objPreference.CasteId = Convert.ToInt32(dsResponse.Tables[0].Rows[0]["CasteId"]);
+                    objPreference.CasteName = Convert.ToString(dsResponse.Tables[0].Rows[0]["CasteName"]);
+                    objPreference.MotherToungeId = Convert.ToString(dsResponse.Tables[0].Rows[0]["MotherToungeId"]);
+                    objPreference.MotherTounge = Convert.ToString(dsResponse.Tables[0].Rows[0]["MotherTounge"]);
+                    objPreference.Income = Convert.ToString(dsResponse.Tables[0].Rows[0]["Income"]);
+                    objPreference.IsDrink = Convert.ToString(dsResponse.Tables[0].Rows[0]["IsDrink"]);
+                    objPreference.IsSmoke = Convert.ToString(dsResponse.Tables[0].Rows[0]["IsSmoke"]);
+                    objPreference.IsPhysicalDisable = Convert.ToString(dsResponse.Tables[0].Rows[0]["IsPhysicalDisable"]);
+                    objPreference.SkinTone = Convert.ToString(dsResponse.Tables[0].Rows[0]["SkinTone"]);
+                    objPreference.BodyType = Convert.ToString(dsResponse.Tables[0].Rows[0]["BodyType"]);
+                }
             }
             catch (Exception ex)
             {
             }
-            return View(objUserPreference);
+            return View(objPreference);
         }
     }
 }
