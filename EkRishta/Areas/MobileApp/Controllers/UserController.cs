@@ -201,7 +201,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     objUserMaster.lstImages = new List<ImageUpload>();
                     if (dsResponse != null && dsResponse.Tables[1] != null)
                     {
-                        foreach(DataRow dr in dsResponse.Tables[1].Rows)
+                        foreach (DataRow dr in dsResponse.Tables[1].Rows)
                         {
                             ImageUpload objImageUpload = new ImageUpload();
                             objImageUpload.ImagePath = "/Uploads/" + objUser.UserId + "/" + Convert.ToString(dr["ImagePath"]);
@@ -663,6 +663,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     {
                         objUserMaster.ShareCount = objUser.ShareCount;
 
+                        objUserMaster.UserId = Convert.ToInt32(dr["UserId"]);
                         objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
                         objUserMaster.LastName = Convert.ToString(dr["LastName"]);
                         objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
@@ -719,6 +720,17 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.CompanyName = Convert.ToString(dr["CompanyName"]);
                         objUserMaster.Designation = Convert.ToString(dr["Designation"]);
                         objUserMaster.Income = Convert.ToString(dr["Income"]);
+                    }
+                    objUserMaster.lstImages = new List<ImageUpload>();
+                    if (dsResponse != null && dsResponse.Tables[1] != null)
+                    {
+                        foreach (DataRow dr in dsResponse.Tables[1].Rows)
+                        {
+                            ImageUpload objImageUpload = new ImageUpload();
+                            objImageUpload.ImagePath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ImagePath"]);
+
+                            objUserMaster.lstImages.Add(objImageUpload);
+                        }
                     }
                 }
 
@@ -1381,7 +1393,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 objSearchUserProfile.ReligionId = objSearchUserProfile.ReligionId == "0" ? null : objSearchUserProfile.ReligionId;
                 objSearchUserProfile.MotherToungeId = objSearchUserProfile.MotherToungeId == "0" ? null : objSearchUserProfile.MotherToungeId;
                 objSearchUserProfile.Income = objSearchUserProfile.Income == "0" ? null : objSearchUserProfile.Income;
-                
+
                 sqlCmd.Parameters.AddWithValue("@FromAge", objSearchUserProfile.FromAge);
                 sqlCmd.Parameters.AddWithValue("@ToAge", objSearchUserProfile.ToAge);
                 sqlCmd.Parameters.AddWithValue("@ReligionId", objSearchUserProfile.ReligionId);
@@ -1517,9 +1529,10 @@ namespace EkRishta.Areas.MobileApp.Controllers
         [HttpPost]
         public ActionResult UploadPhotos(HttpPostedFileBase imageFile)
         {
+            DataSet dsResponse = new DataSet();
             string filename = string.Empty;
             List<ImageUpload> lstImage = new List<ImageUpload>();
-            if (imageFile!=null&& imageFile.ContentLength > 0)
+            if (imageFile != null && imageFile.ContentLength > 0)
             {
                 try
                 {
@@ -1544,32 +1557,37 @@ namespace EkRishta.Areas.MobileApp.Controllers
                             System.IO.Directory.CreateDirectory(updatedPath);
                         }
                         file.SaveAs(updatedPath + filename);
-                    }
 
-                    //Save Path to Database
-                    DataSet dsResponse = new DataSet();
-                    string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
-                    SqlConnection connString = new SqlConnection(conStr);
-                    SqlCommand sqlCmd = new SqlCommand();
-                    sqlCmd.CommandType = CommandType.StoredProcedure;
-                    sqlCmd.Parameters.AddWithValue("@ImagePath", filename);
-                    sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
-                    sqlCmd.Parameters.AddWithValue("@Action", "I");
-                    sqlCmd.CommandText = "UploadImage";
-                    sqlCmd.Connection = connString;
-                    SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
-                    sda.Fill(dsResponse);
+                        //Save Path to Database
+
+                        string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                        SqlConnection connString = new SqlConnection(conStr);
+                        SqlCommand sqlCmd = new SqlCommand();
+                        sqlCmd.CommandType = CommandType.StoredProcedure;
+                        sqlCmd.Parameters.AddWithValue("@ImagePath", filename);
+                        sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                        sqlCmd.Parameters.AddWithValue("@Action", "I");
+                        sqlCmd.CommandText = "UploadImage";
+                        sqlCmd.Connection = connString;
+                        SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                        sda.Fill(dsResponse);
+                    }
 
                     if (dsResponse != null && dsResponse.Tables.Count > 0 && dsResponse.Tables[0] != null)
                     {
+                        System.Collections.ArrayList arrlst = new System.Collections.ArrayList();
                         foreach (DataRow dr in dsResponse.Tables[0].Rows)
                         {
-                            ImageUpload objImage = new ImageUpload();
-                            objImage.UserId = Convert.ToString(dr["UserId"]);
-                            objImage.ImagePath = "/Uploads/" + objImage.UserId + "/" + Convert.ToString(dr["ImagePath"]);
-                            objImage.ImageId = Convert.ToString(dr["ImageId"]);
+                            if (!arrlst.Contains(Convert.ToString(dr["ImageId"])))
+                            {
+                                arrlst.Add(Convert.ToString(dr["ImageId"]));
+                                ImageUpload objImage = new ImageUpload();
+                                objImage.UserId = Convert.ToString(dr["UserId"]);
+                                objImage.ImagePath = "/Uploads/" + objImage.UserId + "/" + Convert.ToString(dr["ImagePath"]);
+                                objImage.ImageId = Convert.ToString(dr["ImageId"]);
 
-                            lstImage.Add(objImage);
+                                lstImage.Add(objImage);
+                            }
                         }
                     }
                     //return Json("Photo Uploaded Successfully!");

@@ -389,16 +389,46 @@ function UpdateOtherDetails(cntrl) {
     })
 }
 
-function EditUserPreference() {
-    var formData = {}
+function EditUserPreference(cntrl) {
+    if (cntrl.innerHTML.toLowerCase() == "edit") {
+        $("#ulPreferenceLabels").css("display", "none");
+        $("#ulPreferenceEdit").css("display", "block");
+        cntrl.innerHTML = "Update";
+    }
+    else {
+        UpdateUserPreference(cntrl);
+    }
+}
+
+function UpdateUserPreference(cntrl) {
+    var formData = {
+        FromAge: $("#txtFromAgePref").val(),
+        ToAge: $("#txtToAgePref").val(),
+        FromHeight: $("#txtFromHeightPref").val(),
+        ToHeight: $("#txtToHeightPref").val(),
+        MaritialStatus: $("#ddlMaritialStatusPref").val(),
+        CityId: $("#ddlCityPref").val(),
+        //CountryId:$("#").val(),
+        ReligionId: $("#ddlReligionPref").val(),
+        CasteId: $("#ddlCastePref").val(),
+        MotherToungeId: $("#ddlMotherToungePref").val(),
+        Income: $("#ddlIncomePref").val(),
+        IsSmoke: $("#ddlSmokePref").val(),
+        IsDrink: $("#ddlDrinkPref").val(),
+        IsPhysicalDisable: $("#ddlPhysicalDisablePref").val(),
+        SkinTone: $("#txtSkinTonePref").val(),
+        BodyType: $("#txtBodyTypePref").val(),
+        ActionType: "U"
+    };
+
     $.ajax({
         url: "/UserPreferences/ManageUserPreferences",
-        data: {},
+        data: formData,
         type: "POST",
         success: function (htmlText) {
-            $('#divOtherDetails').html(htmlText);
-            $("#ulOtherLabels").css("display", "block");
-            $("#ulOtherEdit").css("display", "none");
+            $('#divUserPreference').html(htmlText);
+            $("#ulPreferenceLabels").css("display", "block");
+            $("#ulPreferenceEdit").css("display", "none");
             cntrl.innerHTML = "Edit";
         },
         error: function (HttpRequest, textStatus, errorThrown) {

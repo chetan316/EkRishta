@@ -34,7 +34,7 @@ namespace Areas.Models
         public string SkinTone { get; set; }
         public string BodyType { get; set; }
         public string IsPhysicalDisable { get; set; }
-        public string Action { get; set; }
+        public string ActionType { get; set; }
 
         public SelectList ReligionDetails { get; set; }
         public SelectList LanguageDetails { get; set; }

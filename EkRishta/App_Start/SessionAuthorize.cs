@@ -15,7 +15,7 @@ namespace EkRishta
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            filterContext.Result = new RedirectResult("~/Login/Index");
+            filterContext.Result = new RedirectResult("~/MobileApp/Login/MobileIndex");
         }
     }
 }

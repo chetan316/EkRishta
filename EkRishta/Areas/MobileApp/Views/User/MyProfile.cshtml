@@ -58,24 +58,6 @@
                                 </a>
                             </li>
                         }
-                        @*<li data-src="/images/1.jpg">
-                                <a href="">
-                                    <img class="img-responsive" src="/images/thumb-1.jpg">
-                                </a>
-                            </li>
-
-                            <li data-src="/images/2.jpg">
-                                <a href="">
-                                    <img class="img-responsive" src="/images/thumb-2.jpg">
-                                </a>
-                            </li>
-
-                            <li data-src="/images/13.jpg">
-                                <a href="">
-                                    <img class="img-responsive" src="/images/thumb-13.jpg">
-                                </a>
-                            </li>*@
-
                     </ul>
                 </div>
             </div>
@@ -95,15 +77,6 @@
                 <a onclick="EditAddressDetails(this);">Edit</a>
             </div>
             <div class="details" id="divAddressDetails">
-                @*<ul>
-                        <li> <strong>Address Line 1 </strong> <p> : @Model.Address1</p>  </li>
-                        <li> <strong>Address Line 2 </strong> <p> : @Model.Address2</p>  </li>
-                        <li> <strong>City </strong> <p> : @Model.CityName</p>  </li>
-                        <li> <strong>State </strong> <p> : @Model.StateName </p>  </li>
-                        <li> <strong>Country </strong> <p>:  @Model.CountryName</p>  </li>
-                        <li> <strong>Pincode </strong> <p>:  @Model.Pincode</p>  </li>
-
-                    </ul>*@
                 @{Html.RenderPartial("_AddressDetails", Model.objUserAddressDetails);}
             </div>
             <div class="user_title">
@@ -112,16 +85,6 @@
                 <a onclick="EditFamilyDetails(this);">Edit</a>
             </div>
             <div class="details" id="divFamilyDetails">
-                @*<ul>
-                        <li> <strong>Father Name </strong> <p>: @Model.FatherName </p>  </li>
-                        <li> <strong>Father Profession </strong> <p>:  @Model.FatherProfession</p>  </li>
-                        <li> <strong>Mother Name </strong> <p>:  @Model.MotherName</p>  </li>
-                        <li> <strong>Mother Profession </strong> <p>:  @Model.MotherProfession</p>  </li>
-                        <li> <strong>State </strong> <p>:  @Model.StateName</p>  </li>
-                        <li> <strong>Country </strong> <p>: @Model.CountryName </p>  </li>
-                        <li> <strong>Pincode </strong> <p> : @Model.Pincode</p>  </li>
-
-                    </ul>*@
                 @{Html.RenderPartial("_FamilyDetails", Model.objUserFamilyDetails);}
             </div>
             <div class="user_title">
@@ -130,13 +93,6 @@
                 <a onclick="EditReligionDetails(this);">Edit</a>
             </div>
             <div class="details" id="divReligionDetails">
-                @*<ul>
-                        <li> <strong>Religion </strong> <p>: @Model.ReligionName </p>  </li>
-                        <li> <strong>Cast </strong> <p>: @Model.CastName </p>  </li>
-                        <li> <strong>Country of Birth </strong> <p> : @Model.BirthCountry</p>  </li>
-
-
-                    </ul>*@
                 @{Html.RenderPartial("_ReligionDetails", Model.objUserReligionDetails);}
             </div>
             <div class="user_title">
@@ -145,17 +101,6 @@
                 <a onclick="EditOtherDetails(this);">Edit</a>
             </div>
             <div class="details" id="divOtherDetails">
-                @*<ul>
-                        <li> <strong>Height </strong> <p> : @Model.Height</p>  </li>
-                        <li> <strong>Body Type </strong> <p>: @Model.BodyType </p>  </li>
-
-
-                        <li> <strong>Skin Tone </strong> <p> : @Model.SkinTone</p>  </li>
-                        <li> <strong>Blood Group </strong> <p>: @Model.BloodGroup </p>  </li>
-
-                        <li> <strong>Smoke </strong> <p> : @Model.IsSmoke</p>  </li>
-                        <li> <strong>Drink </strong> <p> : @Model.IsDrink</p>  </li>
-                    </ul>*@
                 @{Html.RenderPartial("_OtherDetails", Model.objUserOtherDetails);}
             </div>
         </div>
