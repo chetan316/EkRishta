@@ -14,7 +14,8 @@ namespace EkRishta.Areas.WebApp.Controllers
     {
         public ActionResult WebIndex()
         {
-            return View("~/Areas/WebApp/Views/Login/WebIndex.cshtml");
+            //return View("~/Areas/WebApp/Views/Login/WebIndex.cshtml");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

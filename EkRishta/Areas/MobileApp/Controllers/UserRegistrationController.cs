@@ -183,5 +183,33 @@ namespace EkRishta.Areas.MobileApp.Controllers
             }
             return Json(response, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult ValidateEmailId(string EmailId)
+        {
+            string response = string.Empty;
+            DataSet dsResponse = new DataSet();
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@EmailId", EmailId);
+                sqlCmd.CommandText = "ValidateEmailId";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                if (dsResponse != null && dsResponse.Tables[0].Rows.Count > 0)
+                {
+                    response = Convert.ToString(dsResponse.Tables[0].Rows[0]["EmailId"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
     }
 }

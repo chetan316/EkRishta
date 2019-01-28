@@ -4,7 +4,10 @@ namespace Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Configuration;
     using System.Data.Entity.Spatial;
+    using System.IO;
+    using System.Net;
 
     public partial class SMSLog
     {
@@ -24,4 +27,5 @@ namespace Models
 
         public DateTime? CreatedDate { get; set; }
     }
+
 }

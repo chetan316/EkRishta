@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace EkRishta.Areas.MobileApp.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         public ActionResult MobileIndex()
         {
@@ -18,7 +18,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult MobileLogin(Login objLogin)
         {
             try
@@ -65,6 +65,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
             }
             catch (Exception ex)
             {
+                WriteLog("Message : " + ex.Message + "\n" + "StackTrace : " + ex.StackTrace);
                 ViewBag.ErrorMessage = "Error Occurred, Please Try Again.";
                 return View("MobileIndex");
             }

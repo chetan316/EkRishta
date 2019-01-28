@@ -14,8 +14,15 @@ namespace EkRishta
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
+            bundles.Add(new ScriptBundle("~/bundles/CustomJs").Include(
+                        "~/Scripts/CustomJs/jquery-3.3.1.min.js",
+                        "~/Scripts/CustomJs/jquery.slicknav.min.js",
+                        "~/Scripts/CustomJs/swiper.min.js",
+                        "~/Scripts/CustomJs/wow.min.js",
+                        "~/Scripts/CustomJs/main.js"));
+
+
+            ///Style Bundle
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
@@ -23,12 +30,19 @@ namespace EkRishta
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/bundles/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            bundles.Add(new StyleBundle("~/bundles/CustomCss").Include(
+                      "~/Content/CustomCss/themify-icons.css",
+                      "~/Content/CustomCss/bootstrap.min.css",
+                      "~/Content/CustomCss/style.css",
+                      "~/Content/CustomCss/style1.css",
+                      "~/Content/CustomCss/swiper.min.css",
+                      "~/Content/CustomCss/main.css"));
+
             // Set EnableOptimizations to false for debugging. For more information,
-            // visit http://go.microsoft.com/fwlink/?LinkId=301862
             BundleTable.EnableOptimizations = true;
         }
     }

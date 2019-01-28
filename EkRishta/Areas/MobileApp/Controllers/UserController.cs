@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Areas.Models;
+using System.IO;
 
 namespace EkRishta.Areas.MobileApp.Controllers
 {
@@ -204,9 +205,15 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         foreach (DataRow dr in dsResponse.Tables[1].Rows)
                         {
                             ImageUpload objImageUpload = new ImageUpload();
-                            objImageUpload.ImagePath = "/Uploads/" + objUser.UserId + "/" + Convert.ToString(dr["ImagePath"]);
-
-                            objUserMaster.lstImages.Add(objImageUpload);
+                            if (Convert.ToString(dr["ImageType"]) != "Cover")
+                            {
+                                objImageUpload.ImagePath = "/Uploads/" + objUser.UserId + "/" + Convert.ToString(dr["ImagePath"]);
+                                objUserMaster.lstImages.Add(objImageUpload);
+                            }
+                            else
+                            {
+                                objUserMaster.CoverImageName = "/Uploads/" + objUser.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
+                            }
                         }
                     }
                 }
@@ -215,7 +222,6 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     return View("MyProfile", objUserMaster);
                 else
                     return RedirectToAction("ViewProfile", objUserMaster);
-
             }
             catch (Exception ex)
             {
@@ -268,8 +274,13 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.ReligionName = Convert.ToString(dr["ReligionName"]);
                         objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
                         objUserMaster.CastName = Convert.ToString(dr["CastName"]);
-                        //objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
+                        objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
                         objUserMaster.ShareCount = objUser.ShareCount;
+                        objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
+                        objUserMaster.MotherTounge = Convert.ToString(dr["MotherTounge"]);
+                        objUserMaster.Designation = Convert.ToString(dr["Designation"]);
+                        objUserMaster.Degree = Convert.ToString(dr["Degree"]);
+                        objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
 
                         foreach (DataRow dr1 in dsResponse.Tables[1].Rows)
                         {
@@ -316,6 +327,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         UserMaster objUserMaster = new UserMaster();
 
                         objUserMaster.RequestSource = MethodInfo.GetCurrentMethod().Name;
+                        objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
                         objUserMaster.UserId = Convert.ToInt32(dr["UserId"]);
                         objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
                         objUserMaster.LastName = Convert.ToString(dr["LastName"]);
@@ -335,6 +347,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
                         objUserMaster.CastName = Convert.ToString(dr["CastName"]);
                         objUserMaster.ShareCount = objUser.ShareCount;
+                        objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
+                        objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
 
                         lstUserMaster.Add(objUserMaster);
                     }
@@ -391,6 +405,9 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
                         objUserMaster.CastName = Convert.ToString(dr["CastName"]);
                         objUserMaster.ShareCount = objUser.ShareCount;
+                        objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
+                        objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
+                        objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
 
                         lstUserMaster.Add(objUserMaster);
                     }
@@ -448,6 +465,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
                         objUserMaster.CastName = Convert.ToString(dr["CastName"]);
                         objUserMaster.ShareCount = objUser.ShareCount;
+                        objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
+                        objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
 
                         lstUserMaster.Add(objUserMaster);
                     }
@@ -505,6 +524,67 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
                         objUserMaster.CastName = Convert.ToString(dr["CastName"]);
                         objUserMaster.ShareCount = objUser.ShareCount;
+                        objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
+                        objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
+
+                        lstUserMaster.Add(objUserMaster);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return View("RequestInfo", lstUserMaster);
+        }
+
+        public ActionResult RejectedMeRequest()
+        {
+            DataSet dsResponse = new DataSet();
+            List<UserMaster> lstUserMaster = new List<UserMaster>();
+
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                Models.User objUser = (Models.User)(Session["USER"]);
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                sqlCmd.CommandText = "GetDeclinedMeRequest";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                if (dsResponse != null && dsResponse.Tables[0] != null)
+                {
+                    foreach (DataRow dr in dsResponse.Tables[0].Rows)
+                    {
+                        UserMaster objUserMaster = new UserMaster();
+
+                        objUserMaster.RequestSource = MethodInfo.GetCurrentMethod().Name;
+                        objUserMaster.UserId = Convert.ToInt32(dr["UserId"]);
+                        objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
+                        objUserMaster.LastName = Convert.ToString(dr["LastName"]);
+                        objUserMaster.ProfileId = Convert.ToString(dr["ProfileId"]);
+                        objUserMaster.MobileNo = Convert.ToString(dr["MobileNo"]);
+                        objUserMaster.DOB = Convert.ToString(dr["DOB"]);
+                        objUserMaster.Age = Convert.ToString(dr["Age"]);
+                        objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
+                        objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
+                        objUserMaster.IsSurnameVisible = Convert.ToString(dr["IsSurnameVisible"]);
+                        objUserMaster.IsDPVisible = Convert.ToString(dr["IsDPVisible"]);
+                        objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]);
+                        objUserMaster.Height = Convert.ToString(dr["Height"]);
+                        objUserMaster.ProfilePicPath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
+                        objUserMaster.ReligionId = Convert.ToInt32(dr["ReligionId"]);
+                        objUserMaster.ReligionName = Convert.ToString(dr["ReligionName"]);
+                        objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
+                        objUserMaster.CastName = Convert.ToString(dr["CastName"]);
+                        objUserMaster.ShareCount = objUser.ShareCount;
+                        objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
+                        objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
+                        objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
 
                         lstUserMaster.Add(objUserMaster);
                     }
@@ -540,30 +620,35 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 {
                     foreach (DataRow dr in dsResponse.Tables[0].Rows)
                     {
-                        UserMaster objUserMaster = new UserMaster();
+                        if (Convert.ToString(dr["RequestStatus"]) == "P")
+                        {
+                            UserMaster objUserMaster = new UserMaster();
 
-                        objUserMaster.UserId = Convert.ToInt32(dr["RequestingUserId"]);
-                        objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
-                        objUserMaster.LastName = Convert.ToString(dr["LastName"]);
-                        objUserMaster.ProfileId = Convert.ToString(dr["ProfileId"]);
-                        objUserMaster.MobileNo = Convert.ToString(dr["MobileNo"]);
-                        objUserMaster.DOB = Convert.ToString(dr["DOB"]);
-                        objUserMaster.Age = Convert.ToString(dr["Age"]);
-                        objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
-                        objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
-                        objUserMaster.IsSurnameVisible = Convert.ToString(dr["IsSurnameVisible"]);
-                        objUserMaster.IsDPVisible = Convert.ToString(dr["IsDPVisible"]);
-                        objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]) == "1" ? "Unmarried" : "Married";
-                        objUserMaster.Height = Convert.ToString(dr["Height"]);
-                        objUserMaster.ProfilePicPath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
-                        objUserMaster.ReligionId = Convert.ToInt32(dr["ReligionId"]);
-                        objUserMaster.ReligionName = Convert.ToString(dr["ReligionName"]);
-                        objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
-                        objUserMaster.CastName = Convert.ToString(dr["CastName"]);
-                        objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
-                        objUserMaster.ShareCount = objUser.ShareCount;
+                            objUserMaster.UserId = Convert.ToInt32(dr["RequestingUserId"]);
+                            objUserMaster.FirstName = Convert.ToString(dr["FirstName"]);
+                            objUserMaster.LastName = Convert.ToString(dr["LastName"]);
+                            objUserMaster.ProfileId = Convert.ToString(dr["ProfileId"]);
+                            objUserMaster.MobileNo = Convert.ToString(dr["MobileNo"]);
+                            objUserMaster.DOB = Convert.ToString(dr["DOB"]);
+                            objUserMaster.Age = Convert.ToString(dr["Age"]);
+                            objUserMaster.Gender = Convert.ToString(dr["Gender"]) == "M" ? "Male" : "Female";
+                            objUserMaster.EmailId = Convert.ToString(dr["EmailId"]);
+                            objUserMaster.IsSurnameVisible = Convert.ToString(dr["IsSurnameVisible"]);
+                            objUserMaster.IsDPVisible = Convert.ToString(dr["IsDPVisible"]);
+                            objUserMaster.MaritialStatus = Convert.ToString(dr["MaritialStatus"]) == "1" ? "Unmarried" : "Married";
+                            objUserMaster.Height = Convert.ToString(dr["Height"]);
+                            objUserMaster.ProfilePicPath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ProfilePicPath"]);
+                            objUserMaster.ReligionId = Convert.ToInt32(dr["ReligionId"]);
+                            objUserMaster.ReligionName = Convert.ToString(dr["ReligionName"]);
+                            objUserMaster.CastId = Convert.ToInt32(dr["CastId"]);
+                            objUserMaster.CastName = Convert.ToString(dr["CastName"]);
+                            objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
+                            objUserMaster.ShareCount = objUser.ShareCount;
+                            objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
+                            objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
 
-                        lstUserMaster.Add(objUserMaster);
+                            lstUserMaster.Add(objUserMaster);
+                        }
                     }
                 }
             }
@@ -720,6 +805,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.CompanyName = Convert.ToString(dr["CompanyName"]);
                         objUserMaster.Designation = Convert.ToString(dr["Designation"]);
                         objUserMaster.Income = Convert.ToString(dr["Income"]);
+                        objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
                     }
                     objUserMaster.lstImages = new List<ImageUpload>();
                     if (dsResponse != null && dsResponse.Tables[1] != null)
@@ -727,9 +813,15 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         foreach (DataRow dr in dsResponse.Tables[1].Rows)
                         {
                             ImageUpload objImageUpload = new ImageUpload();
-                            objImageUpload.ImagePath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ImagePath"]);
-
-                            objUserMaster.lstImages.Add(objImageUpload);
+                            if (Convert.ToString(dr["ImageType"]) != "Cover")
+                            {
+                                objImageUpload.ImagePath = "/Uploads/" + objUserMaster.UserId + "/" + Convert.ToString(dr["ImagePath"]);
+                                objUserMaster.lstImages.Add(objImageUpload);
+                            }
+                            else
+                            {
+                                objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
+                            }
                         }
                     }
                 }
@@ -1244,6 +1336,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.Designation = Convert.ToString(dr["Designation"]);
                         objUserMaster.Income = Convert.ToString(dr["Income"]);
                         objUserMaster.IsShortlisted = "S";
+                        objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
+                        objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
 
                         lstUserMaster.Add(objUserMaster);
                     }
@@ -1340,6 +1434,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.CompanyName = Convert.ToString(dr["CompanyName"]);
                         objUserMaster.Designation = Convert.ToString(dr["Designation"]);
                         objUserMaster.Income = Convert.ToString(dr["Income"]);
+                        objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
+                        objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
 
                         foreach (DataRow dr1 in dsResponse.Tables[1].Rows)
                         {
@@ -1470,6 +1566,9 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     objUserMaster.CompanyName = Convert.ToString(dr["CompanyName"]);
                     objUserMaster.Designation = Convert.ToString(dr["Designation"]);
                     objUserMaster.Income = Convert.ToString(dr["Income"]);
+                    objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
+                    objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
+                    objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
 
                     //foreach (DataRow dr1 in dsResponse.Tables[1].Rows)
                     //{
@@ -1510,12 +1609,15 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 {
                     foreach (DataRow dr in dsResponse.Tables[0].Rows)
                     {
-                        ImageUpload objImage = new ImageUpload();
-                        objImage.UserId = Convert.ToString(dr["UserId"]);
-                        objImage.ImagePath = "/Uploads/" + objImage.UserId + "/" + Convert.ToString(dr["ImagePath"]);
-                        objImage.ImageId = Convert.ToString(dr["ImageId"]);
+                        if (Convert.ToString(dr["ImageType"]) != "Cover")
+                        {
+                            ImageUpload objImage = new ImageUpload();
+                            objImage.UserId = Convert.ToString(dr["UserId"]);
+                            objImage.ImagePath = "/Uploads/" + objImage.UserId + "/" + Convert.ToString(dr["ImagePath"]);
+                            objImage.ImageId = Convert.ToString(dr["ImageId"]);
 
-                        lstImage.Add(objImage);
+                            lstImage.Add(objImage);
+                        }
                     }
                 }
             }
@@ -1573,20 +1675,25 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         sda.Fill(dsResponse);
                     }
 
+                    imageFile = null;
+
                     if (dsResponse != null && dsResponse.Tables.Count > 0 && dsResponse.Tables[0] != null)
                     {
                         System.Collections.ArrayList arrlst = new System.Collections.ArrayList();
                         foreach (DataRow dr in dsResponse.Tables[0].Rows)
                         {
-                            if (!arrlst.Contains(Convert.ToString(dr["ImageId"])))
+                            if (Convert.ToString(dr["ImageType"]) != "Cover")
                             {
-                                arrlst.Add(Convert.ToString(dr["ImageId"]));
-                                ImageUpload objImage = new ImageUpload();
-                                objImage.UserId = Convert.ToString(dr["UserId"]);
-                                objImage.ImagePath = "/Uploads/" + objImage.UserId + "/" + Convert.ToString(dr["ImagePath"]);
-                                objImage.ImageId = Convert.ToString(dr["ImageId"]);
+                                if (!arrlst.Contains(Convert.ToString(dr["ImageId"])))
+                                {
+                                    arrlst.Add(Convert.ToString(dr["ImageId"]));
+                                    ImageUpload objImage = new ImageUpload();
+                                    objImage.UserId = Convert.ToString(dr["UserId"]);
+                                    objImage.ImagePath = "/Uploads/" + objImage.UserId + "/" + Convert.ToString(dr["ImagePath"]);
+                                    objImage.ImageId = Convert.ToString(dr["ImageId"]);
 
-                                lstImage.Add(objImage);
+                                    lstImage.Add(objImage);
+                                }
                             }
                         }
                     }
@@ -1602,6 +1709,169 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 //return Json("No files selected.");
             }
             return View(lstImage);
+        }
+
+        [HttpPost]
+        public string UpdatePhoto()
+        {
+            DataSet dsResponse = new DataSet();
+            string filename = string.Empty;
+            List<ImageUpload> lstImage = new List<ImageUpload>();
+                Models.User objUser = (Models.User)Session["USER"];
+
+
+            try
+            {
+                HttpFileCollectionBase files = Request.Files;
+                for (int i = 0; i < files.Count; i++)
+                {
+                    HttpPostedFileBase file = files[i];
+
+                    if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                    {
+                        string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                        filename = testfiles[testfiles.Length - 1];
+                    }
+                    else
+                    {
+                        filename = file.FileName;
+                    }
+                    string updatedPath = string.Empty;
+                    if (Request["ImageType"] != null && Request["ImageType"].Contains("Cover"))
+                    {
+                        updatedPath = System.IO.Path.Combine(Server.MapPath("~/Uploads/"), objUser.UserId + "/Cover\\");
+                    }
+                    else
+                    {
+                        updatedPath = System.IO.Path.Combine(Server.MapPath("~/Uploads/"), objUser.UserId + "\\");
+                    }
+                    if (!System.IO.Directory.Exists(updatedPath))
+                    {
+                        System.IO.Directory.CreateDirectory(updatedPath);
+                    }
+                    else
+                    {
+                        if (Request["ImageType"] != null && Request["ImageType"].Contains("Cover"))
+                        {
+                            System.IO.DirectoryInfo di = new DirectoryInfo(updatedPath);
+
+                            foreach (FileInfo fileInfo in di.GetFiles())
+                            {
+                                fileInfo.Delete();
+                            }
+                        }
+                    }
+                    file.SaveAs(updatedPath + filename);
+
+                    //Save Path to Database
+
+                    string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                    SqlConnection connString = new SqlConnection(conStr);
+                    SqlCommand sqlCmd = new SqlCommand();
+                    sqlCmd.CommandType = CommandType.StoredProcedure;
+                    if (Request["ImageType"] != null && Request["ImageType"].Contains("Cover"))
+                    {
+                        sqlCmd.Parameters.AddWithValue("@ImagePath", filename);
+                        sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                        sqlCmd.CommandText = "UploadCoverImage";
+                    }
+                    else
+                    {
+                        sqlCmd.Parameters.AddWithValue("@ProfiePicPath", filename);
+                        sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                        sqlCmd.CommandText = "UpdateUserProfilePic";
+                    }
+                    sqlCmd.Connection = connString;
+                    SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                    sda.Fill(dsResponse);
+                }
+
+                if (dsResponse != null && dsResponse.Tables.Count > 0 && dsResponse.Tables[0] != null)
+                {
+                    if (Request["ImageType"] != null && Request["ImageType"].Contains("Cover"))
+                    {
+                        return "/Uploads/" + objUser.UserId + "/Cover/" + filename;
+                    }
+                    else
+                    {
+                        return "/Uploads/" + objUser.UserId + "/" + Convert.ToString(dsResponse.Tables[0].Rows[0]["ProfilePicPath"]);
+                    }
+                }
+                //return Json("Photo Uploaded Successfully!");
+            }
+            catch (Exception ex)
+            {
+                //return Json("Error occurred. Error details: " + ex.Message);
+                Logger.Logging(ex.Message, ex.StackTrace, objUser.UserId, DateTime.Now);
+            }
+            return null;
+        }
+
+        [HttpPost]
+        public ActionResult DeleteImage(string ImageId, string ImagePath)
+        {
+            try
+            {
+                DataSet dsResponse = new DataSet();
+                Models.User objUser = (Models.User)Session["USER"];
+
+                string FolderPath="/Uploads/"+objUser.UserId;
+                string FileName = ImagePath.Split('/')[3];
+                string updatedPath = System.IO.Path.Combine(Server.MapPath(FolderPath));
+                System.IO.DirectoryInfo di = new DirectoryInfo(updatedPath);
+
+                foreach (FileInfo fileInfo in di.GetFiles())
+                {
+                    if (fileInfo.Name == FileName)
+                    {
+                        fileInfo.Delete();
+                        break;
+                    }
+                }
+
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@ImageId", ImageId);
+                sqlCmd.Parameters.AddWithValue("@Action", "D");
+                sqlCmd.CommandText = "UploadImage";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return null;
+        }
+
+        [HttpPost]
+        public ActionResult SetProfilePic(string ImagePath)
+        {
+            try
+            {
+                string FileName = ImagePath.Contains("/") ? ImagePath.Split('/')[3] : ImagePath;
+                DataSet dsResponse = new DataSet();
+                Models.User objUser = (Models.User)Session["USER"];
+
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@ProfiePicPath", FileName);
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                sqlCmd.CommandText = "UpdateUserProfilePic";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return null;
         }
     }
 }

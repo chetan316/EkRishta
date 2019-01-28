@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -23,20 +24,21 @@ namespace EkRishta
 
         public JsonResult SendSMS(string MobileNo)
         {
-            string response = string.Empty;
+            string APIResponse = string.Empty, response=string.Empty;
             try
             {
                 Random generator = new Random();
                 String OTP = generator.Next(0, 9999).ToString();
-                string smsText = OTP + " " + ConfigurationManager.AppSettings["RegistrationSMSText"];
+                string smsText = ConfigurationManager.AppSettings["RegistrationSMSText"] + OTP;
                 string SMSLoginId = ConfigurationManager.AppSettings["SMSLoginId"];
                 string SMSPassword = ConfigurationManager.AppSettings["SMSPassword"];
                 string SMSSenderId = ConfigurationManager.AppSettings["SMSSenderId"];
                 string SMSUrl = ConfigurationManager.AppSettings["SMSUrl"];
-
-                string smsURL = SMSUrl + "username=" + SMSLoginId + "&password=" + SMSPassword + "&message=" + HttpUtility.UrlEncode(smsText) + "&sender=" + SMSSenderId + "&numbers=" + MobileNo;
-                //WebClient webClient = new WebClient();
-                string APIResponse = "YOUR SMS HAS BEEN SENT";//webClient.DownloadString(smsURL);
+                
+                string smsURL = SMSUrl+"username=" + SMSLoginId + "&password=" + SMSPassword + "&from=" + SMSSenderId + "&to=" + MobileNo + "&text=" + smsText + "&coding=0";
+                WebClient webClient = new WebClient();
+                APIResponse = webClient.DownloadString(smsURL);//"YOUR SMS HAS BEEN SENT";
+                
 
                 DataSet dsResult = new DataSet();
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
@@ -52,9 +54,8 @@ namespace EkRishta
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsResult);
 
-                if (APIResponse.Contains("YOUR SMS HAS BEEN SENT"))
+                if (!APIResponse.ToLower().Contains("error"))
                 {
-                    OTP = "1111";
                     response = SaveOTPDetails(MobileNo, OTP);
                 }
             }
@@ -342,6 +343,29 @@ namespace EkRishta
                 lstSelectItem.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             }
             return lstSelectItem;
+        }
+
+        public void WriteLog(string strMessage)
+        {
+            try
+            {
+                string strLogPath = ConfigurationManager.AppSettings["LogPath"];
+                if (!System.IO.Directory.Exists(strLogPath))
+                    System.IO.Directory.CreateDirectory(strLogPath);
+
+                string strFileName = "Logs_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".log";
+
+                FileStream fs = new FileStream(strLogPath + "\\" + strFileName,
+                                    FileMode.OpenOrCreate, FileAccess.Write);
+                StreamWriter m_streamWriter = new StreamWriter(fs);
+                m_streamWriter.BaseStream.Seek(0, SeekOrigin.End);
+                m_streamWriter.WriteLine(strMessage + "\n");
+                m_streamWriter.Flush();
+                m_streamWriter.Close();
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 

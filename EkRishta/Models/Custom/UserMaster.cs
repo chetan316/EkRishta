@@ -119,6 +119,8 @@ namespace Models.Custom
         /// </summary>
         public string RequestSource { get; set; }
         public string IsShortlisted { get; set; }
+        public string CoverImageName { get; set; }
+        public string PhotoCount { get; set; }
 
         public Areas.Models.UserBasicDetails objUserBasicDetails { get; set; }
         public Areas.Models.UserProfessionalDetails objUserProfessionalDetails { get; set; }
