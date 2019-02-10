@@ -5,7 +5,12 @@
 }
 <link href="~/Content/lightgallery.css" rel="stylesheet">
 <script src="~/Scripts/CustomJs/ManageUser.js?rd=@ViewBag.JSRefNo"></script>
+<style>
+.top-right {background: rgba(37, 37, 37, 0.59);width: 50px;position: absolute;text-align: center;padding: 8px;border-radius: 5px;color: #fff;/* margin-top: 6px; */text-align: center;top: 8px;right: 6px;}
+body {background-color: #f4f4f4;margin-top: 0px;padding-bottom: 15px;}
+.table .user-bg {margin-bottom: 80px;}
 
+</style>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -20,22 +25,22 @@
                 <div class="user_sec">
 
                     <div class="bg-cover">
-                        <a href="#"> Upload cover </a>
+                        <input type="hidden" value="@Model.CoverImageName" id="hdnCoverImagePath"/>
+                        <a onclick="return OpenFileDialog();"> Upload cover </a>
+                        <input id="fuCoverPhoto" type="file" style="display:none;" />
+                        <input id="fuProfilePhoto" type="file" style="display:none;"/>
                     </div>
+                    <div class="user-pic-round">
+                        <div class="ProfilePic profile_centre">
+                            <img id="imgProfilePic" alt="Profile" src="@Model.ProfilePicPath" />
+                            <a class="top-right" onclick="OpenFileDialogForProfilePic();">Edit</a>
+                        </div>
+                    </div>
+                   
 
-                    <div class="ProfilePic profile_centre">
-                        <img id="imgProfilePic" alt="Profile" src="@Model.ProfilePicPath" />
-                    </div>
                 </div>
             </div>
-            <div class="view-pro user_title besic_lik">
-                <ul>
-                    <li> <a href="#"> Basic </a> </li>
-                    <li> <a href="#"> About </a> </li>
-                    <li><a href="#"> Add Photo </a> </li>
-
-                </ul>
-            </div>
+           
             <div class="clearfix"></div>
             <div class="user_title">
                 <span><img alt="matrimonial ek vivaah" src="/images/user.svg"></span>
@@ -54,7 +59,8 @@
                         {
                             <li data-src="@item.ImagePath">
                                 <a href="">
-                                    <img class="img-responsive" src="@item.ImagePath" style="width:154px;height:104px" />
+                                    @*<img class="img-responsive" src="@item.ImagePath" style="width:154px;height:104px" />*@
+                                    <img class="img-responsive" src="@item.ImagePath"/>
                                 </a>
                             </li>
                         }
@@ -110,6 +116,13 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#lightgallery').lightGallery();
+
+        if ($("#hdnCoverImagePath").val() != "") {
+            $(".user-bg").css({
+                'background-image': 'url(' + $("#hdnCoverImagePath").val() + ')',
+                'background-repeat': 'no-repeat'
+            });
+        }
     });
 </script>
 <script src="~/Scripts/lightgallery-all.min.js"></script>

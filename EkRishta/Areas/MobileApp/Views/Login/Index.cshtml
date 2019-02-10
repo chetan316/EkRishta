@@ -5,7 +5,7 @@
     ViewBag.Title = "Login";
 } <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no, minimum-scale=1.0" />
 <link href="~/Content/Mobile.css?rd=1" rel="stylesheet" />
-@Styles.Render("~/Content/css")
+@Styles.Render("~/bundles/css")
 
 
 @{ Html.EnableClientValidation(); }
@@ -49,12 +49,15 @@
             @Html.ValidationMessageFor(a => a.LoginPassword)
         </div>
 
-        <div class="login-btn"> <input type="submit" value="Login" /></div>
+        <div class="login-btn"> <input type="submit" value="Login" /> </div>
 
+<div class="login-btn"> 
+  @Html.ActionLink("Register Here", "RegisterUser", "MobileApp/UserRegistration")
+</div>
     </div>
 
     <div class="Register">
-        @Html.ActionLink("Register Here", "RegisterUser", "MobileApp/UserRegistration")
+      
     </div>
 
 

@@ -24,7 +24,7 @@ namespace EkRishta
 
         public JsonResult SendSMS(string MobileNo)
         {
-            string APIResponse = string.Empty, response=string.Empty;
+            string APIResponse = string.Empty, response = string.Empty;
             try
             {
                 Random generator = new Random();
@@ -34,11 +34,11 @@ namespace EkRishta
                 string SMSPassword = ConfigurationManager.AppSettings["SMSPassword"];
                 string SMSSenderId = ConfigurationManager.AppSettings["SMSSenderId"];
                 string SMSUrl = ConfigurationManager.AppSettings["SMSUrl"];
-                
-                string smsURL = SMSUrl+"username=" + SMSLoginId + "&password=" + SMSPassword + "&from=" + SMSSenderId + "&to=" + MobileNo + "&text=" + smsText + "&coding=0";
+
+                string smsURL = SMSUrl + "username=" + SMSLoginId + "&password=" + SMSPassword + "&from=" + SMSSenderId + "&to=" + MobileNo + "&text=" + smsText + "&coding=0";
                 WebClient webClient = new WebClient();
                 APIResponse = webClient.DownloadString(smsURL);//"YOUR SMS HAS BEEN SENT";
-                
+
 
                 DataSet dsResult = new DataSet();
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
@@ -79,6 +79,36 @@ namespace EkRishta
                 sqlCmd.Parameters.AddWithValue("@MobileNo", MobileNo);
                 sqlCmd.Parameters.AddWithValue("@OTP", OTP);
                 sqlCmd.CommandText = "SaveOTPDetails";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsOTP);
+
+                if (dsOTP != null && dsOTP.Tables[0].Rows.Count > 0)
+                {
+                    response = Convert.ToString(dsOTP.Tables[0].Rows[0]["Result"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return response;
+        }
+
+        public string SaveForgotPwdOTPDetails(string MobileNo, string OTP)
+        {
+            string response = string.Empty;
+            DataSet dsOTP = new DataSet();
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@MobileNo", MobileNo);
+                sqlCmd.Parameters.AddWithValue("@OTP", OTP);
+                sqlCmd.Parameters.AddWithValue("@OTPType", "FP");
+                sqlCmd.CommandText = "SaveForgotPwdOTPDetails";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsOTP);
@@ -367,7 +397,127 @@ namespace EkRishta
             {
             }
         }
+
+        public string SendOTPAPI(string MobileNo, string smsText, out string OTP)
+        {
+            string APIResponse = string.Empty;
+            try
+            {
+                Random generator = new Random();
+                OTP = generator.Next(0, 9999).ToString();
+                smsText = smsText + OTP;
+                string SMSLoginId = ConfigurationManager.AppSettings["SMSLoginId"];
+                string SMSPassword = ConfigurationManager.AppSettings["SMSPassword"];
+                string SMSSenderId = ConfigurationManager.AppSettings["SMSSenderId"];
+                string SMSUrl = ConfigurationManager.AppSettings["SMSUrl"];
+
+                string smsURL = SMSUrl + "username=" + SMSLoginId + "&password=" + SMSPassword + "&from=" + SMSSenderId + "&to=" + MobileNo + "&text=" + smsText + "&coding=0";
+                WebClient webClient = new WebClient();
+                APIResponse = webClient.DownloadString(smsURL);//"YOUR SMS HAS BEEN SENT";
+
+                DataSet dsResult = new DataSet();
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@MobileNo", MobileNo);
+                sqlCmd.Parameters.AddWithValue("@SMSText", smsText);
+                sqlCmd.Parameters.AddWithValue("@APIRequest", smsURL);
+                sqlCmd.Parameters.AddWithValue("@APIResponse", APIResponse);
+                sqlCmd.CommandText = "InsertSMSLogs";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResult);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return APIResponse;
+        }
+
+        public ActionResult ValidateMobileNo(string MobileNo)
+        {
+            string response = string.Empty;
+            DataSet dsResponse = new DataSet();
+            try
+            {
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@MobileNo", MobileNo);
+                sqlCmd.CommandText = "ValidateMobileNo";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                if (dsResponse != null && dsResponse.Tables[0].Rows.Count > 0)
+                {
+                    response = Convert.ToString(dsResponse.Tables[0].Rows[0]["MobileNo"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        [SessionAuthorize]
+        [HttpPost]
+        public ActionResult DeleteProfile()
+        {
+            string response = string.Empty;
+            DataSet dsResponse = new DataSet();
+            try
+            {
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
+                sqlCmd.CommandText = "DeleteProfile";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResponse);
+
+                if (dsResponse != null && dsResponse.Tables[0].Rows.Count > 0)
+                {
+                    response = Convert.ToString(dsResponse.Tables[0].Rows[0]["Result"]);
+                }
+
+                if (response == "SUCCESS")
+                {
+                    Session.Remove("USER");
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        public string GetSPName(string RequestStatus)
+        {
+            string SPName = string.Empty;
+            if (RequestStatus.ToLower() == "blocked" || RequestStatus.ToLower() == "unblock")
+            {
+                SPName = "BlockProfile";
+            }
+            else
+                SPName = "ManageSendRequest";
+
+            return SPName;
+        }
+
     }
 
+    
 
 }

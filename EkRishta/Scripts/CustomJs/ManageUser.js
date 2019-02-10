@@ -65,8 +65,11 @@ function ShortlistProfile(shortlistedUserId, requestStatus, cntrl, source) {
         success: function (data) {
             if (data != "") {
                 $(cntrl).attr('onclick', 'ShortlistProfile(' + shortlistedUserId + ',\'' + requestStatus + '\',this' + ')')
-                if (source != undefined) {
+                if (source != undefined && source == "ShortlistedProfiles") {
                     $("#user_sec_" + shortlistedUserId).css("display", "none");
+                }
+                else if (source != undefined && source == "ViewProfile") {
+                    $("#pLike").html("Liked");
                 }
             }
             else {

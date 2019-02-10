@@ -4,7 +4,7 @@
 
 body {
     background-color: #f4f4f4;
-    margin-top: 48px;
+    margin-top: -1px;
     padding-bottom:15px;
 }
 
@@ -47,6 +47,10 @@ a {
     background: #fff;
 }
 
+
+.photo-action .action-btn {width: 50%;}
+.photo-action  .action-btn .m_icon {width: 16px; height: 17px;}
+.photo-action  .action-btn a {float: none;color: #9c9c9c;}
 .input-hidden {
     position: absolute;
     left: -9999px;
@@ -120,7 +124,7 @@ a:hover {
 .user_sec {
     clear: both;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     background: #fff;
     box-shadow: 0 0px 4px 0 rgba(0, 0, 0, 0.2);
     position: relative;
@@ -155,6 +159,43 @@ a:hover {
     color: #252525;
     box-shadow: 0 2px 3px #ddd;
 }
+.m_icon.user_pik {
+    width: 80px;
+    height: 80px;
+    border-radius: 120px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-left: 10px;
+    border: 5px solid #fff;
+
+}
+.us_box.neme_user span {
+    font-size: 18px;
+    text-transform: capitalize;
+    color: #fff;    font-weight: 400;
+
+}
+
+.action_sec {
+    position: absolute;
+    top: 338px;
+    background:#00000080;
+    width: 100%;
+}
+.action_sec .photo-right p {
+    color: #fff;
+    margin:  0;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.action_sec .action-btn{background: none;border: 0;}
+.action_sec .action-btn a { color:#fff;border: 0;}
+.action_sec .photo-right{ top:0;right: 0;
+position: static;}
+
+
+
 
 .details {
     padding: 10px 10px 20px 10px;
@@ -190,16 +231,53 @@ a:hover {
 .ProfilePic.profile_centre {
     background-color: #fff;
     margin: 0 auto;
-    border: 2px solid #fff;
-    border-radius: 4px;
-    float: none;
-    top: 80px;
-    left: 33%;
-    width: 136px;
-    height: 136px;
-    box-shadow: none;
+    border: 5px solid #ff2e53;
+     float: none;
+    top: 10px;
+    left: 10px;
+    width: 140px;
+    height: 140px;
     position: absolute;
     box-shadow: 0 1px 2px rgba(0, 0, 0, .125);
+    border-radius: 110px;
+}
+
+.height {
+
+    padding-left: 4px;
+
+}
+.photo-count {
+    position: absolute;
+    top: 140px;
+    left: 20px;
+    text-align: center;
+}
+.photo-right { position: absolute;
+    top: 140px;
+    right: 20px;
+    text-align: center;
+}
+
+.photo-count p, .photo-right p { color:#828286;
+    margin: 2px 0 10px;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+
+}
+.photo-count span, .photo-right span {
+
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    display: block;
+    border-radius: 50px;
+    line-height: 36px;
+    font-size: 18px;
+    font-weight: 600;
+    border: 1px solid #ff2e53;
+
 }
 
 .bg-cover a {
@@ -356,6 +434,16 @@ a:hover {
     box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.2);
 }
 
+.user-pic-round {  background-color: rgba(255, 255, 255, 0.70);
+    margin: 0 auto;  
+    float: none;
+    top: 76px;
+    left: 26%;
+    width: 160px;
+    height: 160px;
+    position: absolute; 
+    border-radius: 110px;
+}
 input {
     max-width: 100%;
     display: block;
@@ -370,11 +458,29 @@ input {
     border: 1px solid #f3f3f3;
     border-radius: 4px;
 }
-
+.user-details p {
+    margin: 0;
+    text-align: center;
+}
+.action-btn a span {width: 100%;
+    clear: both;
+    text-align: center;
+    display: inline-table;
+ }
+ .action-btn .m_icon {
+    float: none;
+    width: 20px;
+    height: 20px;
+    margin-right: 0;
+    margin: 0 auto 3px auto;
+}
+ 
+ 
 #dvValidationMessage {
     background: #eb292d;
     color: #fff;
     font-size: 15px;
+    margin-top:48px;
 }
 
 .Guardian {
@@ -391,6 +497,17 @@ input {
     width: 30%;
 }
 
+.action_sec .photo-right span {
+    width: 30px;
+    height: 30px;
+    background: none;
+    display: block;
+    border-radius: 50px;
+    line-height: 47px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+}
 select {
     border: 1px solid #f3f3f3;
     width: 100%;
@@ -481,22 +598,25 @@ ul, ol {
     clear: both;
 }
 
-    .user-details ul li {
+    .user-details ul li {color: #868585;
+font-weight: 100;
         float: left;
         width: 50%;
-        padding-top: 4px;
+        padding-top: 0px;
     }
 
-    .user-details strong {
-        font-size: 18px;
-        padding: 6px 0 12px 10px;
-        display: block;
-        text-align: center;
-        text-transform: capitalize;
-        color: #ff0d3d;
-        font-weight: 400;
-    }
+.user-details strong {
 
+    font-size: 24px;
+    padding: 26px 0 10px 10px;
+    display: block;
+    text-align: center;
+    text-transform: capitalize;
+    color: #ff0d3d;
+    font-weight: 200;
+    line-height: 0px;
+
+}
     .user-details ul {
         overflow: hidden;
         padding: 10px;
@@ -614,7 +734,7 @@ input:-webkit-autofill {
 }
 
 .table .user-bg {
-    margin-bottom: 80px;
+    margin-bottom: 0px;
 }
 
 .view-pro.user_title ul li a span {
@@ -632,8 +752,8 @@ li.fourty {
     width: 80px;
     height: 80px;
     position: absolute;
-    right: -9px;
-    top: -26px;
+    right: -10px;
+    top: -27px;
     background: url(/images/heart.png) no-repeat;
     background-position: 0 0;
     cursor: pointer;
@@ -658,6 +778,7 @@ li.fourty {
 .action-btn a {
     color: #2d2d2d;
     text-decoration: none;
+	font-size: 14px;
 }
 
 .view-pro.user_title.besic_lik ul li {
@@ -739,7 +860,7 @@ nav ul li a {
     background: #ff0d3d;
     position: fixed;
     width: 100%;
-    z-index: 999;
+    z-index: 99999999;
     box-shadow: 0 2px 4px #383838;
     margin-top: 0;
 }
@@ -772,8 +893,11 @@ nav ul li a {
 }
 
 .us_box {
+
     background: #ff0d3d;
-    height: 80px;
+    height: 100px;
+    padding: 30px 0;
+
 }
 
 a.useer_bg {

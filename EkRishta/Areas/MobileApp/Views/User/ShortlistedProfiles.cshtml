@@ -23,40 +23,51 @@
             foreach (var item in Model)
             {
                 <div class="user_sec" id="user_sec_@item.UserId">
-                    <div class="user-bg">
+                    <div class="user-bg" style="background: url(@(item.CoverImageName.IndexOf('.') < 0? "/images/1232.jpg" : item.CoverImageName)) no-repeat;">
                         <div class="Shield"> <img alt="ek vivaah " src="/images/wellness.svg"> </div>
-
-                        <div class="ProfilePic profile_centre">
-                            <img src="@item.ProfilePicPath" alt="ProfilePic" class="fl" />
+                        <div class="user-pic-round">
+                            <div class="ProfilePic profile_centre">
+                                <img src="@item.ProfilePicPath" alt="ProfilePic" class="fl" />
+                            </div>
                         </div>
                     </div>
                     <div class="user-details">
                         <strong> @item.FirstName @item.LastName</strong>
+                        <p>@item.Designation</p>
                     </div>
+                    <div class="photo-count">
+                        <span> @item.PhotoCount </span>
+                        <p> Photo</p>
+                    </div>
+
+                    <div class="photo-right ">
+                        <span>
+                            <a onclick="ShortlistProfile('@item.UserId','@item.IsShortlisted',this,'ShortlistedProfiles');">
+                                <div class="heart"></div>
+                            </a>
+                        </span>
+                        <p>  Like</p>
+                    </div>
+
                     <div class="view-pro user_title">
                         <ul>
                             <li class="fourty">
-                                @*<a href="#" onclick="ViewProfile('@item.UserId');"> View Profile </a>*@
-                                @Html.ActionLink("View Profile", "ViewProfile", "User", new { UserId = item.UserId }, null)
+
                             </li>
-                            <li class="fourty"><a href="#"> Photo <span> 9</span> </a> </li>
-                            <li>
-                                <a onclick="ShortlistProfile('@item.UserId','@item.IsShortlisted',this,'ShortlistedProfiles');">
-                                    <div class="heart"></div>
-                                </a>
-                            </li>
+
+
                         </ul>
                     </div>
 
                     <div class="user-details">
                         <ul>
-                            <li>@item.Age</li>
-                            <li>@item.Height </li>
+                            <li><span>  @item.Age  </span> <span> year </span> <span class="height">@item.Height  </span> </li>
+
                             <li>@item.ReligionName </li>
                             <li>@item.CastName</li>
                             <li>@item.MotherTounge </li>
                             <li>@item.Degree </li>
-                            <li>@item.Designation</li>
+
                             <li>
                                 @if (item.ShareCount >= 50)
                                 {
@@ -75,10 +86,41 @@
                     </div>
 
                     <div class="action_sction">
-                        <input type="button" value="Request" id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info" />
+                        <div class="action-btn ">
+                            <a href="#" id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');">
+                                <span>
+                                    <div class="m_icon">
+                                        <img src="/images/m-Ignore.svg" alt="ek vivaah">
+                                    </div>
+                                </span>
+                                Request
+                            </a>
+                        </div>
+
+                        <div class="action-btn ">
+                            <a href="#" id="btnBlockRequest_@item.UserId" onclick="SendRequest('@item.UserId','Blocked');">
+                                <span>
+                                    <div class="m_icon">
+                                        <img src="/images/m-Ignore.svg" alt="ek vivaah">
+                                    </div>
+                                </span>
+                                Ignore
+                            </a>
+                        </div>
+                        <div class="action-btn ">
+                            <a href="#" onclick="ViewProfile('@item.UserId');">
+                                <span>
+                                                 <div class="m_icon">
+                                                     <img src="/images/m-Ignore.svg" alt="ek vivaah">
+                                                 </div>
+                                             </span>
+                                 </a>
+                            @Html.ActionLink("View Profile", "ViewProfile", "User", new { UserId = item.UserId }, null)
+                        </div>
+
                         @*<input type="button" value="Request" id="btnShortlist_@item.UserId" onclick="ShortlistProfile('@item.UserId');" class="btn action-btn btn-info" />*@
 
-                        <input type="button" value="Block" id="btnBlockRequest_@item.UserId" onclick="SendRequest('@item.UserId','Blocked');" class="btn action-btn btn-info" />
+
                     </div>
                 </div>
                 <div class="clearfix"></div>

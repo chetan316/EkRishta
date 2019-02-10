@@ -4,10 +4,17 @@
 }
 
 <script src="~/Scripts/CustomJs/ManageUser.js?rd=@ViewBag.JSRefNo"></script>
-<div class="user_title Profile">
-<div class="back-arow"> <a href="#">  <img alt="ek vivaah " src="/images/back.svg"> </a></div>
+<style>
+    .action-btn {
+        width: 25%;
+    }
+</style>
 
- <p>Profile Request </p>   </div>
+<div class="user_title Profile">
+    <div class="back-arow"> <a href="#">  <img alt="ek vivaah " src="/images/back.svg"> </a></div>
+
+    <p>Profile Request </p>
+</div>
 
 @using (Html.BeginForm())
 {
@@ -16,50 +23,86 @@
     <div class="maching-body">
         @foreach (var item in Model)
         {
-		
-		<div class="user_sec"> 
-		<div class="user-bg"> 
-		<div class="Shield"> <img alt="ek vivaah " src="/images/wellness.svg"> </div>
-            <div class="ProfilePic profile_centre">
-                <img src="@item.ProfilePicPath" alt="ProfilePic"  />
+
+            <div class="user_sec">
+                <div class="user-bg" style="background: url(@(item.CoverImageName.IndexOf('.') < 0? "/images/1232.jpg" : item.CoverImageName)) no-repeat;">
+                    <div class="Shield"> <img alt="ek vivaah " src="/images/wellness.svg"> </div>
+                    <div class="user-pic-round">
+                        <div class="ProfilePic profile_centre">
+                            <img src="@item.ProfilePicPath" alt="ProfilePic" />
+                        </div>
+                    </div>
+                </div>
+                <div class="user-details">
+                    <strong> @item.FirstName @item.LastName</strong>
+                    <p> @item.Designation  </p>
+                </div>
+
+                <div class="photo-count">
+                    <a href="#">  <span> @item.PhotoCount</span> <p>  Photo</p> </a>
+                </div>
+
+
+
+                <div class="view-pro user_title">
+                    <ul>
+                        <li class="fourty"> <a href="#"> View Profile </a> </li>
+
+                    </ul>
+                </div>
+                <div class="user-details">
+                    <ul>
+                        <li> <span> @item.Age</span> <span>  Year</span> <span class="height"> @item.Height   </span></li>
+                        <li>@item.ReligionName </li>
+                        <li> @item.CastName</li>
+                        <li>@item.MotherTounge </li>
+                        <li>@item.Degree </li>
+                        <li> @item.CityName</li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <div class="action_sction">
+
+                    <div class="action-btn">
+                        <a href="#">
+                            <span> <div class="m_icon"> <img src="/images/r-paper-plane.svg" alt="ek vivaah"> </div> </span>
+                        </a>
+                    </div>
+
+                    <div class="action-btn">
+                        <a href="#">
+                            <span> <div class="m_icon"> <img src="/images/r-paper-plane.svg" alt="ek vivaah"> </div> </span>
+                        </a>
+                    </div>
+
+                    <div class="action-btn">
+                        <a href="#">
+                            <span> <div class="m_icon"> <img src="/images/r-paper-plane.svg" alt="ek vivaah"> </div> </span>
+                        </a>
+                    </div>
+
+                    <div class="action-btn">
+                        <a href="#">
+                            <span> <div class="m_icon"> <img src="/images/r-paper-plane.svg" alt="ek vivaah"> </div> </span>
+                        </a>
+                    </div>
+                    <input type="button" value="@(item.RequestStatus == "A"?"Accepted":"Accept")" id="btnAcceptRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Accepted');" class="btn action-btn btn-info @(item.RequestStatus == "A"?"disabled":"")" />
+                    <input type="button" value="@(item.RequestStatus == "R"?"Rejected":"Reject")" id="btnRejectRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Rejected');" class="btn action-btn btn-info @(item.RequestStatus == "R"?"disabled":"")" />
+                    <input type="button" value="Block" id="btnBlockRequest_@item.UserId" onclick="SendRequest('@item.UserId','Blocked');" class="btn action-btn btn-info" />
+
+
+                </div>
             </div>
-			</div>
-			<div class="user-details">
-			<strong> @item.FirstName @item.LastName</strong>
-			</div>
-			<div class="view-pro user_title">			
-			<ul>
-			<li class="fourty"> <a href="#"> View Profile </a> </li>
-			<li class="fourty"><a href="#"> Photo <span> 9</span> </a> </li>
-				<li> <a href="#">  <div class="heart"></div> </a> </li>
-			</ul>
-			</div>
-			<div class="user-details"> 
-			<ul>
-			<li> @item.Age</li>
-			<li>@item.Height </li>
-			<li>@item.ReligionName </li>
-			<li> @item.CastName</li>
-			<li>@item.MotherTounge </li>
-			<li>@item.Degree </li>
-			<li>@item.Designation </li>
-			<li> @item.CityName</li>
-			
-			</ul>
-			
-			</div>
-			
-           
-		   
-            <div class="action_sction">
-                <input type="button" value="@(item.RequestStatus == "A"?"Accepted":"Accept")" id="btnAcceptRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Accepted');" class="btn action-btn btn-info @(item.RequestStatus == "A"?"disabled":"")" />
-                <input type="button" value="@(item.RequestStatus == "R"?"Rejected":"Reject")" id="btnRejectRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Rejected');" class="btn action-btn btn-info @(item.RequestStatus == "R"?"disabled":"")" />
-                <input type="button" value="Block" id="btnBlockRequest_@item.UserId" onclick="SendRequest('@item.UserId','Blocked');" class="btn action-btn btn-info" />
-            </div>
-			</div>
             <div class="clearfix"></div>
 
         }
+        @if (Model.ToList().Count == 0)
+        {
+            <div>No Request available!!!</div>
+        }
     </div>
 }
-

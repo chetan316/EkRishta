@@ -88,7 +88,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             UserPreference objPreference = new UserPreference();
             try
             {
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 UserPreference objUserPreference = new UserPreference();
                 objUserPreference.UserId = objUser.UserId;
                 objUserPreference.ActionType = "S";
@@ -151,7 +152,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
 
             try
             {
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 objUserPreference.UserId = objUser.UserId;
                 objUserPreference.ActionType = string.IsNullOrEmpty(objUserPreference.ActionType) ? "S" : objUserPreference.ActionType;
 

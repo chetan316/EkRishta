@@ -2,6 +2,11 @@
 @{
     ViewBag.Title = "SearchProfileById";
 }
+<style>
+#btnSearchById {width: 98%;margin: 8px auto; float: none;text-transform: uppercase;font-weight: 500;font-size: 18px;}
+.action_sction { padding: 0;margin: 0;clear: both;overflow: hidden;border-top: 1px solid #ddd;width: 100%;text-align: center;}
+.details ul li {overflow: hidden; padding-bottom: 16px; }
+</style>
 
 @using (Html.BeginForm("SearchProfile", "User", FormMethod.Post))
 {
@@ -12,10 +17,10 @@
         <p>Search Profile</p>
     </div>
     <div id="divMessage"></div>
-    <div class="maching-body" id="divSearchByProfileId">
+    <div class="maching-body details" id="divSearchByProfileId">
         <ul>
             <li>
-                <strong>Profile ID </strong>:
+                
                 @Html.TextBoxFor(m => m.ProfileId, htmlAttributes: new { @id = "txtProfileId", @placeholder = "Enter Profile ID" })
             </li>
         </ul>

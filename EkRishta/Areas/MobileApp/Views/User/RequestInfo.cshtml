@@ -16,6 +16,7 @@
     var RejectedRequest = Model.Where(m => m.RequestSource == "RejectedRequest");
     var BlockedUser = Model.Where(m => m.RequestSource == "BlockedUser");
     var SearchProfile = Model.Where(m => m.RequestSource == "SearchProfile");
+    var RejectedMe = Model.Where(m => m.RequestSource == "RejectedMeRequest");
 
     <div class="user_title Profile">
         <div class="back-arow"><a href="#"><img alt="ek vivaah" src="/images/back.svg"></a></div>
@@ -33,7 +34,7 @@
         }
         else if (RejectedRequest.ToList().Count > 0)
         {
-            <p>Rejected Requests</p>
+            <p>Declined Requests</p>
         }
         else if (BlockedUser.ToList().Count > 0)
         {
@@ -42,6 +43,10 @@
         else if (SearchProfile.ToList().Count > 0)
         {
             <p>Search Profiles</p>
+        }
+        else if (RejectedMe.ToList().Count > 0)
+        {
+            <p>Declined Me</p>
         }
         else
         {
@@ -57,46 +62,49 @@
             foreach (var item in Model)
             {
                 <div class="user_sec">
-                    <div class="user-bg">
+                    <div class="user-bg" style="background: url(@(item.CoverImageName.IndexOf('.') < 0? "/images/1232.jpg" : item.CoverImageName)) no-repeat;">
                         <div class="Shield"> <img alt="ek vivaah " src="/images/wellness.svg"> </div>
-
-                        <div class="ProfilePic profile_centre">
-                            <img src="@item.ProfilePicPath" alt="ProfilePic" class="fl" />
+                        <div class="user-pic-round">
+                            <div class="ProfilePic profile_centre">
+                                <img src="@item.ProfilePicPath" alt="ProfilePic" class="fl" />
+                            </div>
                         </div>
                     </div>
+
+                    <div class="photo-count">
+                        <span> @item.PhotoCount</span>
+                        <p> Photo</p>
+                    </div>
+
                     <div class="user-details">
                         <strong> @item.FirstName @item.LastName</strong>
+                        <p>@item.Designation </p>
                     </div>
-                    <div class="view-pro user_title">
-                        <ul>
-                            <li class="fourty">
-                                @Html.ActionLink("View Profile", "ViewProfile", "User", new { UserId = item.UserId }, null)
-                            </li>
-                            <li class="fourty"><a href="#"> Photo <span> 9</span> </a> </li>
-
-                            <li>
-                                @{
-                                    if (item.RequestSource == "MatchingProfile")
-                                    {
-                                        <a onclick="ShortlistProfile('@item.UserId','@item.IsShortlisted',this);">
-                                            <div class="heart"></div>
-                                        </a>
-                                    }
-                                }
-                            </li>
-
-                        </ul>
+                    <div class="photo-right ">
+                        <span>
+                            @*@{
+                                if (item.RequestSource == "MatchingProfile")
+                                    {*@
+                            <a onclick="ShortlistProfile('@item.UserId','@item.IsShortlisted',this);">
+                                <div class="heart"></div>
+                            </a>
+                            @*}
+                                }*@
+                        </span>
+                        <p>  like </p>
                     </div>
+
+
 
                     <div class="user-details">
                         <ul>
-                            <li>@item.Age</li>
-                            <li>@item.Height </li>
+                            <li><span>@item.Age </span> <span>years </span> <span class="height">@item.Height </span>     </li>
+                            <li> </li>
                             <li>@item.ReligionName </li>
                             <li>@item.CastName</li>
                             <li>@item.MotherTounge </li>
                             <li>@item.Degree </li>
-                            <li>@item.Designation</li>
+
                             <li>
                                 @if (item.ShareCount >= 50)
                                 {
@@ -117,19 +125,75 @@
                     <div class="action_sction">
 
                         @*@if (item.RequestStatus == "P")
-                            {*@
-                        @*<input type="button" value="Cancel Request" id="btnCancelRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info @(item.RequestStatus=="P"?"displaybtn":"hidebtn")" />*@
-                        @*}*@
+                                {
+                            <input type="button" value="Cancel Request" id="btnCancelRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info @(item.RequestStatus=="P"?"displaybtn":"hidebtn")" />
+                            }
+                            else{*@
                         @*@if (item.RequestStatus == "C" || item.RequestStatus == "N")
                             {*@
-                        <input type="button" value="Request" id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info" />
+                        @*<input type="button" value="Request" id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info" />*@
+                        @*}*@
                         @*}*@
                         @*@if (item.RequestStatus == "A")
                             {
                                 <label>Accepted</label>
                             }*@
-                        <div class="action-btn"> <a href="#">Contact </a> </div>
-                        @*<div class="action-btn no-bder"><a href="#">Block</a></div>*@
+                        <div class="action-btn ">
+
+                            <a id="btnCancelRequest_@item.UserId" onclick="SendRequest('@item.UserId');" style="@(item.RequestStatus == "P" ? "display:block" : "display:none")">
+                                <span>
+                                    <div class="m_icon">
+                                        <img src="/images/m-Ignore.svg" alt="ek vivaah">
+                                    </div>
+                                </span>
+                                Cancel
+                            </a>
+                            <a id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');" style="@((item.RequestStatus == "C" || item.RequestStatus == "N" || item.RequestStatus == "R") ? "display:block" : "display:none")">
+                                <span>
+                                    <div class="m_icon">
+                                        <img src="/images/r-paper-plane.svg" alt="ek vivaah">
+                                    </div>
+                                </span>
+                                Request
+                            </a>
+                            <a id="btnAcceptedRequest_@item.UserId" style="@((item.RequestStatus == "A") ? "display:block" : "display:none")">
+                                <span>
+                                    <div class="m_icon">
+                                        <img src="/images/r-paper-plane.svg" alt="ek vivaah">
+                                    </div>
+                                </span>
+                                Accepted
+                            </a>
+                        </div>
+                        <div class="action-btn ">
+                            <a id="btnBlockRequest_@item.UserId" onclick="SendRequest('@item.UserId','Blocked');" style="@((item.RequestStatus != "B") ? "display:block" : "display:none")">
+                                <span>
+                                    <div class="m_icon">
+                                        <img src="/images/m-Ignore.svg" alt="ek vivaah">
+                                    </div>
+                                </span>
+                                Ignore
+                            </a>
+                            <a id="btnBlockRequest_@item.UserId" onclick="SendRequest('@item.UserId','Unblock');" style="@((item.RequestStatus == "B") ? "display:block" : "display:none")">
+                                <span>
+                                    <div class="m_icon">
+                                        <img src="/images/m-Ignore.svg" alt="ek vivaah">
+                                    </div>
+                                </span>
+                                Unblock
+                            </a>
+                        </div>
+                        <div class="action-btn no-bder">
+                            <a href="#">
+                                <span>
+                                    <div class="m_icon">
+                                        <img src="/images/Profile-in-love.svg" alt="ek vivaah">
+                                    </div>
+                                </span> @Html.ActionLink("View Profile", "ViewProfile", "User", new { UserId = item.UserId }, null)
+                            </a>
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="clearfix"></div>

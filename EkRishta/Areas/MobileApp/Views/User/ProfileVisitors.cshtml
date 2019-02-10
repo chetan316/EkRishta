@@ -23,39 +23,44 @@
             foreach (var item in Model)
             {
                 <div class="user_sec" id="user_sec_@item.UserId">
-                    <div class="user-bg">
+                    <div class="user-bg" style="background: url(@(item.CoverImageName.IndexOf('.') < 0? "/images/1232.jpg" : item.CoverImageName)) no-repeat;">
                         <div class="Shield"> <img alt="ek vivaah " src="/images/wellness.svg"> </div>
-
-                        <div class="ProfilePic profile_centre">
-                            <img src="@item.ProfilePicPath" alt="ProfilePic" class="fl" />
+                        <div class="user-pic-round">
+                            <div class="ProfilePic profile_centre">
+                                <img src="@item.ProfilePicPath" alt="ProfilePic" class="fl" />
+                            </div>
                         </div>
+
+
                     </div>
                     <div class="user-details">
                         <strong> @item.FirstName @item.LastName</strong>
+						<p> @item.Designation </p>
                     </div>
-                    <div class="view-pro user_title">
-                        <ul>
-                            <li class="fourty">
-                                @Html.ActionLink("View Profile", "ViewProfile", "User", new { UserId = item.UserId }, null)
-                            </li>
-                            <li class="fourty"><a href="#"> Photo <span> 9</span> </a> </li>
-                            <li>
-                                <a onclick="ShortlistProfile('@item.UserId','@item.IsShortlisted',this);">
+					
+					
+					<div class="photo-count"> 
+					<span> @item.PhotoCount</span> 
+					<p>Photos </p>
+					</div>
+					
+					<div class="photo-right">
+					<span><a onclick="ShortlistProfile('@item.UserId','@item.IsShortlisted',this);">
                                     <div class="heart"></div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
+                                </a> </span>	
+								<p> like </p>		
+					</div>
+										
+                   
                     <div class="user-details">
                         <ul>
-                            <li>@item.Age</li>
-                            <li>@item.Height </li>
+                            <li> <span> @item.Age</span> <span> year </span> <span class="height">@item.Height </span> </li>
+                            <li> </li>
                             <li>@item.ReligionName </li>
                             <li>@item.CastName</li>
                             <li>@item.MotherTounge </li>
                             <li>@item.Degree </li>
-                            <li>@item.Designation</li>
+                            <li></li>
                             <li>
                                 @if (item.ShareCount >= 50)
                                 {
@@ -68,13 +73,22 @@
                                 }
                             </li>
                             <li> @item.CityName</li>
-
+ 
                         </ul>
 
                     </div>
 
-                    <div class="action_sction">
-                        <input type="button" value="Request" id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');" class="btn action-btn btn-info" />
+                    <div class="action_sction">                        
+						<div class="action-btn"> 
+						<a href="#" id="btnSendRequest_@item.UserId" onclick="SendRequest('@item.UserId');">
+						<span> <div class="m_icon"><img src="/images/r-paper-plane.svg" alt="ek vivaah"> </div> </span>
+						Request	</a>
+						</div>
+						  <div class="action-btn"> 
+						  <span> <div class="m_icon"><img src="/images/Profile-in-love.svg" alt="ek vivaah"> </div> </span>
+						@Html.ActionLink("View Profile", "ViewProfile", "User", new { UserId = item.UserId }, null)
+							</div>
+						
                     </div>
                 </div>
                 <div class="clearfix"></div>

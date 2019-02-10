@@ -2,16 +2,19 @@
 
 @{
     Layout = null;
-    ViewBag.Title = "Login";
-} <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no, minimum-scale=1.0" />
+}
+<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no, minimum-scale=1.0" />
+<title>Matrimonial, Marriage, Matrimony Site – ekvivaah.com</title>
+<link rel="icon" href="~/images/favicon.png" type="image/png" sizes="16x16">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400" rel="stylesheet">
 <link href="~/Content/Mobile.css?rd=1" rel="stylesheet" />
-@Styles.Render("~/Content/css")
+@Styles.Render("~/bundles/css")
 
 
 @{ Html.EnableClientValidation(); }
-@using (Html.BeginForm("MobileLogin", "Login",new { Area="MobileApp"},FormMethod.Post))
+@using (Html.BeginForm("MobileLogin", "Login", new { Area = "MobileApp" }, FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+    @*@Html.AntiForgeryToken()*@
     @Html.ValidationSummary(true)
     if (@ViewBag.ErrorMessage != null)
     {
@@ -49,12 +52,18 @@
             @Html.ValidationMessageFor(a => a.LoginPassword)
         </div>
 
-        <div class="login-btn"> <input type="submit" value="Login" /></div>
+        <div class="login-btn"> <input type="submit" value="Login" /> </div>
+        @Html.ActionLink("Forgot Password", "ForgotPassword", "Login", new { Area = "MobileApp" }, null)
+
+
+        <div class="login-btn HereREG">
+            @Html.ActionLink("Register Here", "RegisterUser", "UserRegistration", new { Area = "MobileApp" }, null)
+        </div>
 
     </div>
 
     <div class="Register">
-        @Html.ActionLink("Register Here", "RegisterUser", "UserRegistration",new { Area="MobileApp"}, null)
+
     </div>
 
 

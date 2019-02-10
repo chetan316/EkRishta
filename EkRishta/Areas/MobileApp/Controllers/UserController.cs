@@ -30,7 +30,11 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                Models.User objUser = (Models.User)(Session["USER"]);
+                //Models.User objUser = (Models.User)(Session["USER"]);
+
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
+
                 if (UserId == null)
                     sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 else
@@ -240,7 +244,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 sqlCmd.Parameters.AddWithValue("@ReligionId", objUser.ReligionId);
                 sqlCmd.CommandText = "GetMatchingProfile";
@@ -312,7 +317,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 sqlCmd.Parameters.AddWithValue("@RequestStatus", "Pending");
                 sqlCmd.CommandText = "GetRequestByStatus";
@@ -371,7 +377,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 sqlCmd.Parameters.AddWithValue("@RequestType", RequestType);
                 sqlCmd.CommandText = "GetAcceptedRequest";
@@ -431,7 +438,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 //sqlCmd.Parameters.AddWithValue("@RequestStatus", "Blocked");
                 sqlCmd.CommandText = "GetBlockedRequest";
@@ -467,6 +475,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.ShareCount = objUser.ShareCount;
                         objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
                         objUserMaster.CoverImageName = "/Uploads/" + objUserMaster.UserId + "/Cover/" + Convert.ToString(dr["ImagePath"]);
+                        objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
 
                         lstUserMaster.Add(objUserMaster);
                     }
@@ -490,7 +499,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 //sqlCmd.Parameters.AddWithValue("@RequestStatus", "Blocked");
                 sqlCmd.CommandText = "GetRejectedRequest ";
@@ -549,7 +559,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 sqlCmd.CommandText = "GetDeclinedMeRequest";
                 sqlCmd.Connection = connString;
@@ -608,7 +619,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 sqlCmd.CommandText = "GetProfileRequest";
                 sqlCmd.Connection = connString;
@@ -665,15 +677,18 @@ namespace EkRishta.Areas.MobileApp.Controllers
             string jsonResponse = string.Empty;
             try
             {
+                string CommandText = GetSPName(objManageRequest.RequestStatus);
+
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 sqlCmd.Parameters.AddWithValue("@RequestedUserId", objManageRequest.RequestedUserId);
                 sqlCmd.Parameters.AddWithValue("@Status", objManageRequest.RequestStatus);
-                sqlCmd.CommandText = "ManageSendRequest";
+                sqlCmd.CommandText = CommandText;
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsResponse);
@@ -701,7 +716,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 sqlCmd.Parameters.AddWithValue("@RequestedUserId", objManageRequest.RequestedUserId);
                 sqlCmd.Parameters.AddWithValue("@Status", objManageRequest.RequestStatus);
@@ -738,7 +754,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsResponse);
 
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 UserMaster objUserMaster = new UserMaster();
 
                 if (dsResponse != null && dsResponse.Tables[0] != null)
@@ -806,6 +823,18 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.Designation = Convert.ToString(dr["Designation"]);
                         objUserMaster.Income = Convert.ToString(dr["Income"]);
                         objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
+                        //objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
+
+                        //To Manage Shortlisted Profile
+                        foreach (DataRow dr2 in dsResponse.Tables[2].Rows)
+                        {
+                            int ShortlistedUserId = Convert.ToInt32(dr2["ShortlistedUserId"]);
+                            string shortlistedStatus = Convert.ToString(dr2["Status"]);
+                            if (objUserMaster.UserId == ShortlistedUserId && shortlistedStatus == "S")
+                                objUserMaster.IsShortlisted = "S";
+                            else if (objUserMaster.UserId == ShortlistedUserId && shortlistedStatus == "NS")
+                                objUserMaster.IsShortlisted = "NS";
+                        }
                     }
                     objUserMaster.lstImages = new List<ImageUpload>();
                     if (dsResponse != null && dsResponse.Tables[1] != null)
@@ -824,6 +853,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                             }
                         }
                     }
+
+                    
                 }
 
                 return View("ViewProfile", objUserMaster);
@@ -866,7 +897,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
 
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
@@ -926,7 +958,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
 
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
@@ -975,7 +1008,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 objUserAddressDetails.UserId = objUser.UserId;
 
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
@@ -1029,7 +1063,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 objUserFamilyDetails.UserId = objUser.UserId;
 
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
@@ -1077,7 +1112,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 objUserReligionDetails.UserId = objUser.UserId;
 
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
@@ -1130,7 +1166,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 objUserOtherDetails.UserId = objUser.UserId;
 
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
@@ -1232,7 +1269,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
                 sqlCmd.Parameters.AddWithValue("@ShortlistedUserId", objManageRequest.RequestedUserId);
                 sqlCmd.Parameters.AddWithValue("@Status", objManageRequest.RequestStatus);
@@ -1258,7 +1296,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
-                Models.User objUser = (Models.User)Session["USER"];
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
@@ -1357,7 +1396,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
@@ -1466,11 +1506,14 @@ namespace EkRishta.Areas.MobileApp.Controllers
         }
         public ActionResult SearchProfile()
         {
-            Models.User objUser = (Models.User)Session["USER"];
+            Models.User objUser = new Models.User();
+            objUser.ReligionId = Request.Cookies["ReligionId"].Value;
             SearchUserProfile objSearchUserProfile = new SearchUserProfile();
             objSearchUserProfile.ReligionId = objUser.ReligionId;
             objSearchUserProfile.LanguageDetails = new SelectList(LanguageDetails(), "Value", "Text");
             objSearchUserProfile.ReligionDetails = new SelectList(ReligionDetails(), "Value", "Text");
+            objSearchUserProfile.CityDetails = new SelectList(CityDetails(), "Value", "Text");
+            objSearchUserProfile.CastDetails = new SelectList(CastDetails(), "Value", "Text");
             return View(objSearchUserProfile);
         }
         [HttpPost]
@@ -1480,7 +1523,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
-                Models.User objUser = (Models.User)(Session["USER"]);
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
@@ -1489,6 +1533,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 objSearchUserProfile.ReligionId = objSearchUserProfile.ReligionId == "0" ? null : objSearchUserProfile.ReligionId;
                 objSearchUserProfile.MotherToungeId = objSearchUserProfile.MotherToungeId == "0" ? null : objSearchUserProfile.MotherToungeId;
                 objSearchUserProfile.Income = objSearchUserProfile.Income == "0" ? null : objSearchUserProfile.Income;
+                objSearchUserProfile.CityId = objSearchUserProfile.CityId == "0" ? null : objSearchUserProfile.CityId;
+                objSearchUserProfile.CastId = objSearchUserProfile.CastId == "0" ? null : objSearchUserProfile.CastId;
 
                 sqlCmd.Parameters.AddWithValue("@FromAge", objSearchUserProfile.FromAge);
                 sqlCmd.Parameters.AddWithValue("@ToAge", objSearchUserProfile.ToAge);
@@ -1497,6 +1543,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                 sqlCmd.Parameters.AddWithValue("@Income", objSearchUserProfile.Income);
                 sqlCmd.Parameters.AddWithValue("@MaritialStatus", objSearchUserProfile.MaritialStatus);
                 sqlCmd.Parameters.AddWithValue("@ProfileId", objSearchUserProfile.ProfileId);
+                sqlCmd.Parameters.AddWithValue("@CityId", objSearchUserProfile.CityId);
+                sqlCmd.Parameters.AddWithValue("@CastId", objSearchUserProfile.CastId);
                 sqlCmd.Parameters.AddWithValue("@UserId", objUser.UserId);
 
                 sqlCmd.CommandText = "SearchProfile";
@@ -1592,7 +1640,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             List<ImageUpload> lstImage = new List<ImageUpload>();
             try
             {
-                Models.User objUser = (Models.User)Session["USER"];
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 DataSet dsResponse = new DataSet();
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
@@ -1638,7 +1687,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             {
                 try
                 {
-                    Models.User objUser = (Models.User)Session["USER"];
+                    Models.User objUser = new Models.User();
+                    objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                     HttpFileCollectionBase files = Request.Files;
                     for (int i = 0; i < files.Count; i++)
                     {
@@ -1717,7 +1767,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             string filename = string.Empty;
             List<ImageUpload> lstImage = new List<ImageUpload>();
-                Models.User objUser = (Models.User)Session["USER"];
+            Models.User objUser = new Models.User();
+            objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
 
 
             try
@@ -1813,9 +1864,10 @@ namespace EkRishta.Areas.MobileApp.Controllers
             try
             {
                 DataSet dsResponse = new DataSet();
-                Models.User objUser = (Models.User)Session["USER"];
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
 
-                string FolderPath="/Uploads/"+objUser.UserId;
+                string FolderPath = "/Uploads/" + objUser.UserId;
                 string FileName = ImagePath.Split('/')[3];
                 string updatedPath = System.IO.Path.Combine(Server.MapPath(FolderPath));
                 System.IO.DirectoryInfo di = new DirectoryInfo(updatedPath);
@@ -1854,7 +1906,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
             {
                 string FileName = ImagePath.Contains("/") ? ImagePath.Split('/')[3] : ImagePath;
                 DataSet dsResponse = new DataSet();
-                Models.User objUser = (Models.User)Session["USER"];
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
 
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);

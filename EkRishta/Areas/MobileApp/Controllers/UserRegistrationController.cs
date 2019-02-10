@@ -132,13 +132,48 @@ namespace EkRishta.Areas.MobileApp.Controllers
                     {
                         User objUser = new User();
                         objUser.UserId = objUserRegistration.UserId;
+                        objUser.UserName = Convert.ToString(dsResponse.Tables[0].Rows[0]["FirstName"]) + " " + Convert.ToString(dsResponse.Tables[0].Rows[0]["LastName"]);
                         objUser.ProfileId = Convert.ToString(dsResponse.Tables[0].Rows[0]["ProfileId"]);
                         objUser.MobileNo = Convert.ToString(dsResponse.Tables[0].Rows[0]["MobileNo"]);
                         objUser.EmailId = Convert.ToString(dsResponse.Tables[0].Rows[0]["EmailId"]);
                         objUser.ReligionId = Convert.ToString(dsResponse.Tables[0].Rows[0]["ReligionId"]);
+                        objUser.ProfilePicPath = "/Uploads/" + objUser.UserId + "/" + Convert.ToString(dsResponse.Tables[0].Rows[0]["ProfilePicPath"]);
                         objUser.ShareCount = 0;
 
-                        Session["USER"] = objUser;
+                        HttpCookie UserId = new HttpCookie("UserId");
+                        UserId.Value = Convert.ToString(objUser.UserId);
+                        UserId.Expires = DateTime.Now.AddYears(365);
+                        Response.Cookies.Add(UserId);
+
+                        HttpCookie UserName = new HttpCookie("UserName");
+                        UserName.Value = Convert.ToString(objUser.UserName);
+                        UserName.Expires = DateTime.Now.AddYears(365);
+                        Response.Cookies.Add(UserName);
+
+                        HttpCookie ProfileId = new HttpCookie("ProfileId");
+                        ProfileId.Value = Convert.ToString(objUser.ProfileId);
+                        ProfileId.Expires = DateTime.Now.AddYears(365);
+                        Response.Cookies.Add(ProfileId);
+
+                        HttpCookie ProfilePicPath = new HttpCookie("ProfilePicPath");
+                        ProfilePicPath.Value = Convert.ToString(objUser.ProfilePicPath);
+                        ProfilePicPath.Expires = DateTime.Now.AddYears(365);
+                        Response.Cookies.Add(ProfilePicPath);
+
+                        HttpCookie MobileNo = new HttpCookie("MobileNo");
+                        MobileNo.Value = Convert.ToString(objUser.MobileNo);
+                        MobileNo.Expires = DateTime.Now.AddYears(365);
+                        Response.Cookies.Add(MobileNo);
+
+                        HttpCookie EmailId = new HttpCookie("EmailId");
+                        EmailId.Value = Convert.ToString(objUser.EmailId);
+                        EmailId.Expires = DateTime.Now.AddYears(365);
+                        Response.Cookies.Add(EmailId);
+
+                        HttpCookie ReligionId = new HttpCookie("ReligionId");
+                        ReligionId.Value = Convert.ToString(objUser.ReligionId);
+                        ReligionId.Expires = DateTime.Now.AddYears(365);
+                        Response.Cookies.Add(ReligionId);
                     }
 
                     // Returns message that successfully uploaded  
@@ -155,34 +190,34 @@ namespace EkRishta.Areas.MobileApp.Controllers
             }
         }
 
-        public ActionResult ValidateMobileNo(string MobileNo)
-        {
-            string response = string.Empty;
-            DataSet dsResponse = new DataSet();
-            try
-            {
-                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
-                SqlConnection connString = new SqlConnection(conStr);
-                SqlCommand sqlCmd = new SqlCommand();
-                sqlCmd.CommandType = CommandType.StoredProcedure;
-                sqlCmd.Parameters.AddWithValue("@MobileNo", MobileNo);
-                //                sqlCmd.Parameters.AddWithValue("@CityId", objUserRegistration.CityId);
-                sqlCmd.CommandText = "ValidateMobileNo";
-                sqlCmd.Connection = connString;
-                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
-                sda.Fill(dsResponse);
+        //public ActionResult ValidateMobileNo(string MobileNo)
+        //{
+        //    string response = string.Empty;
+        //    DataSet dsResponse = new DataSet();
+        //    try
+        //    {
+        //        string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+        //        SqlConnection connString = new SqlConnection(conStr);
+        //        SqlCommand sqlCmd = new SqlCommand();
+        //        sqlCmd.CommandType = CommandType.StoredProcedure;
+        //        sqlCmd.Parameters.AddWithValue("@MobileNo", MobileNo);
+        //        //                sqlCmd.Parameters.AddWithValue("@CityId", objUserRegistration.CityId);
+        //        sqlCmd.CommandText = "ValidateMobileNo";
+        //        sqlCmd.Connection = connString;
+        //        SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+        //        sda.Fill(dsResponse);
 
-                if (dsResponse != null && dsResponse.Tables[0].Rows.Count > 0)
-                {
-                    response = Convert.ToString(dsResponse.Tables[0].Rows[0]["MobileNo"]);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return Json(response, JsonRequestBehavior.AllowGet);
-        }
+        //        if (dsResponse != null && dsResponse.Tables[0].Rows.Count > 0)
+        //        {
+        //            response = Convert.ToString(dsResponse.Tables[0].Rows[0]["MobileNo"]);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //    return Json(response, JsonRequestBehavior.AllowGet);
+        //}
 
         public ActionResult ValidateEmailId(string EmailId)
         {

@@ -26,9 +26,22 @@
                     @foreach (var item in Model)
                     {
                         <li data-src="@item.ImagePath">
-                            <input type="hidden" value="@item.ImageId" />
+                            <input type="hidden" value="@item.ImageId" data-name="@item.ImagePath" id="hdnImageId_@item.ImageId"/>
+							<div class="photo-action"> 
+							<div class="action-btn"> 
+                            <a onclick="DeleteImage('@item.ImageId','@item.ImagePath',this)">
+							<div class="m_icon"> <img src="/images/Delete-Profile.svg" alt="ek Delete"> </div>
+							Delete</a>
+							</div>
+							<div class="action-btn"> 
+                            <a onclick="SetProfilePic('@item.ImagePath',this)">
+							<div class="m_icon"> <img src="/images/SetProfile.svg" alt="Set Profile"> </div>
+							Set Profile</a>
+							</div>
+							</div>
                             <a href="">
-                                <img class="img-responsive" src="@item.ImagePath" style="width:154px;height:104px" />
+                                @*<img class="img-responsive" src="@item.ImagePath" style="width:154px;height:104px" />*@
+                                <img class="img-responsive" src="@item.ImagePath" />
                             </a>
                         </li>
                     }
@@ -56,6 +69,37 @@
     $(document).ready(function () {
         $('#lightgallery').lightGallery();
     });
+
+    function DeleteImage(ImageId, ImagePath,e) {
+        if (confirm('Do you want to delete?')) {
+            $.ajax({
+                url: "/User/DeleteImage",
+                type: "POST",
+                data: { 'ImageId': ImageId, 'ImagePath': ImagePath },
+                success: function (result) {
+                    window.location.href = window.origin + "/MobileApp/User/UploadPhotos";
+                },
+                error: function (xhr) {
+
+                }
+            });
+        }
+    }
+
+    function SetProfilePic(ImagePath) {
+        $.ajax({
+            url: "/User/SetProfilePic",
+            type: "POST",
+            data: {'ImagePath': ImagePath },
+            success: function (result) {
+                //window.location.href = window.origin + "/MobileApp/User/UploadPhotos";
+
+            },
+            error: function (xhr) {
+
+            }
+        });
+    }
     </script>
     <script src="~/Scripts/lightgallery-all.min.js"></script>
 }

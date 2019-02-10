@@ -5,6 +5,22 @@
 }
 
 <script src="~/Scripts/CustomJs/ManageUser.js?rd=@ViewBag.JSRefNo"></script>
+<style>
+#btnSearch {
+
+    width: 98%;
+    margin: 8px auto;
+    float: none;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 18px;
+
+}
+.action_sction { padding: 0;margin: 0;clear: both;overflow: hidden;border-top: 1px solid #ddd;width: 100%;text-align: center;}
+.half-d {width: 48%;float: left; margin: 0 2px;}
+.details ul li {overflow: hidden; padding-bottom: 16px; }
+select { padding:12px; background: #fff;color: #555;}
+</style>
 
 @using (Html.BeginForm("SearchProfile", "User", FormMethod.Post))
 {
@@ -15,23 +31,36 @@
         <p>Search Profile</p>
     </div>
     <div id="divMessage"></div>
-    <div class="maching-body" id="divAdvancedSearch">
+    <div class="maching-body details" id="divAdvancedSearch">
         <ul>
             <li>
-                <strong>Age</strong>:
-                @Html.TextBoxFor(m => m.FromAge, htmlAttributes: new { @id = "txtFromAge", @placeholder = "Enter Age" })
-                @Html.TextBoxFor(m => m.ToAge, htmlAttributes: new { @id = "txtToAge", @placeholder = "Enter Age" })
+                
+				<div class="half-d"> @Html.TextBoxFor(m => m.FromAge, htmlAttributes: new { @id = "txtFromAge", @placeholder = "Enter from Age" }) </div>              
+               
+				<div class="half-d"> @Html.TextBoxFor(m => m.ToAge, htmlAttributes: new { @id = "txtToAge", @placeholder = "Enter to Age" }) </div>
             </li>
         </ul>
         <ul>
             <li>
-                <strong>Religion</strong>:
+                
                 @Html.DropDownListFor(m => m.ReligionId, new SelectList(Model.ReligionDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlReligion" })
             </li>
         </ul>
         <ul>
             <li>
-                <strong>Maritial Status</strong>:
+
+                @Html.DropDownListFor(m => m.CityId, new SelectList(Model.CityDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlCity" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+
+                @Html.DropDownListFor(m => m.CastId, new SelectList(Model.CastDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlCast" })
+            </li>
+        </ul>
+        <ul>
+            <li>
+                
                 @Html.DropDownListFor(m => m.MaritialStatus, new SelectList(new List<object>{new {value="Unmarried",text = "Unmarried"},
                                                                                      new {value="Divorced",text="Divorced"},
                                                                                      new {value="Widow", text="Widow"},
@@ -40,7 +69,7 @@
         </ul>
         <ul>
             <li>
-                <strong>Income</strong>:
+                
                 @Html.DropDownListFor(m => m.Income, new SelectList(new List<object>{new {value=0,text = "Income"},
                                                                                      new {value="Upto 1 Lakh",text = "Upto 1 Lakh"},
                                                                                      new {value="1-2 Lakh",text="1-2 Lakh"},
@@ -53,7 +82,7 @@
         </ul>
         <ul>
             <li>
-                <strong>Mother Tounge</strong>:
+                
                 @Html.DropDownListFor(m => m.MotherToungeId, new SelectList(Model.LanguageDetails, "Value", "Text"), htmlAttributes: new { @id = "ddlMotherTounge" })
             </li>
         </ul>

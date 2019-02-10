@@ -42,7 +42,7 @@ namespace Areas.Models
         public int AddressId { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
-        public int CityId { get; set; }
+        public string CityId { get; set; }
         public string CityName { get; set; }
         public int StateId { get; set; }
         public string StateName { get; set; }
@@ -98,7 +98,7 @@ namespace Areas.Models
         public int UserReligionId { get; set; }
         public string ReligionId { get; set; }
         public string ReligionName { get; set; }
-        public int CastId { get; set; }
+        public string CastId { get; set; }
         public string CastName { get; set; }
         public int SubCastId { get; set; }
         public string SubCastName { get; set; }
@@ -121,5 +121,7 @@ namespace Areas.Models
 
         public SelectList ReligionDetails { get; set; }
         public SelectList LanguageDetails { get; set; }
+        public SelectList CityDetails { get; set; }
+        public SelectList CastDetails { get; set; }
     }
 }

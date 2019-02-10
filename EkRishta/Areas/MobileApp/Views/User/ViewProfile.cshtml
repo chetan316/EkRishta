@@ -4,7 +4,66 @@
     ViewBag.Title = "ViewProfile";
 }
 <link href="~/Content/lightgallery.css" rel="stylesheet">
+<script src="~/Scripts/CustomJs/ManageUser.js?rd=@ViewBag.JSRefNo"></script>
+<style>
+    .user-bg {
+        height: 400px;
+        filter: blur(3px);
+        -webkit-filter: blur(3px);
+    }
 
+    .user_sec {
+        clear: both;
+        overflow: hidden;
+        margin-bottom: 10px;
+        background: none;
+        box-shadow: none;
+        position: absolute;
+        z-index: 9999;
+        top: 67px;
+        left: 21%;
+    }
+
+    .ProfilePic.profile_centre {
+        width: 180px;
+        height: 180px;
+    }
+
+    .user-pic-round {
+        background-color: rgba(255, 255, 255, 0.70);
+        margin: 0 auto;
+        float: none;
+        top: 67px;
+        left: 26%;
+        width: 200px;
+        height: 200px;
+        position: static;
+        border-radius: 110px;
+    }
+
+    .user-details strong, .user-details p {
+        color: #fff;
+    }
+
+    .user-details p {
+        padding: 5px 0 6px 0;
+    }
+
+    .ProfilePic.profile_centre {
+        left: 0;
+        position: sticky;
+        top: 10px;
+    }
+
+    .table .user-bg {
+        margin-bottom: 0px;
+        margin-top: -6px;
+    }
+
+    .photo-count, .photo-right {
+        top: 25px;
+    }
+</style>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -16,23 +75,69 @@
     <div class="table">
         <div>
             <div class="user-bg">
-                <div class="user_sec">
-
+                <input type="hidden" value="@Model.CoverImageName" id="hdnCoverImagePath" /> 
+            </div>
+            <div class="user_sec">
+                <div class="user-pic-round">
                     <div class="ProfilePic profile_centre">
                         <img id="imgProfilePic" alt="Profile" src="@Model.ProfilePicPath" />
                     </div>
                 </div>
+                <div class="user-details">
+                    <strong> @Model.FirstName @Model.LastName </strong>
+                    <p> @Model.Field </p>
+                </div>
             </div>
-            <div class="user-details">
-                <strong> @Model.FirstName @Model.LastName </strong>
-            </div>
-            <div class="view-pro user_title besic_lik">
-                <ul>
-                    <li> <a href="#"> Basic </a> </li>
-                    <li> <a href="#"> About </a> </li>
-                    <li><a href="#">  Photo<span> 9</span> </a> </li>
+            <div class="action_sec">
+                <div class="action-btn ">
+                    <a id="btnCancelRequest_@Model.UserId" onclick="SendRequest('@Model.UserId');" style="@(Model.RequestStatus == "P" ? "display:block" : "display:none")">
+                        <span>
+                            <div class="m_icon">
+                                <img src="/images/ignore-profile.svg" alt="ek vivaah">
+                            </div>
+                        </span>
+                        Cancel
+                    </a>
+                    @*<a href="#" id="btnSendRequest_@Model.UserId" onclick="SendRequest('@Model.UserId');">
+                        <span>
+                            <div class="m_icon">
+                                <img src="/images/send-profile-view.svg" alt="Request">
+                            </div>
+                        </span> Request
+                    </a>*@
 
-                </ul>
+                    <a id="btnSendRequest_@Model.UserId" onclick="SendRequest('@Model.UserId');" style="@((Model.RequestStatus == "C" || Model.RequestStatus == "N" || Model.RequestStatus == "R") ? "display:block" : "display:none")">
+                        <span>
+                            <div class="m_icon">
+                                <img src="/images/send-profile-view.svg" alt="ek vivaah">
+                            </div>
+                        </span>
+                        Request
+                    </a>
+                </div>
+                <div class="action-btn ">
+                    <a href="#" id="btnBlockRequest_@Model.UserId" onclick="SendRequest('@Model.UserId','Blocked');">
+                        <span>
+                            <div class="m_icon">
+                                <img src="/images/ignore-profile.svg" alt="ignore">
+                            </div>
+                        </span> ignore
+                    </a>
+                </div>
+
+                <div class="photo-right ">
+                    
+                        <a onclick="ShortlistProfile('@Model.UserId','@Model.IsShortlisted',this,'ViewProfile');">
+                            <span>
+                            </span>
+                    <p id="pLike">@(Model.IsShortlisted == "S" ? "Unlike" : "Like")</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="photo-count">
+                <span> @Model.PhotoCount </span>
+                <p> Photo</p>
             </div>
             <div class="clearfix"></div>
             <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/user.svg"></span> <p> Basic Details</p></div>
@@ -58,7 +163,7 @@
 
                             <li data-src="@item.ImagePath">
                                 <a href="">
-                                    <img class="img-responsive" src="@item.ImagePath" style="width:154px;height:104px" />
+                                    <img class="img-responsive" src="@item.ImagePath" />
                                 </a>
                             </li>
                         }
@@ -69,7 +174,7 @@
             <div class="details">
                 <ul>
                     <li> <strong>Qualification </strong> <p> : @Model.Degree</p>  </li>
-                    <li> <strong>Field </strong> <p>: @Model.Field </p>  </li>
+
                     <li> <strong>College Name  </strong> <p>: @Model.CollegeName  </p>  </li>
                     <li> <strong>Company Name  </strong> <p>: @Model.CompanyName </p>  </li>
                     <li> <strong>Designation </strong> <p>: @Model.Designation </p>  </li>
@@ -140,6 +245,13 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#lightgallery').lightGallery();
+
+            if ($("#hdnCoverImagePath").val() != "") {
+                $(".user-bg").css({
+                    'background-image': 'url(' + $("#hdnCoverImagePath").val() + ')',
+                    'background-repeat': 'no-repeat'
+                });
+            }
         });
     </script>
     <script src="~/Scripts/lightgallery-all.min.js"></script>
