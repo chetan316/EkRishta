@@ -743,19 +743,20 @@ namespace EkRishta.Areas.MobileApp.Controllers
             DataSet dsResponse = new DataSet();
             try
             {
+                Models.User objUser = new Models.User();
+                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
                 SqlConnection connString = new SqlConnection(conStr);
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 sqlCmd.Parameters.AddWithValue("@UserId", UserId);
+                sqlCmd.Parameters.AddWithValue("@LoginId", objUser.UserId);
 
-                sqlCmd.CommandText = "GetUserProfile";
+                sqlCmd.CommandText = "GetViewProfile";
                 sqlCmd.Connection = connString;
                 SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
                 sda.Fill(dsResponse);
 
-                Models.User objUser = new Models.User();
-                objUser.UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
                 UserMaster objUserMaster = new UserMaster();
 
                 if (dsResponse != null && dsResponse.Tables[0] != null)

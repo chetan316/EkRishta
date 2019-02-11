@@ -161,36 +161,36 @@ namespace EkRishta.Areas.MobileApp.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public ActionResult ChangePassword(ForgotPassword objForgotPassword)
-        {
-            string result = string.Empty;
-            try
-            {
+        //[HttpPost]
+        //public ActionResult ChangePassword(ForgotPassword objForgotPassword)
+        //{
+        //    string result = string.Empty;
+        //    try
+        //    {
 
-                DataSet dsResult = new DataSet();
-                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
-                SqlConnection connString = new SqlConnection(conStr);
-                SqlCommand sqlCmd = new SqlCommand();
-                sqlCmd.CommandType = CommandType.StoredProcedure;
-                sqlCmd.Parameters.AddWithValue("@MobileNo", objForgotPassword.MobileNo);
-                sqlCmd.Parameters.AddWithValue("@Password", objForgotPassword.Password);
-                sqlCmd.Parameters.AddWithValue("@OTP", objForgotPassword.OTP);
-                sqlCmd.CommandText = "ChangePassword";
-                sqlCmd.Connection = connString;
-                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
-                sda.Fill(dsResult);
+        //        DataSet dsResult = new DataSet();
+        //        string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+        //        SqlConnection connString = new SqlConnection(conStr);
+        //        SqlCommand sqlCmd = new SqlCommand();
+        //        sqlCmd.CommandType = CommandType.StoredProcedure;
+        //        sqlCmd.Parameters.AddWithValue("@MobileNo", objForgotPassword.MobileNo);
+        //        sqlCmd.Parameters.AddWithValue("@Password", objForgotPassword.Password);
+        //        sqlCmd.Parameters.AddWithValue("@OTP", objForgotPassword.OTP);
+        //        sqlCmd.CommandText = "ChangePassword";
+        //        sqlCmd.Connection = connString;
+        //        SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+        //        sda.Fill(dsResult);
 
-                if (dsResult != null && dsResult.Tables[0].Rows.Count > 0)
-                {
-                    result = Convert.ToString(dsResult.Tables[0].Rows[0]["Result"]);
-                }
-            }
-            catch (Exception ex)
-            {
-                return View();
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //        if (dsResult != null && dsResult.Tables[0].Rows.Count > 0)
+        //        {
+        //            result = Convert.ToString(dsResult.Tables[0].Rows[0]["Result"]);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return View();
+        //    }
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
     }
 }
