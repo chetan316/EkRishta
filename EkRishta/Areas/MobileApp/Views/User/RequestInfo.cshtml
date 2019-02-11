@@ -106,7 +106,7 @@
                             <li>@item.Degree </li>
 
                             <li>
-                                @if (item.ShareCount >= 50)
+                                @if (item.ShareCount >= 50 || item.RequestStatus == "A")
                                 {
                                     ContactCount += 1;
                                     @item.MobileNo
@@ -184,12 +184,12 @@
                             </a>
                         </div>
                         <div class="action-btn no-bder">
-                            <a href="#">
+                            <a href='@Url.Action("ViewProfile", "User", new { UserId = item.UserId })'>
                                 <span>
                                     <div class="m_icon">
                                         <img src="/images/Profile-in-love.svg" alt="ek vivaah">
                                     </div>
-                                </span> @Html.ActionLink("View Profile", "ViewProfile", "User", new { UserId = item.UserId }, null)
+                                </span> View Profile @*@Html.ActionLink("View Profile", "ViewProfile", "User", new { UserId = item.UserId }, null)*@
                             </a>
 
                         </div>

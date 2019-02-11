@@ -140,40 +140,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUser.ProfilePicPath = "/Uploads/" + objUser.UserId + "/" + Convert.ToString(dsResponse.Tables[0].Rows[0]["ProfilePicPath"]);
                         objUser.ShareCount = 0;
 
-                        HttpCookie UserId = new HttpCookie("UserId");
-                        UserId.Value = Convert.ToString(objUser.UserId);
-                        UserId.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(UserId);
-
-                        HttpCookie UserName = new HttpCookie("UserName");
-                        UserName.Value = Convert.ToString(objUser.UserName);
-                        UserName.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(UserName);
-
-                        HttpCookie ProfileId = new HttpCookie("ProfileId");
-                        ProfileId.Value = Convert.ToString(objUser.ProfileId);
-                        ProfileId.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(ProfileId);
-
-                        HttpCookie ProfilePicPath = new HttpCookie("ProfilePicPath");
-                        ProfilePicPath.Value = Convert.ToString(objUser.ProfilePicPath);
-                        ProfilePicPath.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(ProfilePicPath);
-
-                        HttpCookie MobileNo = new HttpCookie("MobileNo");
-                        MobileNo.Value = Convert.ToString(objUser.MobileNo);
-                        MobileNo.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(MobileNo);
-
-                        HttpCookie EmailId = new HttpCookie("EmailId");
-                        EmailId.Value = Convert.ToString(objUser.EmailId);
-                        EmailId.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(EmailId);
-
-                        HttpCookie ReligionId = new HttpCookie("ReligionId");
-                        ReligionId.Value = Convert.ToString(objUser.ReligionId);
-                        ReligionId.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(ReligionId);
+                        CreateUserCookie(objUser.UserId, objUser.UserName, objUser.ProfileId, objUser.ProfilePicPath, objUser.MobileNo, objUser.EmailId, objUser.ReligionId);
                     }
 
                     // Returns message that successfully uploaded  

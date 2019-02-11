@@ -824,7 +824,7 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUserMaster.Designation = Convert.ToString(dr["Designation"]);
                         objUserMaster.Income = Convert.ToString(dr["Income"]);
                         objUserMaster.PhotoCount = Convert.ToString(dr["PhotoCount"]);
-                        //objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
+                        objUserMaster.RequestStatus = Convert.ToString(dr["RequestStatus"]);
 
                         //To Manage Shortlisted Profile
                         foreach (DataRow dr2 in dsResponse.Tables[2].Rows)

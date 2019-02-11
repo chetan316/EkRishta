@@ -497,7 +497,7 @@ namespace EkRishta
             }
             catch (Exception ex)
             {
-                
+
                 throw;
             }
             return Json(response, JsonRequestBehavior.AllowGet);
@@ -516,8 +516,53 @@ namespace EkRishta
             return SPName;
         }
 
+        public void CreateUserCookie(int userId, string userName, string profileId, string profilePicPath, string mobileNo, string emailId, string religionId)
+        {
+            try
+            {
+                HttpCookie UserId = new HttpCookie("UserId");
+                UserId.Value = Convert.ToString(userId);
+                UserId.Expires = DateTime.Now.AddYears(365);
+                Response.Cookies.Add(UserId);
+
+                HttpCookie UserName = new HttpCookie("UserName");
+                UserName.Value = Convert.ToString(userName);
+                UserName.Expires = DateTime.Now.AddYears(365);
+                Response.Cookies.Add(UserName);
+
+                HttpCookie ProfileId = new HttpCookie("ProfileId");
+                ProfileId.Value = Convert.ToString(profileId);
+                ProfileId.Expires = DateTime.Now.AddYears(365);
+                Response.Cookies.Add(ProfileId);
+
+                HttpCookie ProfilePicPath = new HttpCookie("ProfilePicPath");
+                ProfilePicPath.Value = Convert.ToString(profilePicPath);
+                ProfilePicPath.Expires = DateTime.Now.AddYears(365);
+                Response.Cookies.Add(ProfilePicPath);
+
+                HttpCookie MobileNo = new HttpCookie("MobileNo");
+                MobileNo.Value = Convert.ToString(mobileNo);
+                MobileNo.Expires = DateTime.Now.AddYears(365);
+                Response.Cookies.Add(MobileNo);
+
+                HttpCookie EmailId = new HttpCookie("EmailId");
+                EmailId.Value = Convert.ToString(emailId);
+                EmailId.Expires = DateTime.Now.AddYears(365);
+                Response.Cookies.Add(EmailId);
+
+                HttpCookie ReligionId = new HttpCookie("ReligionId");
+                ReligionId.Value = Convert.ToString(religionId);
+                ReligionId.Expires = DateTime.Now.AddYears(365);
+                Response.Cookies.Add(ReligionId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 
-    
+
 
 }

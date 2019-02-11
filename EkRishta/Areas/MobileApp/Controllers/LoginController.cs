@@ -55,44 +55,8 @@ namespace EkRishta.Areas.MobileApp.Controllers
                         objUser.ProfilePicPath = "/Uploads/" + objUser.UserId + "/" + Convert.ToString(dsResult.Tables[0].Rows[0]["ProfilePicPath"]);
 
                         //Session["USER"] = objUser;
-                        //HttpCookie SessionOut = new HttpCookie("UserId");
-                        //SessionOut.Expires = DateTime.Now.AddYears(-365);
-                        //Response.Cookies.Add(SessionOut);
 
-                        HttpCookie UserId = new HttpCookie("UserId");
-                        UserId.Value = Convert.ToString(objUser.UserId);
-                        UserId.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(UserId);
-
-                        HttpCookie UserName = new HttpCookie("UserName");
-                        UserName.Value = Convert.ToString(objUser.UserName);
-                        UserName.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(UserName);
-
-                        HttpCookie ProfileId = new HttpCookie("ProfileId");
-                        ProfileId.Value = Convert.ToString(objUser.ProfileId);
-                        ProfileId.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(ProfileId);
-
-                        HttpCookie ProfilePicPath = new HttpCookie("ProfilePicPath");
-                        ProfilePicPath.Value = Convert.ToString(objUser.ProfilePicPath);
-                        ProfilePicPath.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(ProfilePicPath);
-
-                        HttpCookie MobileNo = new HttpCookie("MobileNo");
-                        MobileNo.Value = Convert.ToString(objUser.MobileNo);
-                        MobileNo.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(MobileNo);
-
-                        HttpCookie EmailId = new HttpCookie("EmailId");
-                        EmailId.Value = Convert.ToString(objUser.EmailId);
-                        EmailId.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(EmailId);
-
-                        HttpCookie ReligionId = new HttpCookie("ReligionId");
-                        ReligionId.Value = Convert.ToString(objUser.ReligionId);
-                        ReligionId.Expires = DateTime.Now.AddYears(365);
-                        Response.Cookies.Add(ReligionId);
+                        CreateUserCookie(objUser.UserId, objUser.UserName, objUser.ProfileId, objUser.ProfilePicPath, objUser.MobileNo, objUser.EmailId, objUser.ReligionId);
                       
                         return RedirectToAction("MyProfile", "User", new { Area = "MobileApp" });
                     }
@@ -161,36 +125,36 @@ namespace EkRishta.Areas.MobileApp.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
-        //[HttpPost]
-        //public ActionResult ChangePassword(ForgotPassword objForgotPassword)
-        //{
-        //    string result = string.Empty;
-        //    try
-        //    {
+        [HttpPost]
+        public ActionResult ChangePassword(ForgotPassword objForgotPassword)
+        {
+            string result = string.Empty;
+            try
+            {
 
-        //        DataSet dsResult = new DataSet();
-        //        string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
-        //        SqlConnection connString = new SqlConnection(conStr);
-        //        SqlCommand sqlCmd = new SqlCommand();
-        //        sqlCmd.CommandType = CommandType.StoredProcedure;
-        //        sqlCmd.Parameters.AddWithValue("@MobileNo", objForgotPassword.MobileNo);
-        //        sqlCmd.Parameters.AddWithValue("@Password", objForgotPassword.Password);
-        //        sqlCmd.Parameters.AddWithValue("@OTP", objForgotPassword.OTP);
-        //        sqlCmd.CommandText = "ChangePassword";
-        //        sqlCmd.Connection = connString;
-        //        SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
-        //        sda.Fill(dsResult);
+                DataSet dsResult = new DataSet();
+                string conStr = ConfigurationManager.ConnectionStrings["DBEntity"].ConnectionString;
+                SqlConnection connString = new SqlConnection(conStr);
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@MobileNo", objForgotPassword.MobileNo);
+                sqlCmd.Parameters.AddWithValue("@Password", objForgotPassword.Password);
+                sqlCmd.Parameters.AddWithValue("@OTP", objForgotPassword.OTP);
+                sqlCmd.CommandText = "ChangePassword";
+                sqlCmd.Connection = connString;
+                SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
+                sda.Fill(dsResult);
 
-        //        if (dsResult != null && dsResult.Tables[0].Rows.Count > 0)
-        //        {
-        //            result = Convert.ToString(dsResult.Tables[0].Rows[0]["Result"]);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return View();
-        //    }
-        //    return Json(result, JsonRequestBehavior.AllowGet);
-        //}
+                if (dsResult != null && dsResult.Tables[0].Rows.Count > 0)
+                {
+                    result = Convert.ToString(dsResult.Tables[0].Rows[0]["Result"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

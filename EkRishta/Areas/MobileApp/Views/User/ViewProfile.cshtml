@@ -98,13 +98,13 @@
                         </span>
                         Cancel
                     </a>
-                    @*<a href="#" id="btnSendRequest_@Model.UserId" onclick="SendRequest('@Model.UserId');">
+                    <a href="#" id="btnAcceptedRequest_@Model.UserId" style="@((Model.RequestStatus == "A") ? "display:block" : "display:none")">
                         <span>
                             <div class="m_icon">
                                 <img src="/images/send-profile-view.svg" alt="Request">
                             </div>
-                        </span> Request
-                    </a>*@
+                        </span> Accepted
+                    </a>
 
                     <a id="btnSendRequest_@Model.UserId" onclick="SendRequest('@Model.UserId');" style="@((Model.RequestStatus == "C" || Model.RequestStatus == "N" || Model.RequestStatus == "R") ? "display:block" : "display:none")">
                         <span>
@@ -114,6 +114,7 @@
                         </span>
                         Request
                     </a>
+
                 </div>
                 <div class="action-btn ">
                     <a href="#" id="btnBlockRequest_@Model.UserId" onclick="SendRequest('@Model.UserId','Blocked');">
@@ -150,8 +151,8 @@
                     <li> <strong>Birth Date </strong> <p>: @Model.DOB </p>  </li>
                     <li> <strong>Gender </strong> <p>: @Model.Gender </p>  </li>
                     <li> <strong>MaritialStatus  </strong> <p> : @Model.MaritialStatus</p>  </li>
-                    <li> <strong>Email </strong> <p>: @Model.EmailId </p>  </li>
-                    <li> <strong>Mobile No </strong> <p>: @(Model.ShareCount >= 50 ? Model.MobileNo : "View Contact") </p>  </li>
+                    <li> <strong>Email </strong> <p>: @((Model.ShareCount >= 50 || Model.RequestStatus == "A" )? Model.EmailId : "View EmailId") </p>  </li>
+                    <li> <strong>Mobile No </strong> <p>: @((Model.ShareCount >= 50 || Model.RequestStatus == "A" )? Model.MobileNo : "View Contact") </p>  </li>
                 </ul>
             </div>
             <div class="user_title"><span> <img alt="matrimonial ek vivaah" src="/images/gallery.svg"></span> <p> Photos </p></div>
