@@ -23,7 +23,6 @@
     <div class="maching-body">
         @foreach (var item in Model)
         {
-
             <div class="user_sec">
                 <div class="user-bg" style="background: url(@(item.CoverImageName.IndexOf('.') < 0? "/images/1232.jpg" : item.CoverImageName)) no-repeat;">
                     <div class="Shield"> <img alt="ek vivaah " src="/images/wellness.svg"> </div>
@@ -44,12 +43,12 @@
 
 
 
-                <div class="view-pro user_title">
+                @*<div class="view-pro user_title">
                     <ul>
                         <li class="fourty"> <a href="#"> View Profile </a> </li>
 
                     </ul>
-                </div>
+                </div>*@
                 <div class="user-details">
                     <ul>
                         <li> <span> @item.Age</span> <span>  Year</span> <span class="height"> @item.Height   </span></li>
@@ -66,36 +65,59 @@
 
 
                 <div class="action_sction">
-
                     <div class="action-btn">
-                        <a href="#">
-                            <span> <div class="m_icon"> <img src="/images/r-paper-plane.svg" alt="ek vivaah"> </div> </span>
+                        <a id="btnAcceptRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Accepted');" style="@((item.RequestStatus != "A") ? "display:block" : "display:none")">
+                            <span>
+                                <div class="m_icon">
+                                    <img src="/images/r-paper-plane.svg" alt="ek vivaah">
+                                </div>
+                            </span>
+                            Accept
+                        </a>
+                        <a id="btnAcceptRequest_@item.UserId" style="@((item.RequestStatus == "A") ? "display:block" : "display:none")">
+                            <span>
+                                <div class="m_icon">
+                                    <img src="/images/r-paper-plane.svg" alt="ek vivaah">
+                                </div>
+                            </span>
+                            Accepted
                         </a>
                     </div>
-
-                    <div class="action-btn">
-                        <a href="#">
-                            <span> <div class="m_icon"> <img src="/images/r-paper-plane.svg" alt="ek vivaah"> </div> </span>
+                    <div class="action-btn ">
+                        <a id="btnRejectRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Rejected');" style="@((item.RequestStatus != "R") ? "display:block" : "display:none")">
+                            <span>
+                                <div class="m_icon">
+                                    <img src="/images/m-Ignore.svg" alt="ek vivaah">
+                                </div>
+                            </span>
+                            Reject
+                        </a>
+                        <a id="btnRejectRequest_@item.UserId" style="@((item.RequestStatus == "R") ? "display:block" : "display:none")">
+                            <span>
+                                <div class="m_icon">
+                                    <img src="/images/m-Ignore.svg" alt="ek vivaah">
+                                </div>
+                            </span>
+                            Rejected
                         </a>
                     </div>
-
-                    <div class="action-btn">
-                        <a href="#">
-                            <span> <div class="m_icon"> <img src="/images/r-paper-plane.svg" alt="ek vivaah"> </div> </span>
+                    <div class="action-btn no-bder">
+                        <a href='@Url.Action("ViewProfile", "User", new { UserId = item.UserId })'>
+                            <span>
+                                <div class="m_icon">
+                                    <img src="/images/Profile-in-love.svg" alt="ek vivaah">
+                                </div>
+                            </span> View Profile 
                         </a>
+
                     </div>
-
-                    <div class="action-btn">
-                        <a href="#">
-                            <span> <div class="m_icon"> <img src="/images/r-paper-plane.svg" alt="ek vivaah"> </div> </span>
-                        </a>
-                    </div>
-                    <input type="button" value="@(item.RequestStatus == "A"?"Accepted":"Accept")" id="btnAcceptRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Accepted');" class="btn action-btn btn-info @(item.RequestStatus == "A"?"disabled":"")" />
-                    <input type="button" value="@(item.RequestStatus == "R"?"Rejected":"Reject")" id="btnRejectRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Rejected');" class="btn action-btn btn-info @(item.RequestStatus == "R"?"disabled":"")" />
-                    <input type="button" value="Block" id="btnBlockRequest_@item.UserId" onclick="SendRequest('@item.UserId','Blocked');" class="btn action-btn btn-info" />
-
-
+                    
                 </div>
+                @*<input type="button" value="@(item.RequestStatus == "A"?"Accepted":"Accept")" id="btnAcceptRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Accepted');" class="btn action-btn btn-info @(item.RequestStatus == "A"?"disabled":"")" />
+                    <input type="button" value="@(item.RequestStatus == "R"?"Rejected":"Reject")" id="btnRejectRequest_@item.UserId" onclick="AcceptRejectRequest('@item.UserId','Rejected');" class="btn action-btn btn-info @(item.RequestStatus == "R"?"disabled":"")" />
+                    <input type="button" value="Block" id="btnBlockRequest_@item.UserId" onclick="SendRequest('@item.UserId','Blocked');" class="btn action-btn btn-info" />*@
+
+
             </div>
             <div class="clearfix"></div>
 
@@ -104,5 +126,5 @@
         {
             <div>No Request available!!!</div>
         }
-    </div>
+        </div>
 }

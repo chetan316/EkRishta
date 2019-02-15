@@ -492,7 +492,9 @@ namespace EkRishta
 
                 if (response == "SUCCESS")
                 {
-                    Session.Remove("USER");
+                    HttpCookie SessionOut = new HttpCookie("UserId");
+                    SessionOut.Expires = DateTime.Now.AddYears(-365);
+                    Response.Cookies.Add(SessionOut);
                 }
             }
             catch (Exception ex)
